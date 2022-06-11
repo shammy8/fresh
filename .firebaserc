@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fresh-4c845": {
+      "hosting": {
+        "fresh": [
+          "fresh-4c845"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fresh-4c845"
+  }
+}
