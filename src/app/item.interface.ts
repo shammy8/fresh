@@ -9,6 +9,7 @@ export interface Item {
 }
 
 export interface Home {
+  id?: string;
   name: string;
   users: { [key: string]: true };
   storage: string[];

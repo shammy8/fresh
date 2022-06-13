@@ -10,6 +10,7 @@ import {
 
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,13 @@ const routes: Routes = [
     component: MainComponent,
     canActivate: [AuthGuard],
     data: { authGuardPipe: () => redirectUnauthorizedTo(['login']) },
+    // TODO do I need canActivate or canActivateChildren here
+    children: [
+      {
+        path: ':homeId',
+        component: HomeComponent,
+      },
+    ],
   },
   {
     path: 'login',
