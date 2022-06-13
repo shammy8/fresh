@@ -25,3 +25,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Firestore Rules
+
+Run `firebase deploy --only firestore:rules` to deploy the Firestore rules. You can not pull updates to the rules down into this repo. So if you make a change in the Firebase Console you need to copy and paste it here too.
