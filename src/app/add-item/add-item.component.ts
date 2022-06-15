@@ -3,7 +3,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 
-import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import {
+  MatBottomSheetRef,
+  MAT_BOTTOM_SHEET_DATA,
+} from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -14,6 +17,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       form {
         display: flex;
         flex-direction: column;
+      }
+      .button-container {
+        display: flex;
+        flex-direction: row-reverse;
       }
     `,
   ],
@@ -33,6 +40,7 @@ export class AddItemComponent implements OnInit {
 
   constructor(
     private _snackBar: MatSnackBar,
+    private _bottomSheetRef: MatBottomSheetRef<AddItemComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) private _data: { homeId: string },
     private _fb: NonNullableFormBuilder,
     private _firestore: Firestore
@@ -53,5 +61,9 @@ export class AddItemComponent implements OnInit {
     this._snackBar.open('Successfully Added Item', 'Close');
     setTimeout(() => (this.disableSubmitButton = false), 3000); // stops user constantly adding items
     // TODO handle error
+  }
+
+  closeBottomSheet() {
+    this._bottomSheetRef.dismiss();
   }
 }

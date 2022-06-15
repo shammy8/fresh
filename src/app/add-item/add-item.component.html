@@ -69,7 +69,15 @@
   </mat-form-field>
   <br />
 
-  <button mat-button type="submit" [disabled]="disableSubmitButton">
-    Add Item
-  </button>
+  <div class="button-container">
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="disableSubmitButton"
+    >
+      Add Item
+    </button>
+    <button mat-button type="button" (click)="closeBottomSheet()">Close</button>
+  </div>
 </form>
