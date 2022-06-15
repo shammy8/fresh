@@ -6,9 +6,14 @@ import { GoogleAuthProvider } from 'firebase/auth';
 
 @Component({
   selector: 'fresh-login',
-  template: ` <button mat-raised-button color="primary" (click)="login()">
-    Login with Google
-  </button>`,
+  template: ` <mat-toolbar color="primary">
+      <h1>Fresh</h1>
+    </mat-toolbar>
+
+    <br />
+    <button mat-raised-button color="primary" (click)="login()">
+      Login with Google
+    </button>`,
   styles: [],
 })
 export class LoginComponent implements OnInit {
