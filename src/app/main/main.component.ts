@@ -9,6 +9,7 @@ import {
   query,
   where,
 } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Home } from '../item.interface';
 
@@ -18,6 +19,7 @@ import { Home } from '../item.interface';
     <mat-toolbar color="primary">
       <mat-icon (click)="matSidenav.toggle()">menu</mat-icon>
       <h1>Fresh</h1>
+      <mat-icon class="logout-button" (click)="logout()">logout</mat-icon>
     </mat-toolbar>
 
     <mat-sidenav-container>
@@ -27,10 +29,10 @@ import { Home } from '../item.interface';
             mat-list-item
             *ngFor="let home of homes$ | async"
             [routerLink]="home.id"
-            routerLinkActive="active-link" 
+            routerLinkActive="active-link"
             (click)="matSidenav.close()"
           >
-          <!-- TODO add a class (routerLinkActive) or symbol to show the chosen home -->
+            <!-- TODO add a class (routerLinkActive) or symbol to show the chosen home -->
             {{ home.name }}
           </a>
         </mat-nav-list>
@@ -52,13 +54,21 @@ import { Home } from '../item.interface';
       mat-sidenav {
         width: 200px;
       }
+      .logout-button {
+        margin-left: auto;
+        cursor: pointer;
+      }
     `,
   ],
 })
 export class MainComponent implements OnInit {
   homes$: Observable<Home[]> = of([]);
 
-  constructor(private _auth: Auth, private _firestore: Firestore) {}
+  constructor(
+    private _router: Router,
+    private _auth: Auth,
+    private _firestore: Firestore
+  ) {}
 
   ngOnInit(): void {
     const userId = this._auth.currentUser?.uid;
@@ -77,5 +87,11 @@ export class MainComponent implements OnInit {
         idField: 'id',
       }) as Observable<Home[]>;
     }
+  }
+
+  logout() {
+    this._auth.signOut().then(() => {
+      this._router.navigate(['login']);
+    });
   }
 }
