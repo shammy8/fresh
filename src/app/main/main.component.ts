@@ -25,16 +25,18 @@ import { Home } from '../item.interface';
     <mat-sidenav-container>
       <mat-sidenav #matSidenav="matSidenav" mode="over">
         <mat-nav-list>
-          <a
-            mat-list-item
-            *ngFor="let home of homes$ | async"
-            [routerLink]="home.id"
-            routerLinkActive="active-link"
-            (click)="matSidenav.close()"
-          >
-            <!-- TODO add a class (routerLinkActive) or symbol to show the chosen home -->
-            {{ home.name }}
-          </a>
+          <mat-list-item *ngFor="let home of homes$ | async">
+            <a
+              mat-list-item
+              [routerLink]="home.id"
+              routerLinkActive
+              #rla="routerLinkActive"
+              (click)="matSidenav.close()"
+            >
+              {{ home.name }}
+            </a>
+            <mat-icon *ngIf="rla.isActive">checkbox</mat-icon>
+          </mat-list-item>
         </mat-nav-list>
       </mat-sidenav>
 
