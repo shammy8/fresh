@@ -1,9 +1,9 @@
 export interface Item {
   name: string;
-  dateBought?: number; // date
-  useBy?: number; // date
-  notifyOn?: number; // date
-  bestBefore?: number; // date
+  dateBought?: number | Date; // date
+  useBy?: number | Date; // date
+  notifyOn?: number | Date; // date
+  bestBefore?: number | Date; // date
   storedIn?: string;
   comments?: string;
 }

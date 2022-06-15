@@ -3,10 +3,11 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /home/{homeId} {
         allow read: if request.auth != null && resource.data.users[request.auth.uid] == true;
-        allow write: if true;
+        allow write: if true; // TODO
 
         match /items/{itemId} {
             allow read: if true; // TODO
+            allow write: if true; // TODO
         }
     }
   }

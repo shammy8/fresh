@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { map, Observable, of, switchMap } from 'rxjs';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+
+import { Observable, of, switchMap } from 'rxjs';
 
 import {
   collection,
@@ -10,30 +12,44 @@ import {
   limit,
   query,
 } from '@angular/fire/firestore';
+import { AddItemComponent } from '../add-item/add-item.component';
 
 @Component({
   selector: 'fresh-home',
   template: `
+    <button mat-fab color="primary" (click)="displayAddItemBottomSheet()">
+      <mat-icon>add</mat-icon>
+    </button>
     <pre>{{ items$ | async | json }} </pre>
   `,
   styles: [],
 })
 export class HomeComponent implements OnInit {
   items$: Observable<any> = of([]); // TODO
+  homeId = '';
 
-  constructor(private _route: ActivatedRoute, private _firestore: Firestore) {}
+  constructor(
+    private _route: ActivatedRoute,
+    private _firestore: Firestore,
+    private _bottomSheet: MatBottomSheet
+  ) {}
 
   ngOnInit(): void {
     this.items$ = this._route.paramMap.pipe(
       switchMap((params) => {
-        const homeId = params.get('homeId');
-        console.log(homeId);
+        this.homeId = params.get('homeId') ?? '';
         const itemsQuery = query(
-          collection(this._firestore, `home/${homeId}/items`),
+          collection(this._firestore, `home/${this.homeId}/items`),
           limit(10)
         );
         return collectionData(itemsQuery);
       })
     );
+  }
+
+  displayAddItemBottomSheet() {
+    const displayAddItemBottomSheet = this._bottomSheet.open(AddItemComponent, {
+      data: { homeId: this.homeId },
+    });
   }
 }
