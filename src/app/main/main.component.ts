@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { Auth } from '@angular/fire/auth';
 import {
@@ -23,15 +22,18 @@ import { Home } from '../item.interface';
 
     <mat-sidenav-container>
       <mat-sidenav #matSidenav="matSidenav" mode="over">
-        <mat-list role="list">
-          <mat-list-item
+        <mat-nav-list>
+          <a
+            mat-list-item
             *ngFor="let home of homes$ | async"
-            (click)="navigateToHome(home); matSidenav.close()"
-            role="listitem"
+            [routerLink]="home.id"
+            routerLinkActive="active-link" 
+            (click)="matSidenav.close()"
           >
+          <!-- TODO add a class (routerLinkActive) or symbol to show the chosen home -->
             {{ home.name }}
-          </mat-list-item>
-        </mat-list>
+          </a>
+        </mat-nav-list>
       </mat-sidenav>
 
       <mat-sidenav-content>
@@ -45,7 +47,7 @@ import { Home } from '../item.interface';
         margin-left: 10px;
       }
       mat-sidenav-container {
-        height: calc(100% - 56px);
+        height: calc(100% - 64px);
       }
       mat-sidenav {
         width: 200px;
@@ -56,11 +58,7 @@ import { Home } from '../item.interface';
 export class MainComponent implements OnInit {
   homes$: Observable<Home[]> = of([]);
 
-  constructor(
-    private _auth: Auth,
-    private _firestore: Firestore,
-    private _router: Router
-  ) {}
+  constructor(private _auth: Auth, private _firestore: Firestore) {}
 
   ngOnInit(): void {
     const userId = this._auth.currentUser?.uid;
@@ -79,9 +77,5 @@ export class MainComponent implements OnInit {
         idField: 'id',
       }) as Observable<Home[]>;
     }
-  }
-
-  navigateToHome(home: Home) {
-    this._router.navigate([home.id]);
   }
 }
