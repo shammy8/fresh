@@ -1,12 +1,26 @@
+import { Timestamp } from '@angular/fire/firestore';
+
 export interface Item {
   name: string;
   storedIn?: string;
-  dateBought?: null | Date; // date
-  useBy?: null | Date; // date
-  bestBefore?: null | Date; // date
-  notifyOn?: null | Date; // date
+  dateBought?: null | Timestamp; // date
+  userDefinedDate?: null | Timestamp; // date
+  useBy?: null | Timestamp; // date
+  bestBefore?: null | Timestamp; // date
+  notifyOn?: null | Timestamp; // date
   comments?: string;
 }
+
+// export interface Item {
+//   name: string;
+//   storedIn?: string;
+//   dateBought?: null | Date; // date
+//   userDefinedDate?: null | Date; // date
+//   useBy?: null | Date | Timestamp; // date
+//   bestBefore?: null | Date; // date
+//   notifyOn?: null | Date; // date
+//   comments?: string;
+// }
 
 export interface Home {
   id?: string;

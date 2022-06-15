@@ -20,9 +20,17 @@ import { AddItemComponent } from '../add-item/add-item.component';
     <button mat-fab color="primary" (click)="displayAddItemBottomSheet()">
       <mat-icon>add</mat-icon>
     </button>
-    <pre>{{ items$ | async | json }} </pre>
+    <fresh-item *ngFor="let item of items$ | async" [item]="item"></fresh-item>
   `,
-  styles: [],
+  styles: [
+    `
+      [mat-fab] {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+      }
+    `,
+  ],
 })
 export class HomeComponent implements OnInit {
   items$: Observable<any> = of([]); // TODO

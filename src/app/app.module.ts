@@ -16,6 +16,7 @@ import {
   MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -29,6 +30,7 @@ import { MainComponent } from './main/main.component';
 import { HomeComponent } from './home/home.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ItemComponent } from './item/item.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MainComponent,
     HomeComponent,
     AddItemComponent,
+    ItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
+    MatExpansionModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

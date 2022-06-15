@@ -1,0 +1,52 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <div>
+        <div>
+          {{ item.name }}
+        </div>
+        <div class="stored-in-text">
+          {{ item.storedIn }}
+        </div>
+      </div>
+    </mat-panel-title>
+    <mat-panel-description>
+      <div *ngIf="item.userDefinedDate">
+        {{ item.userDefinedDate.toDate() | date: "mediumDate" }}
+      </div>
+
+      <div *ngIf="!item.userDefinedDate && item.useBy">
+        {{ item.useBy.toDate() | date: "mediumDate" }}
+      </div>
+
+      <div *ngIf="!item.userDefinedDate && !item.useBy && item.bestBefore">
+        {{ item.bestBefore.toDate() | date: "mediumDate" }}
+      </div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <div *ngIf="item.userDefinedDate">
+    User defined date
+    <span>{{ item.userDefinedDate.toDate() | date: "mediumDate" }}</span>
+    <!-- TODO add style to above? -->
+  </div>
+
+  <div *ngIf="item.useBy">
+    Use by <span>{{ item.useBy.toDate() | date: "mediumDate" }}</span>
+  </div>
+
+  <div *ngIf="item.bestBefore">
+    Best before
+    <span>{{ item.bestBefore.toDate() | date: "mediumDate" }}</span>
+  </div>
+
+  <div *ngIf="item.comments">
+    <br />
+    <span>{{ item.comments }}</span>
+  </div>
+
+  <mat-action-row>
+    <button mat-button color="primary" (click)="onDelete()">Delete</button>
+    <button mat-raised-button color="primary" (click)="onEdit()">Edit</button>
+  </mat-action-row>
+</mat-expansion-panel>

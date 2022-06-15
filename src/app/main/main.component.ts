@@ -56,6 +56,9 @@ import { Home } from '../item.interface';
       mat-sidenav {
         width: 200px;
       }
+      mat-sidenav-content {
+        padding: 0px 5px;
+      }
       .logout-button {
         margin-left: auto;
         cursor: pointer;
