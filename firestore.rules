@@ -4,6 +4,10 @@ service cloud.firestore {
     match /home/{homeId} {
         allow read: if request.auth != null && resource.data.users[request.auth.uid] == true;
         allow write: if true;
+
+        match /items/{itemId} {
+            allow read: if true; // TODO
+        }
     }
   }
 }
