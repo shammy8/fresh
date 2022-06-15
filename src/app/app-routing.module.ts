@@ -14,23 +14,24 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: MainComponent,
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: () => redirectUnauthorizedTo(['login']) },
-    // TODO do I need canActivate or canActivateChildren here
-    children: [
-      {
-        path: ':homeId',
-        component: HomeComponent,
-      },
-    ],
-  },
-  {
     path: 'login',
     component: LoginComponent,
     canActivate: [AuthGuard],
     data: { authGuardPipe: () => redirectLoggedInTo(['']) },
+  },
+  {
+    path: '',
+    component: MainComponent,
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: () => redirectUnauthorizedTo(['login']) },
+    children: [
+      {
+        path: ':homeId',
+        component: HomeComponent,
+        canActivate: [AuthGuard],
+        data: { authGuardPipe: () => redirectUnauthorizedTo(['login']) },
+      },
+    ],
   },
 ];
 
