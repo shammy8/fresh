@@ -8,56 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'fresh-add-item',
-  template: `
-    <form [formGroup]="form" (ngSubmit)="onAdd()">
-      <mat-form-field>
-        <mat-label>Item</mat-label>
-        <input matInput formControlName="name" placeholder="Chicken" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Stored In</mat-label>
-        <input matInput formControlName="storedIn" placeholder="Fridge" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Date Bought</mat-label>
-        <input
-          matInput
-          [matDatepicker]="dateBoughtPicker"
-          formControlName="dateBought"
-        />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="dateBoughtPicker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #dateBoughtPicker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Best Before</mat-label>
-        <input
-          matInput
-          [matDatepicker]="bestBeforePicker"
-          formControlName="bestBefore"
-        />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="bestBeforePicker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #bestBeforePicker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Comments</mat-label>
-        <textarea
-          matInput
-          formControlName="comments"
-          placeholder="Move to freezer"
-        ></textarea>
-      </mat-form-field>
-      <br />
-      <button mat-button type="submit" [disabled]="disableSubmitButton">
-        Add Item
-      </button>
-    </form>
-  `,
+  templateUrl: './add-item.component.html',
   styles: [
     `
       form {
@@ -70,9 +21,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AddItemComponent implements OnInit {
   form = this._fb.group({
     name: ['', Validators.required],
-    dateBought: new Date(),
-    bestBefore: new Date(),
     storedIn: '',
+    dateBought: null as Date | null,
+    bestBefore: null as Date | null,
+    useBy: null as Date | null,
+    userDefinedDate: null as Date | null,
     comments: '',
   });
 

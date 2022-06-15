@@ -1,10 +1,10 @@
 export interface Item {
   name: string;
-  dateBought?: number | Date; // date
-  useBy?: number | Date; // date
-  notifyOn?: number | Date; // date
-  bestBefore?: number | Date; // date
   storedIn?: string;
+  dateBought?: null | Date; // date
+  useBy?: null | Date; // date
+  bestBefore?: null | Date; // date
+  notifyOn?: null | Date; // date
   comments?: string;
 }
 
