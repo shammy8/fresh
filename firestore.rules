@@ -1,7 +1,7 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /home/{homeId} {
+    match /homes/{homeId} {
         allow read: if request.auth != null && resource.data.users[request.auth.uid] == true;
         allow write: if true; // TODO
 
@@ -12,3 +12,5 @@ service cloud.firestore {
     }
   }
 }
+
+// firebase deploy --only firestore:rules

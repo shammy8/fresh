@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
       switchMap((params) => {
         this.homeId = params.get('homeId') ?? '';
         const itemsQuery = query(
-          collection(this._firestore, `home/${this.homeId}/items`),
+          collection(this._firestore, `homes/${this.homeId}/items`),
           limit(10)
         );
         return collectionData(itemsQuery, { idField: 'id' });
@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
   async deleteItem(item: Item) {
     if (confirm(`Are you sure you want to delete ${item.name}?`) === true) {
       await deleteDoc(
-        doc(this._firestore, `home/${this.homeId}/items/${item.id}`)
+        doc(this._firestore, `homes/${this.homeId}/items/${item.id}`)
       );
 
       this._snackBar.open('Successfully Deleted Item', 'Close');

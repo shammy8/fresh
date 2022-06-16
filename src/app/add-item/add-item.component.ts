@@ -53,7 +53,7 @@ export class AddItemComponent implements OnInit {
 
     this.disableSubmitButton = true;
     await addDoc(
-      collection(this._firestore, `home/${this._data.homeId}/items`),
+      collection(this._firestore, `homes/${this._data.homeId}/items`),
       this.form.value // TODO remove empty formControls??
     );
 

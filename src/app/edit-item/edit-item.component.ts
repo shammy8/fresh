@@ -57,7 +57,7 @@ export class EditItemComponent implements OnInit {
     await updateDoc(
       doc(
         this._firestore,
-        `home/${this._data.homeId}/items/${this._data.item.id}`
+        `homes/${this._data.homeId}/items/${this._data.item.id}`
       ),
       this.form.value // TODO remove empty formControls??
     );

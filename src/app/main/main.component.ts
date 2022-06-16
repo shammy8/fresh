@@ -79,7 +79,7 @@ export class MainComponent implements OnInit {
     const userId = this._auth.currentUser?.uid;
     if (userId) {
       const homesForUserQuery = query(
-        collection(this._firestore, 'home'),
+        collection(this._firestore, 'homes'),
         where(`users.${userId}`, '==', true)
       );
       //   getDocs(homesForUserQuery).then((homesSnapshot) =>
