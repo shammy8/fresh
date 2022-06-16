@@ -82,11 +82,6 @@ export class MainComponent implements OnInit {
         collection(this._firestore, 'homes'),
         where(`users.${userId}`, '==', true)
       );
-      //   getDocs(homesForUserQuery).then((homesSnapshot) =>
-      //     homesSnapshot.forEach((data) => {
-      //       console.log(data.data());
-      //     })
-      //   );
       // TODO is below type casting correct
       this.homes$ = collectionData(homesForUserQuery, {
         idField: 'id',

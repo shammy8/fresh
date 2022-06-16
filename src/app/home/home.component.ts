@@ -23,13 +23,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'fresh-home',
   template: `
-    <button mat-fab color="primary" (click)="displayAddItemBottomSheet()">
+    <button mat-fab color="primary" (click)="openAddItemBottomSheet()">
       <mat-icon>add</mat-icon>
     </button>
     <fresh-item
       *ngFor="let item of items$ | async"
       [item]="item"
-      (edit)="openEditItem(item)"
+      (edit)="openEditItemBottomSheet(item)"
       (delete)="deleteItem(item)"
     ></fresh-item>
   `,
@@ -67,13 +67,13 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  displayAddItemBottomSheet() {
+  openAddItemBottomSheet() {
     const displayAddItemBottomSheet = this._bottomSheet.open(AddItemComponent, {
       data: { homeId: this.homeId },
     });
   }
 
-  openEditItem(item: Item) {
+  openEditItemBottomSheet(item: Item) {
     const displayEditItemBottomSheet = this._bottomSheet.open(
       EditItemComponent,
       {
@@ -83,13 +83,14 @@ export class HomeComponent implements OnInit {
   }
 
   async deleteItem(item: Item) {
-    if (confirm(`Are you sure you want to delete ${item.name}?`) === true) {
-      await deleteDoc(
-        doc(this._firestore, `homes/${this.homeId}/items/${item.id}`)
-      );
+    if (confirm(`Are you sure you want to delete ${item.name}?`) === false)
+      return;
 
-      this._snackBar.open('Successfully Deleted Item', 'Close');
-      // TODO handle error
-    }
+    await deleteDoc(
+      doc(this._firestore, `homes/${this.homeId}/items/${item.id}`)
+    );
+
+    this._snackBar.open('Successfully Deleted Item', 'Close');
+    // TODO handle error
   }
 }
