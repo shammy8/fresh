@@ -1,6 +1,7 @@
 import { Timestamp } from '@angular/fire/firestore';
 
 export interface Item {
+  id?: string;
   name: string;
   storedIn?: string;
   dateBought?: null | Timestamp; // date
@@ -12,6 +13,7 @@ export interface Item {
 }
 
 // export interface Item {
+//   id?: string;
 //   name: string;
 //   storedIn?: string;
 //   dateBought?: null | Date; // date

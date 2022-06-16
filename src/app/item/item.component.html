@@ -40,13 +40,21 @@
     <span>{{ item.bestBefore.toDate() | date: "mediumDate" }}</span>
   </div>
 
+  <div *ngIf="item.dateBought">
+    <br />
+    Bought on
+    <span>{{ item.dateBought.toDate() | date: "mediumDate" }}</span>
+  </div>
+
   <div *ngIf="item.comments">
     <br />
     <span>{{ item.comments }}</span>
   </div>
 
   <mat-action-row>
-    <button mat-button color="primary" (click)="onDelete()">Delete</button>
-    <button mat-raised-button color="primary" (click)="onEdit()">Edit</button>
+    <button mat-button color="primary" (click)="delete.emit()">Delete</button>
+    <button mat-raised-button color="primary" (click)="edit.emit()">
+      Edit
+    </button>
   </mat-action-row>
 </mat-expansion-panel>

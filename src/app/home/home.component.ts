@@ -12,7 +12,10 @@ import {
   limit,
   query,
 } from '@angular/fire/firestore';
+
 import { AddItemComponent } from '../add-item/add-item.component';
+import { EditItemComponent } from '../edit-item/edit-item.component';
+import { Item } from '../item.interface';
 
 @Component({
   selector: 'fresh-home',
@@ -20,7 +23,12 @@ import { AddItemComponent } from '../add-item/add-item.component';
     <button mat-fab color="primary" (click)="displayAddItemBottomSheet()">
       <mat-icon>add</mat-icon>
     </button>
-    <fresh-item *ngFor="let item of items$ | async" [item]="item"></fresh-item>
+    <fresh-item
+      *ngFor="let item of items$ | async"
+      [item]="item"
+      (edit)="openEditItem(item)"
+      (delete)="deleteItem(item)"
+    ></fresh-item>
   `,
   styles: [
     `
@@ -50,7 +58,7 @@ export class HomeComponent implements OnInit {
           collection(this._firestore, `home/${this.homeId}/items`),
           limit(10)
         );
-        return collectionData(itemsQuery);
+        return collectionData(itemsQuery, { idField: 'id' });
       })
     );
   }
@@ -60,4 +68,15 @@ export class HomeComponent implements OnInit {
       data: { homeId: this.homeId },
     });
   }
+
+  openEditItem(item: Item) {
+    const displayEditItemBottomSheet = this._bottomSheet.open(
+      EditItemComponent,
+      {
+        data: { homeId: this.homeId, item },
+      }
+    );
+  }
+
+  deleteItem(item: Item) {}
 }

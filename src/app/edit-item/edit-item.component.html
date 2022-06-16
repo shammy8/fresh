@@ -1,0 +1,77 @@
+<form [formGroup]="form" (ngSubmit)="onUpdate()">
+  <mat-form-field>
+    <mat-label>Item</mat-label>
+    <input matInput formControlName="name" placeholder="Chicken" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Stored In</mat-label>
+    <input matInput formControlName="storedIn" placeholder="Fridge" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Date Bought</mat-label>
+    <input
+      matInput
+      [matDatepicker]="dateBoughtPicker"
+      formControlName="dateBought"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="dateBoughtPicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #dateBoughtPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Best Before</mat-label>
+    <input
+      matInput
+      [matDatepicker]="bestBeforePicker"
+      formControlName="bestBefore"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="bestBeforePicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #bestBeforePicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Use By</mat-label>
+    <input matInput [matDatepicker]="useByPicker" formControlName="useBy" />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="useByPicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #useByPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>User Defined Date</mat-label>
+    <input
+      matInput
+      [matDatepicker]="userDefinedDatePicker"
+      formControlName="userDefinedDate"
+    />
+    <mat-datepicker-toggle matSuffix [for]="userDefinedDatePicker">
+    </mat-datepicker-toggle>
+    <mat-datepicker #userDefinedDatePicker> </mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Comments</mat-label>
+    <textarea
+      matInput
+      formControlName="comments"
+      placeholder="Move to freezer"
+    ></textarea>
+  </mat-form-field>
+
+  <br />
+
+  <div class="button-container">
+    <button mat-raised-button color="primary" type="submit">Update Item</button>
+    <button mat-button type="button" (click)="closeBottomSheet()">Close</button>
+  </div>
+</form>

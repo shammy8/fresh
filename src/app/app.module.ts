@@ -31,6 +31,7 @@ import { HomeComponent } from './home/home.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ItemComponent } from './item/item.component';
+import { EditItemComponent } from './edit-item/edit-item.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ItemComponent } from './item/item.component';
     HomeComponent,
     AddItemComponent,
     ItemComponent,
+    EditItemComponent,
   ],
   imports: [
     BrowserModule,

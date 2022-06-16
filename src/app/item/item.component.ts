@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { Item } from '../item.interface';
 
@@ -20,11 +20,11 @@ import { Item } from '../item.interface';
 export class ItemComponent implements OnInit {
   @Input() item: Item = { name: '' };
 
+  @Output() delete = new EventEmitter();
+
+  @Output() edit = new EventEmitter();
+
   constructor() {}
 
   ngOnInit(): void {}
-
-  onEdit() {}
-
-  onDelete() {}
 }
