@@ -1,28 +1,44 @@
 import { Timestamp } from '@angular/fire/firestore';
+import { FormControl } from '@angular/forms';
+
+/**
+ * The item Firestore sends the app
+ */
+export interface ItemDto {
+  id?: string;
+  name: string;
+  storedIn: string;
+  dateBought: null | Timestamp;
+  userDefinedDate: null | Timestamp;
+  useBy: null | Timestamp;
+  bestBefore: null | Timestamp;
+  notifyOn: null | Timestamp;
+  comments: string;
+}
 
 export interface Item {
   id?: string;
   name: string;
-  storedIn?: string;
-  dateBought?: null | Timestamp; // date
-  userDefinedDate?: null | Timestamp; // date
-  useBy?: null | Timestamp; // date
-  bestBefore?: null | Timestamp; // date
-  notifyOn?: null | Timestamp; // date
-  comments?: string;
+  storedIn: string;
+  dateBought: null | Date;
+  userDefinedDate: null | Date;
+  useBy: null | Date;
+  bestBefore: null | Date;
+  notifyOn: null | Date;
+  comments: string;
 }
 
-// export interface Item {
-//   id?: string;
-//   name: string;
-//   storedIn?: string;
-//   dateBought?: null | Date; // date
-//   userDefinedDate?: null | Date; // date
-//   useBy?: null | Date | Timestamp; // date
-//   bestBefore?: null | Date; // date
-//   notifyOn?: null | Date; // date
-//   comments?: string;
-// }
+export interface ItemFormGroup {
+  id?: FormControl<string>;
+  name: FormControl<string>;
+  storedIn: FormControl<string>;
+  dateBought: FormControl<null | Date>;
+  userDefinedDate: FormControl<null | Date>;
+  useBy: FormControl<null | Date>;
+  bestBefore: FormControl<null | Date>;
+  notifyOn?: FormControl<null | Date>;
+  comments: FormControl<string | null>;
+}
 
 export interface Home {
   id?: string;

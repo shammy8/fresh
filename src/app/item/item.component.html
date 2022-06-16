@@ -12,38 +12,38 @@
     </mat-panel-title>
     <mat-panel-description>
       <div *ngIf="item.userDefinedDate">
-        {{ item.userDefinedDate.toDate() | date: "mediumDate" }}
+        {{ item.userDefinedDate | date: "mediumDate" }}
       </div>
 
       <div *ngIf="!item.userDefinedDate && item.useBy">
-        {{ item.useBy.toDate() | date: "mediumDate" }}
+        {{ item.useBy | date: "mediumDate" }}
       </div>
 
       <div *ngIf="!item.userDefinedDate && !item.useBy && item.bestBefore">
-        {{ item.bestBefore.toDate() | date: "mediumDate" }}
+        {{ item.bestBefore | date: "mediumDate" }}
       </div>
     </mat-panel-description>
   </mat-expansion-panel-header>
 
   <div *ngIf="item.userDefinedDate">
     User defined date
-    <span>{{ item.userDefinedDate.toDate() | date: "mediumDate" }}</span>
+    <span>{{ item.userDefinedDate | date: "mediumDate" }}</span>
     <!-- TODO add style to above? -->
   </div>
 
   <div *ngIf="item.useBy">
-    Use by <span>{{ item.useBy.toDate() | date: "mediumDate" }}</span>
+    Use by <span>{{ item.useBy | date: "mediumDate" }}</span>
   </div>
 
   <div *ngIf="item.bestBefore">
     Best before
-    <span>{{ item.bestBefore.toDate() | date: "mediumDate" }}</span>
+    <span>{{ item.bestBefore | date: "mediumDate" }}</span>
   </div>
 
   <div *ngIf="item.dateBought">
     <br />
     Bought on
-    <span>{{ item.dateBought.toDate() | date: "mediumDate" }}</span>
+    <span>{{ item.dateBought | date: "mediumDate" }}</span>
   </div>
 
   <div *ngIf="item.comments">

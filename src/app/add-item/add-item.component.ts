@@ -1,13 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
-import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
 } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Item, ItemFormGroup } from '../item.interface';
 
 @Component({
   selector: 'fresh-add-item',
@@ -26,14 +27,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ],
 })
 export class AddItemComponent implements OnInit {
-  form = this._fb.group({
-    name: ['', Validators.required],
-    storedIn: '',
-    dateBought: null as Date | null,
-    bestBefore: null as Date | null,
-    useBy: null as Date | null,
-    userDefinedDate: null as Date | null,
-    comments: '',
+  form = new FormGroup<ItemFormGroup>({
+    name: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    storedIn: new FormControl('', { nonNullable: true }),
+    dateBought: new FormControl(null),
+    bestBefore: new FormControl(null),
+    useBy: new FormControl(null),
+    userDefinedDate: new FormControl(null),
+    comments: new FormControl('', { nonNullable: true }),
   });
 
   disableSubmitButton = false;
@@ -42,7 +46,6 @@ export class AddItemComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private _bottomSheetRef: MatBottomSheetRef<AddItemComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) private _data: { homeId: string },
-    private _fb: NonNullableFormBuilder,
     private _firestore: Firestore
   ) {}
 
@@ -54,7 +57,7 @@ export class AddItemComponent implements OnInit {
     this.disableSubmitButton = true;
     await addDoc(
       collection(this._firestore, `homes/${this._data.homeId}/items`),
-      this.form.value // TODO remove empty formControls??
+      this.form.value
     );
 
     this.form.reset();

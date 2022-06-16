@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { Item } from '../item.interface';
+import { Item, ItemDto } from '../item.interface';
 
 @Component({
   selector: 'fresh-item',
@@ -18,7 +18,16 @@ import { Item } from '../item.interface';
   ],
 })
 export class ItemComponent implements OnInit {
-  @Input() item: Item = { name: '' };
+  @Input() item: Item = {
+    name: '',
+    storedIn: '',
+    dateBought: null,
+    userDefinedDate: null,
+    useBy: null,
+    bestBefore: null,
+    notifyOn: null,
+    comments: '',
+  }; // TODO create a function which does this
 
   @Output() delete = new EventEmitter();
 

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 import { Observable, of, switchMap } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import {
   collection,
@@ -17,8 +18,9 @@ import {
 
 import { AddItemComponent } from '../add-item/add-item.component';
 import { EditItemComponent } from '../edit-item/edit-item.component';
-import { Item } from '../item.interface';
+import { Item, ItemDto } from '../item.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ItemsMapperService } from '../services/items-mapper.service';
 
 @Component({
   selector: 'fresh-home',
@@ -44,14 +46,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ],
 })
 export class HomeComponent implements OnInit {
-  items$: Observable<any> = of([]); // TODO
+  items$: Observable<any> = of([]); // TODO should be observable<Item[]>
   homeId = '';
 
   constructor(
     private _route: ActivatedRoute,
     private _firestore: Firestore,
     private _bottomSheet: MatBottomSheet,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _itemsMapperService: ItemsMapperService
   ) {}
 
   ngOnInit(): void {
@@ -62,8 +65,11 @@ export class HomeComponent implements OnInit {
           collection(this._firestore, `homes/${this.homeId}/items`),
           limit(10)
         );
-        return collectionData(itemsQuery, { idField: 'id' });
-      })
+        return collectionData(itemsQuery, { idField: 'id' }); // TODO how to type the collectionData
+      }),
+      map((items) =>
+        items.map((item) => this._itemsMapperService.fromDto(item as ItemDto))
+      )
     );
   }
 

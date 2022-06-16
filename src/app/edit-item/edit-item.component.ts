@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { doc, Firestore, updateDoc } from '@angular/fire/firestore';
 
@@ -9,7 +9,7 @@ import {
 } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Item } from '../item.interface';
+import { Item, ItemFormGroup } from '../item.interface';
 
 @Component({
   selector: 'fresh-edit-item',
@@ -28,14 +28,17 @@ import { Item } from '../item.interface';
   ],
 })
 export class EditItemComponent implements OnInit {
-  form = this._fb.group({
-    name: ['', Validators.required],
-    storedIn: '',
-    dateBought: null as Date | null,
-    bestBefore: null as Date | null,
-    useBy: null as Date | null,
-    userDefinedDate: null as Date | null,
-    comments: '',
+  form = new FormGroup<ItemFormGroup>({
+    name: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    storedIn: new FormControl('', { nonNullable: true }),
+    dateBought: new FormControl(null),
+    bestBefore: new FormControl(null),
+    useBy: new FormControl(null),
+    userDefinedDate: new FormControl(null),
+    comments: new FormControl('', { nonNullable: true }),
   });
 
   constructor(
@@ -43,12 +46,11 @@ export class EditItemComponent implements OnInit {
     private _bottomSheetRef: MatBottomSheetRef<EditItemComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA)
     private _data: { homeId: string; item: Item },
-    private _fb: NonNullableFormBuilder,
     private _firestore: Firestore
   ) {}
 
   ngOnInit(): void {
-    this.form.patchValue(this._changeTimeStampsToDate(this._data.item) as any);
+    this.form.patchValue(this._data.item);
   }
 
   async onUpdate() {
@@ -59,26 +61,15 @@ export class EditItemComponent implements OnInit {
         this._firestore,
         `homes/${this._data.homeId}/items/${this._data.item.id}`
       ),
-      this.form.value // TODO remove empty formControls??
+      this.form.value
     );
 
     this._snackBar.open('Successfully Updated Item', 'Close');
-    this.closeBottomSheet()
+    this.closeBottomSheet();
     // TODO handle error
   }
 
   closeBottomSheet() {
     this._bottomSheetRef.dismiss();
-  }
-
-  // TODO make a service to change date timestamps to and from js date?
-  private _changeTimeStampsToDate(item: Item) {
-    return {
-      ...item,
-      dateBought: item.dateBought?.toDate() ?? null,
-      userDefinedDate: item.userDefinedDate?.toDate() ?? null,
-      useBy: item.useBy?.toDate() ?? null,
-      bestBefore: item.bestBefore?.toDate() ?? null,
-    };
   }
 }
