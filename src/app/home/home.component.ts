@@ -8,6 +8,8 @@ import { Observable, of, switchMap } from 'rxjs';
 import {
   collection,
   collectionData,
+  deleteDoc,
+  doc,
   Firestore,
   limit,
   query,
@@ -16,6 +18,7 @@ import {
 import { AddItemComponent } from '../add-item/add-item.component';
 import { EditItemComponent } from '../edit-item/edit-item.component';
 import { Item } from '../item.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'fresh-home',
@@ -47,7 +50,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _firestore: Firestore,
-    private _bottomSheet: MatBottomSheet
+    private _bottomSheet: MatBottomSheet,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -78,5 +82,14 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  deleteItem(item: Item) {}
+  async deleteItem(item: Item) {
+    if (confirm(`Are you sure you want to delete ${item.name}?`) === true) {
+      await deleteDoc(
+        doc(this._firestore, `home/${this.homeId}/items/${item.id}`)
+      );
+
+      this._snackBar.open('Successfully Deleted Item', 'Close');
+      // TODO handle error
+    }
+  }
 }
