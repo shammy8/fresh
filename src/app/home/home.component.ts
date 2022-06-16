@@ -46,7 +46,20 @@ import { ItemsMapperService } from '../services/items-mapper.service';
   ],
 })
 export class HomeComponent implements OnInit {
-  items$: Observable<any> = of([]); // TODO should be observable<Item[]>
+  items$ = this._route.paramMap.pipe(
+    switchMap((params) => {
+      this.homeId = params.get('homeId') ?? '';
+      const itemsQuery = query(
+        collection(this._firestore, `homes/${this.homeId}/items`),
+        limit(10)
+      );
+      return collectionData(itemsQuery, { idField: 'id' }) as Observable<
+        ItemDto[]
+      >;
+    }),
+    map((items) => items.map((item) => this._itemsMapperService.fromDto(item)))
+  );
+
   homeId = '';
 
   constructor(
@@ -57,21 +70,7 @@ export class HomeComponent implements OnInit {
     private _itemsMapperService: ItemsMapperService
   ) {}
 
-  ngOnInit(): void {
-    this.items$ = this._route.paramMap.pipe(
-      switchMap((params) => {
-        this.homeId = params.get('homeId') ?? '';
-        const itemsQuery = query(
-          collection(this._firestore, `homes/${this.homeId}/items`),
-          limit(10)
-        );
-        return collectionData(itemsQuery, { idField: 'id' }); // TODO how to type the collectionData
-      }),
-      map((items) =>
-        items.map((item) => this._itemsMapperService.fromDto(item as ItemDto))
-      )
-    );
-  }
+  ngOnInit(): void {}
 
   openAddItemBottomSheet() {
     const displayAddItemBottomSheet = this._bottomSheet.open(AddItemComponent, {
