@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TrackByFunction } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -8,7 +8,6 @@ import {
   BehaviorSubject,
   combineLatest,
   Observable,
-  of,
   switchMap,
 } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -50,7 +49,7 @@ import { QueryItemsComponent } from '../query-items/query-items.component';
       <mat-icon>settings</mat-icon>
     </button>
     <fresh-item
-      *ngFor="let item of items$ | async"
+      *ngFor="let item of items$ | async; trackBy: itemTrackByFn"
       [item]="item"
       (edit)="openEditItemBottomSheet(item)"
       (delete)="deleteItem(item)"
@@ -103,6 +102,8 @@ export class HomeComponent implements OnInit {
   );
 
   homeId = '';
+
+  itemTrackByFn: TrackByFunction<Item> = (index: number, item: Item) => item.id;
 
   constructor(
     private _route: ActivatedRoute,
