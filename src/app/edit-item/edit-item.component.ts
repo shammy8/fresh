@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { doc, Firestore, updateDoc } from '@angular/fire/firestore';
+import { arrayUnion, doc, Firestore, updateDoc } from '@angular/fire/firestore';
 
-import { combineLatest } from 'rxjs';
+import { combineLatest, map } from 'rxjs';
 
 import {
   MatBottomSheetRef,
@@ -44,11 +44,17 @@ export class EditItemComponent implements OnInit {
     comments: new FormControl('', { nonNullable: true }),
   });
 
+  filteredStoredInOptions$ = this.form
+    .get('storedIn')
+    ?.valueChanges.pipe(map((value) => this._filter(value || '')));
+
+  disableSubmitButton = false;
+
   constructor(
     private _snackBar: MatSnackBar,
     private _bottomSheetRef: MatBottomSheetRef<EditItemComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA)
-    private _data: { homeId: string; item: Item },
+    private _data: { homeId: string; item: Item; storedInOptions: string[] },
     private _firestore: Firestore
   ) {}
 
@@ -79,6 +85,16 @@ export class EditItemComponent implements OnInit {
   async onUpdate() {
     if (!this.form.valid) return;
 
+    this.disableSubmitButton = true;
+    const storedInValue = this.form.get('storedIn')!.value;
+
+    // TODO might be better to do a batch write for below two?
+    if (!this._data.storedInOptions.includes(storedInValue)) {
+      await updateDoc(doc(this._firestore, `homes/${this._data.homeId}`), {
+        storage: arrayUnion(storedInValue),
+      });
+    }
+
     await updateDoc(
       doc(
         this._firestore,
@@ -94,5 +110,12 @@ export class EditItemComponent implements OnInit {
 
   closeBottomSheet() {
     this._bottomSheetRef.dismiss();
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this._data.storedInOptions.filter((option) =>
+      option.toLowerCase().includes(filterValue)
+    );
   }
 }

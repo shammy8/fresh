@@ -134,7 +134,11 @@ export class HomeComponent implements OnInit {
 
   openEditItemBottomSheet(item: Item) {
     const bottomSheetRef = this._bottomSheet.open(EditItemComponent, {
-      data: { homeId: this.homeId, item },
+      data: {
+        homeId: this.homeId,
+        item,
+        storedInOptions: this._homeService.getStorageFromHome(this.homeId),
+      },
     });
   }
 

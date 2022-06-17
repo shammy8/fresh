@@ -2,9 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 
 import {
   addDoc,
+  arrayUnion,
   collection,
+  doc,
   Firestore,
   serverTimestamp,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -92,14 +95,24 @@ export class AddItemComponent implements OnInit {
     if (!this.form.valid) return;
 
     this.disableSubmitButton = true;
+    const storedInValue = this.form.get('storedIn')!.value;
+
+    // TODO might be better to do a batch write for below two?
+    if (!this._data.storedInOptions.includes(storedInValue)) {
+      await updateDoc(doc(this._firestore, `homes/${this._data.homeId}`), {
+        storage: arrayUnion(storedInValue),
+      });
+    }
+
     await addDoc(
       collection(this._firestore, `homes/${this._data.homeId}/items`),
       { ...this.form.getRawValue(), createdAt: serverTimestamp() }
     );
 
-    this.form.reset();
+    // this.form.reset();
     this._snackBar.open('Successfully Added Item', 'Close');
-    setTimeout(() => (this.disableSubmitButton = false), 3000); // stops user constantly adding items
+    this.closeBottomSheet();
+    // setTimeout(() => (this.disableSubmitButton = false), 3000); // stops user constantly adding items
     // TODO handle error
   }
 

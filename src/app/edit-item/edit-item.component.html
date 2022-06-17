@@ -6,7 +6,20 @@
 
   <mat-form-field>
     <mat-label>Stored In</mat-label>
-    <input matInput formControlName="storedIn" placeholder="Fridge" />
+    <input
+      type="text"
+      matInput
+      formControlName="storedIn"
+      [matAutocomplete]="storedInAuto"
+    />
+    <mat-autocomplete autoActiveFirstOption #storedInAuto="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredStoredInOptions$ | async"
+        [value]="option"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field>
@@ -81,7 +94,14 @@
   <br />
 
   <div class="button-container">
-    <button mat-raised-button color="primary" type="submit">Update Item</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="disableSubmitButton"
+    >
+      Update Item
+    </button>
     <button mat-button type="button" (click)="closeBottomSheet()">Close</button>
   </div>
 </form>
