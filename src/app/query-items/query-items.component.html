@@ -1,11 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="onApply()">
-  <!-- <mat-form-field>
-    <mat-label>Sort</mat-label>
-    <input matInput formControlName="sortBy" placeholder="TODO JjChicken" />
-  </mat-form-field> -->
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" placeholder="Chicken" />
+  </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Sort</mat-label>
+    <mat-label>Sort By</mat-label>
     <mat-select formControlName="sortBy">
       <mat-option *ngFor="let sort of sortOptions" [value]="sort.value">
         {{ sort.label }}

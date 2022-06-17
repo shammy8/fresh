@@ -72,19 +72,29 @@ import { QueryItemsComponent } from '../query-items/query-items.component';
   ],
 })
 export class HomeComponent implements OnInit {
-  query$ = new BehaviorSubject<QueryItems>({ sortBy: 'createdAt', sortOrder: 'desc' });
+  query$ = new BehaviorSubject<QueryItems>({
+    name: '',
+    sortBy: 'createdAt',
+    sortOrder: 'desc',
+  });
 
+  // TODO move to service
   items$ = combineLatest([this._route.paramMap, this.query$]).pipe(
     switchMap(([params, queryOptions]) => {
       this.homeId = params.get('homeId') ?? '';
+
+      const queryCondition =
+        queryOptions.name !== ''
+          ? [where('name', '==', queryOptions.name)]
+          : [];
+
       const itemsQuery = query(
         collection(this._firestore, `homes/${this.homeId}/items`),
-        // TODO move to service
-        // where('name', '==', 'Pork'),
-        // where('storedIn', '==', 'Fridge'),
+        ...queryCondition,
         orderBy(queryOptions.sortBy, queryOptions.sortOrder),
         limit(50)
       );
+
       return collectionData(itemsQuery, { idField: 'id' }) as Observable<
         ItemDto[]
       >;

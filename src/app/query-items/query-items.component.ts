@@ -26,6 +26,7 @@ import { QueryItems, QueryItemsFormGroup } from '../item.interface';
 })
 export class QueryItemsComponent implements OnInit {
   form = new FormGroup<QueryItemsFormGroup>({
+    name: new FormControl('', { nonNullable: true }),
     sortBy: new FormControl('createdAt', { nonNullable: true }),
     sortOrder: new FormControl('desc', { nonNullable: true }),
   });
