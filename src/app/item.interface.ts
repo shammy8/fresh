@@ -47,12 +47,14 @@ export interface ItemFormGroup {
 
 export interface QueryItemsFormGroup {
   name: FormControl<string>;
+  storedIn: FormControl<string[]>;
   sortBy: FormControl<string>;
   sortOrder: FormControl<'asc' | 'desc'>;
 }
 
 export interface QueryItems {
   name: string;
+  storedIn: string[];
   sortBy: string;
   sortOrder: 'asc' | 'desc';
 }

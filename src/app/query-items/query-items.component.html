@@ -5,6 +5,17 @@
   </mat-form-field>
 
   <mat-form-field>
+    <mat-label>Stored In</mat-label>
+    <mat-select formControlName="storedIn" multiple>
+      <mat-option
+        *ngFor="let option of data.storedInOptions"
+        [value]="option"
+        >{{ option }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
     <mat-label>Sort By</mat-label>
     <mat-select formControlName="sortBy">
       <mat-option *ngFor="let sort of sortOptions" [value]="sort.value">

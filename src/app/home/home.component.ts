@@ -42,7 +42,7 @@ import { HomeService } from '../services/home.service';
       class="query-button"
       (click)="openQueryItemsBottomSheet()"
     >
-      <mat-icon>settings</mat-icon>
+      <mat-icon>search</mat-icon>
     </button>
     <fresh-item
       *ngFor="let item of items$ | async; trackBy: itemTrackByFn"
@@ -69,6 +69,7 @@ import { HomeService } from '../services/home.service';
 export class HomeComponent implements OnInit {
   query$ = new BehaviorSubject<QueryItems>({
     name: '',
+    storedIn: [],
     sortBy: 'createdAt',
     sortOrder: 'desc',
   });
@@ -78,14 +79,22 @@ export class HomeComponent implements OnInit {
     switchMap(([params, queryOptions]) => {
       this.homeId = params.get('homeId') ?? '';
 
+      console.log(queryOptions);
+
       const queryCondition =
         queryOptions.name !== ''
           ? [where('name', '==', queryOptions.name)]
           : [];
 
+      const queryCondition2 =
+        queryOptions.storedIn.length > 0
+          ? [where('storedIn', 'in', queryOptions.storedIn)] // TODO this only allows 10 elements in the array
+          : [];
+
       const itemsQuery = query(
         collection(this._firestore, `homes/${this.homeId}/items`),
         ...queryCondition,
+        ...queryCondition2,
         orderBy(queryOptions.sortBy, queryOptions.sortOrder),
         limit(50)
       );
@@ -114,7 +123,10 @@ export class HomeComponent implements OnInit {
 
   openQueryItemsBottomSheet() {
     const bottomSheetRef = this._bottomSheet.open(QueryItemsComponent, {
-      data: { currentQuery: this.query$.getValue() },
+      data: {
+        currentQuery: this.query$.getValue(),
+        storedInOptions: this._homeService.getStorageFromHome(this.homeId),
+      },
     });
     // TODO unsubscribe
     bottomSheetRef.afterDismissed().subscribe((data: QueryItems) => {
