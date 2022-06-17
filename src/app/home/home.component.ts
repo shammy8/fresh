@@ -22,7 +22,7 @@ import {
 import { AddItemComponent } from '../add-item/add-item.component';
 import { EditItemComponent } from '../edit-item/edit-item.component';
 import { Item, ItemDto, QueryItems } from '../item.interface';
-import { ItemsMapperService } from '../services/items-mapper.service';
+import { ItemService } from '../services/item.service';
 import { QueryItemsComponent } from '../query-items/query-items.component';
 import { HomeService } from '../services/home.service';
 
@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
         ItemDto[]
       >;
     }),
-    map((items) => items.map((item) => this._itemsMapperService.fromDto(item)))
+    map((items) => items.map((item) => this._itemService.fromDto(item)))
   );
 
   homeId = '';
@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit {
     private _bottomSheet: MatBottomSheet,
     private _snackBar: MatSnackBar,
     private _homeService: HomeService,
-    private _itemsMapperService: ItemsMapperService
+    private _itemService: ItemService
   ) {}
 
   ngOnInit(): void {}

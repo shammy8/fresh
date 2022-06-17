@@ -5,7 +5,7 @@ import { Item, ItemDto } from '../item.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class ItemsMapperService {
+export class ItemService {
   fromDto(itemDto: ItemDto): Item {
     return {
       id: itemDto.id,

@@ -65,6 +65,7 @@ export class AddItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // TODO unsubscribe
     combineLatest([
       this.form.get('bestBefore')!.valueChanges.pipe(startWith(null)),
       this.form.get('useBy')!.valueChanges.pipe(startWith(null)),
@@ -86,6 +87,7 @@ export class AddItemComponent implements OnInit {
     });
   }
 
+  // TODO move to item service
   async onAdd() {
     if (!this.form.valid) return;
 
