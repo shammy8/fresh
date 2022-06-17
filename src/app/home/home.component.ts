@@ -27,7 +27,7 @@ import {
 
 import { AddItemComponent } from '../add-item/add-item.component';
 import { EditItemComponent } from '../edit-item/edit-item.component';
-import { Item, ItemDto } from '../item.interface';
+import { Item, ItemDto, QueryItems } from '../item.interface';
 import { ItemsMapperService } from '../services/items-mapper.service';
 import { QueryItemsComponent } from '../query-items/query-items.component';
 
@@ -72,7 +72,7 @@ import { QueryItemsComponent } from '../query-items/query-items.component';
   ],
 })
 export class HomeComponent implements OnInit {
-  query$ = new BehaviorSubject<any>({ sortBy: 'createdAt', sortOrder: 'desc' }); // TODO type
+  query$ = new BehaviorSubject<QueryItems>({ sortBy: 'createdAt', sortOrder: 'desc' });
 
   items$ = combineLatest([this._route.paramMap, this.query$]).pipe(
     switchMap(([params, queryOptions]) => {
@@ -106,10 +106,10 @@ export class HomeComponent implements OnInit {
 
   openQueryItemsBottomSheet() {
     const bottomSheetRef = this._bottomSheet.open(QueryItemsComponent, {
-      data: { homeId: this.homeId }, // TODO
+      data: { currentQuery: this.query$.getValue() },
     });
     // TODO unsubscribe
-    bottomSheetRef.afterDismissed().subscribe((data) => {
+    bottomSheetRef.afterDismissed().subscribe((data: QueryItems) => {
       if (!data) return;
       this.query$.next(data);
     });

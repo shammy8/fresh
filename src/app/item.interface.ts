@@ -45,6 +45,16 @@ export interface ItemFormGroup {
   comments: FormControl<string | null>;
 }
 
+export interface QueryItemsFormGroup {
+  sortBy: FormControl<string>;
+  sortOrder: FormControl<'asc' | 'desc'>;
+}
+
+export interface QueryItems {
+  sortBy: string;
+  sortOrder: 'asc' | 'desc';
+}
+
 export interface Home {
   id?: string;
   name: string;

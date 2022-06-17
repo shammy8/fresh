@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import {
+  MatBottomSheetRef,
+  MAT_BOTTOM_SHEET_DATA,
+} from '@angular/material/bottom-sheet';
+
+import { QueryItems, QueryItemsFormGroup } from '../item.interface';
 
 @Component({
   selector: 'fresh-query-items',
@@ -34,10 +39,13 @@ export class QueryItemsComponent implements OnInit {
   ];
 
   constructor(
-    private _bottomSheetRef: MatBottomSheetRef<QueryItemsComponent>
+    private _bottomSheetRef: MatBottomSheetRef<QueryItemsComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) private _data: { currentQuery: QueryItems }
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.form.setValue(this._data.currentQuery);
+  }
 
   onApply() {
     this._bottomSheetRef.dismiss(this.form.value);
@@ -46,9 +54,4 @@ export class QueryItemsComponent implements OnInit {
   closeBottomSheet() {
     this._bottomSheetRef.dismiss();
   }
-}
-
-interface QueryItemsFormGroup {
-  sortBy: FormControl<string>;
-  sortOrder: FormControl<'asc' | 'desc'>;
 }
