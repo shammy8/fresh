@@ -1,17 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Auth } from '@angular/fire/auth';
-import {
-  collection,
-  collectionData,
-  DocumentData,
-  Firestore,
-  query,
-  where,
-} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+
 import { Observable, of } from 'rxjs';
+
 import { Home } from '../item.interface';
+import { HomeService } from '../services/home.service';
 
 @Component({
   selector: 'fresh-main',
@@ -70,27 +65,15 @@ import { Home } from '../item.interface';
   ],
 })
 export class MainComponent implements OnInit {
-  homes$: Observable<Home[]> = of([]);
+  homes$: Observable<Home[]> = this._homeService.fetchHomes();
 
   constructor(
     private _router: Router,
     private _auth: Auth,
-    private _firestore: Firestore
+    private _homeService: HomeService
   ) {}
 
-  ngOnInit(): void {
-    const userId = this._auth.currentUser?.uid;
-    if (userId) {
-      const homesForUserQuery = query(
-        collection(this._firestore, 'homes'),
-        where(`users.${userId}`, '==', true)
-      );
-      // TODO is below type casting correct
-      this.homes$ = collectionData(homesForUserQuery, {
-        idField: 'id',
-      }) as Observable<Home[]>;
-    }
-  }
+  ngOnInit(): void {}
 
   logout() {
     this._auth.signOut().then(() => {

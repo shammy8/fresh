@@ -8,7 +8,7 @@ import {
 } from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { combineLatest, startWith } from 'rxjs';
+import { combineLatest, map, startWith } from 'rxjs';
 
 import {
   MatBottomSheetRef,
@@ -49,12 +49,18 @@ export class AddItemComponent implements OnInit {
     comments: new FormControl('', { nonNullable: true }),
   });
 
+  filteredStoredInOptions$ = this.form.get('storedIn')?.valueChanges.pipe(
+    startWith(''),
+    map((value) => this._filter(value || ''))
+  );
+
   disableSubmitButton = false;
 
   constructor(
     private _snackBar: MatSnackBar,
     private _bottomSheetRef: MatBottomSheetRef<AddItemComponent>,
-    @Inject(MAT_BOTTOM_SHEET_DATA) private _data: { homeId: string },
+    @Inject(MAT_BOTTOM_SHEET_DATA)
+    private _data: { homeId: string; storedInOptions: string[] },
     private _firestore: Firestore
   ) {}
 
@@ -97,5 +103,12 @@ export class AddItemComponent implements OnInit {
 
   closeBottomSheet() {
     this._bottomSheetRef.dismiss();
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this._data.storedInOptions.filter((option) =>
+      option.toLowerCase().includes(filterValue)
+    );
   }
 }

@@ -4,12 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import {
-  BehaviorSubject,
-  combineLatest,
-  Observable,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, switchMap } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import {
@@ -29,6 +24,7 @@ import { EditItemComponent } from '../edit-item/edit-item.component';
 import { Item, ItemDto, QueryItems } from '../item.interface';
 import { ItemsMapperService } from '../services/items-mapper.service';
 import { QueryItemsComponent } from '../query-items/query-items.component';
+import { HomeService } from '../services/home.service';
 
 @Component({
   selector: 'fresh-home',
@@ -110,6 +106,7 @@ export class HomeComponent implements OnInit {
     private _firestore: Firestore,
     private _bottomSheet: MatBottomSheet,
     private _snackBar: MatSnackBar,
+    private _homeService: HomeService,
     private _itemsMapperService: ItemsMapperService
   ) {}
 
@@ -128,7 +125,10 @@ export class HomeComponent implements OnInit {
 
   openAddItemBottomSheet() {
     const bottomSheetRef = this._bottomSheet.open(AddItemComponent, {
-      data: { homeId: this.homeId },
+      data: {
+        homeId: this.homeId,
+        storedInOptions: this._homeService.getStorageFromHome(this.homeId),
+      },
     });
   }
 
