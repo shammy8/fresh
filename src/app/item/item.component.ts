@@ -27,6 +27,7 @@ export class ItemComponent implements OnInit {
     useBy: null,
     bestBefore: null,
     notifyOn: null,
+    createdAt: null,
     comments: '',
   }; // TODO create a function which does this
 

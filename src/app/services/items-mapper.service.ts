@@ -17,6 +17,7 @@ export class ItemsMapperService {
       useBy: itemDto.useBy?.toDate() ?? null,
       bestBefore: itemDto.bestBefore?.toDate() ?? null,
       notifyOn: itemDto.notifyOn?.toDate() ?? null,
+      createdAt: itemDto.createdAt?.toDate() ?? null,
       comments: itemDto.comments,
     };
   }

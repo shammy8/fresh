@@ -14,6 +14,7 @@ export interface ItemDto {
   useBy: null | Timestamp;
   bestBefore: null | Timestamp;
   notifyOn: null | Timestamp;
+  createdAt: null | Timestamp;
   comments: string;
 }
 
@@ -27,6 +28,7 @@ export interface Item {
   useBy: null | Date;
   bestBefore: null | Date;
   notifyOn: null | Date;
+  createdAt: null | Date;
   comments: string;
 }
 

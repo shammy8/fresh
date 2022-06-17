@@ -1,6 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import {
+  addDoc,
+  collection,
+  Firestore,
+  serverTimestamp,
+} from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { combineLatest, startWith } from 'rxjs';
@@ -81,7 +86,7 @@ export class AddItemComponent implements OnInit {
     this.disableSubmitButton = true;
     await addDoc(
       collection(this._firestore, `homes/${this._data.homeId}/items`),
-      this.form.getRawValue()
+      { ...this.form.getRawValue(), createdAt: serverTimestamp() }
     );
 
     this.form.reset();

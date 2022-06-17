@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit {
         // TODO move to service
         // where('name', '==', 'Pork'),
         // where('storedIn', '==', 'Fridge'),
-        // orderBy('useBy', 'asc' /* or desc */),
+        orderBy('createdAt', 'desc'),
         limit(10)
       );
       return collectionData(itemsQuery, { idField: 'id' }) as Observable<
