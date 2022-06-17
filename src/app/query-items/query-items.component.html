@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="onApply()">
+  <!-- <mat-form-field>
+    <mat-label>Sort</mat-label>
+    <input matInput formControlName="sortBy" placeholder="TODO JjChicken" />
+  </mat-form-field> -->
+
+  <mat-form-field>
+    <mat-label>Sort</mat-label>
+    <mat-select formControlName="sortBy">
+      <mat-option *ngFor="let sort of sortOptions" [value]="sort.value">
+        {{ sort.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-radio-group formControlName="sortOrder">
+    <mat-radio-button value="asc">Asc</mat-radio-button>
+    <mat-radio-button value="desc">Desc</mat-radio-button>
+  </mat-radio-group>
+
+  <div class="button-container">
+    <button mat-raised-button color="primary" type="submit">Apply</button>
+    <button mat-button type="button" (click)="closeBottomSheet()">Close</button>
+  </div>
+</form>

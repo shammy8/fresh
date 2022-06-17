@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable, of, switchMap } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -14,19 +15,33 @@ import {
   Firestore,
   limit,
   query,
+  orderBy,
+  where,
 } from '@angular/fire/firestore';
 
 import { AddItemComponent } from '../add-item/add-item.component';
 import { EditItemComponent } from '../edit-item/edit-item.component';
 import { Item, ItemDto } from '../item.interface';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ItemsMapperService } from '../services/items-mapper.service';
+import { QueryItemsComponent } from '../query-items/query-items.component';
 
 @Component({
   selector: 'fresh-home',
   template: `
-    <button mat-fab color="primary" (click)="openAddItemBottomSheet()">
+    <button
+      mat-fab
+      color="primary"
+      class="add-item-button"
+      (click)="openAddItemBottomSheet()"
+    >
       <mat-icon>add</mat-icon>
+    </button>
+    <button
+      mat-mini-fab
+      class="query-button"
+      (click)="openQueryItemsBottomSheet()"
+    >
+      <mat-icon>settings</mat-icon>
     </button>
     <fresh-item
       *ngFor="let item of items$ | async"
@@ -37,10 +52,15 @@ import { ItemsMapperService } from '../services/items-mapper.service';
   `,
   styles: [
     `
-      [mat-fab] {
+      .add-item-button {
         position: fixed;
         bottom: 20px;
         right: 20px;
+      }
+      .query-button {
+        position: fixed;
+        bottom: 85px;
+        right: 30px;
       }
     `,
   ],
@@ -51,6 +71,10 @@ export class HomeComponent implements OnInit {
       this.homeId = params.get('homeId') ?? '';
       const itemsQuery = query(
         collection(this._firestore, `homes/${this.homeId}/items`),
+        // TODO move to service
+        // where('name', '==', 'Pork'),
+        // where('storedIn', '==', 'Fridge'),
+        // orderBy('useBy', 'asc' /* or desc */),
         limit(10)
       );
       return collectionData(itemsQuery, { idField: 'id' }) as Observable<
@@ -72,19 +96,26 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  openQueryItemsBottomSheet() {
+    const bottomSheetRef = this._bottomSheet.open(QueryItemsComponent, {
+      data: { homeId: this.homeId }, // TODO
+    });
+    // TODO unsubscribe
+    bottomSheetRef.afterDismissed().subscribe((data) => {
+      console.log(data);
+    });
+  }
+
   openAddItemBottomSheet() {
-    const displayAddItemBottomSheet = this._bottomSheet.open(AddItemComponent, {
+    const bottomSheetRef = this._bottomSheet.open(AddItemComponent, {
       data: { homeId: this.homeId },
     });
   }
 
   openEditItemBottomSheet(item: Item) {
-    const displayEditItemBottomSheet = this._bottomSheet.open(
-      EditItemComponent,
-      {
-        data: { homeId: this.homeId, item },
-      }
-    );
+    const bottomSheetRef = this._bottomSheet.open(EditItemComponent, {
+      data: { homeId: this.homeId, item },
+    });
   }
 
   async deleteItem(item: Item) {

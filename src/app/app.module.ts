@@ -17,6 +17,8 @@ import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -32,6 +34,7 @@ import { AddItemComponent } from './add-item/add-item.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ItemComponent } from './item/item.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
+import { QueryItemsComponent } from './query-items/query-items.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +45,7 @@ import { EditItemComponent } from './edit-item/edit-item.component';
     AddItemComponent,
     ItemComponent,
     EditItemComponent,
+    QueryItemsComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +64,8 @@ import { EditItemComponent } from './edit-item/edit-item.component';
     MatNativeDateModule,
     MatSnackBarModule,
     MatExpansionModule,
+    MatRadioModule,
+    MatSelectModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
