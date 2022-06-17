@@ -21,8 +21,8 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 })
 export class QueryItemsComponent implements OnInit {
   form = new FormGroup<QueryItemsFormGroup>({
-    sortBy: new FormControl('', { nonNullable: true }),
-    sortOrder: new FormControl('asc', { nonNullable: true }),
+    sortBy: new FormControl('createdAt', { nonNullable: true }),
+    sortOrder: new FormControl('desc', { nonNullable: true }),
   });
 
   sortOptions = [
@@ -30,6 +30,7 @@ export class QueryItemsComponent implements OnInit {
     { label: 'Best Before', value: 'bestBefore' },
     { label: 'Use By', value: 'useBy' },
     { label: 'User Defined Use By', value: 'userDefinedDate' },
+    { label: 'Order Added', value: 'createdAt' },
   ];
 
   constructor(

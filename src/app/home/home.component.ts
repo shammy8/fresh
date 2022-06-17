@@ -4,7 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Observable, of, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  of,
+  switchMap,
+} from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import {
@@ -66,16 +72,18 @@ import { QueryItemsComponent } from '../query-items/query-items.component';
   ],
 })
 export class HomeComponent implements OnInit {
-  items$ = this._route.paramMap.pipe(
-    switchMap((params) => {
+  query$ = new BehaviorSubject<any>({ sortBy: 'createdAt', sortOrder: 'desc' }); // TODO type
+
+  items$ = combineLatest([this._route.paramMap, this.query$]).pipe(
+    switchMap(([params, queryOptions]) => {
       this.homeId = params.get('homeId') ?? '';
       const itemsQuery = query(
         collection(this._firestore, `homes/${this.homeId}/items`),
         // TODO move to service
         // where('name', '==', 'Pork'),
         // where('storedIn', '==', 'Fridge'),
-        orderBy('createdAt', 'desc'),
-        limit(10)
+        orderBy(queryOptions.sortBy, queryOptions.sortOrder),
+        limit(50)
       );
       return collectionData(itemsQuery, { idField: 'id' }) as Observable<
         ItemDto[]
@@ -102,7 +110,8 @@ export class HomeComponent implements OnInit {
     });
     // TODO unsubscribe
     bottomSheetRef.afterDismissed().subscribe((data) => {
-      console.log(data);
+      if (!data) return;
+      this.query$.next(data);
     });
   }
 
