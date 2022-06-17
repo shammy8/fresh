@@ -22,6 +22,7 @@ export class ItemComponent implements OnInit {
     name: '',
     storedIn: '',
     dateBought: null,
+    chiefDate: null,
     userDefinedDate: null,
     useBy: null,
     bestBefore: null,

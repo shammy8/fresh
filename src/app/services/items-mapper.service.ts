@@ -12,6 +12,7 @@ export class ItemsMapperService {
       name: itemDto.name,
       storedIn: itemDto.storedIn,
       dateBought: itemDto.dateBought?.toDate() ?? null,
+      chiefDate: itemDto.chiefDate?.toDate() ?? null,
       userDefinedDate: itemDto.userDefinedDate?.toDate() ?? null,
       useBy: itemDto.useBy?.toDate() ?? null,
       bestBefore: itemDto.bestBefore?.toDate() ?? null,

@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { doc, Firestore, updateDoc } from '@angular/fire/firestore';
 
+import { combineLatest } from 'rxjs';
+
 import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
@@ -34,10 +36,11 @@ export class EditItemComponent implements OnInit {
       validators: Validators.required,
     }),
     storedIn: new FormControl('', { nonNullable: true }),
-    dateBought: new FormControl(null),
-    bestBefore: new FormControl(null),
-    useBy: new FormControl(null),
-    userDefinedDate: new FormControl(null),
+    dateBought: new FormControl(null, { updateOn: 'blur' }),
+    bestBefore: new FormControl(null, { updateOn: 'blur' }),
+    useBy: new FormControl(null, { updateOn: 'blur' }),
+    userDefinedDate: new FormControl(null, { updateOn: 'blur' }),
+    chiefDate: new FormControl({ value: null, disabled: true }),
     comments: new FormControl('', { nonNullable: true }),
   });
 
@@ -50,6 +53,26 @@ export class EditItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    combineLatest([
+      this.form.get('bestBefore')!.valueChanges,
+      this.form.get('useBy')!.valueChanges,
+      this.form.get('userDefinedDate')!.valueChanges,
+    ]).subscribe(([bestBefore, useBy, userDefinedDate]) => {
+      if (userDefinedDate) {
+        this.form.get('chiefDate')?.patchValue(userDefinedDate);
+        return;
+      }
+      if (!userDefinedDate && useBy) {
+        this.form.get('chiefDate')?.patchValue(useBy);
+        return;
+      }
+      if (!userDefinedDate && !useBy && bestBefore) {
+        this.form.get('chiefDate')?.patchValue(bestBefore);
+        return;
+      }
+      this.form.get('chiefDate')?.patchValue(null);
+    });
+
     this.form.patchValue(this._data.item);
   }
 
@@ -61,7 +84,7 @@ export class EditItemComponent implements OnInit {
         this._firestore,
         `homes/${this._data.homeId}/items/${this._data.item.id}`
       ),
-      this.form.value
+      this.form.getRawValue()
     );
 
     this._snackBar.open('Successfully Updated Item', 'Close');

@@ -60,6 +60,16 @@
   </mat-form-field>
 
   <mat-form-field>
+    <mat-label>Chief Date</mat-label>
+    <input
+      matInput
+      [matDatepicker]="chiefDatePicker"
+      formControlName="chiefDate"
+    />
+    <mat-datepicker #chiefDatePicker> </mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
     <mat-label>Comments</mat-label>
     <textarea
       matInput

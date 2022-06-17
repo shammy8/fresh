@@ -9,6 +9,7 @@ export interface ItemDto {
   name: string;
   storedIn: string;
   dateBought: null | Timestamp;
+  chiefDate: null | Timestamp;
   userDefinedDate: null | Timestamp;
   useBy: null | Timestamp;
   bestBefore: null | Timestamp;
@@ -21,6 +22,7 @@ export interface Item {
   name: string;
   storedIn: string;
   dateBought: null | Date;
+  chiefDate: null | Date;
   userDefinedDate: null | Date;
   useBy: null | Date;
   bestBefore: null | Date;
@@ -33,6 +35,7 @@ export interface ItemFormGroup {
   name: FormControl<string>;
   storedIn: FormControl<string>;
   dateBought: FormControl<null | Date>;
+  chiefDate: FormControl<null | Date>;
   userDefinedDate: FormControl<null | Date>;
   useBy: FormControl<null | Date>;
   bestBefore: FormControl<null | Date>;

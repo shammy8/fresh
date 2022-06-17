@@ -3,12 +3,15 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { combineLatest, startWith } from 'rxjs';
+
 import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
 } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Item, ItemFormGroup } from '../item.interface';
+
+import { ItemFormGroup } from '../item.interface';
 
 @Component({
   selector: 'fresh-add-item',
@@ -33,10 +36,11 @@ export class AddItemComponent implements OnInit {
       validators: Validators.required,
     }),
     storedIn: new FormControl('', { nonNullable: true }),
-    dateBought: new FormControl(null),
-    bestBefore: new FormControl(null),
-    useBy: new FormControl(null),
-    userDefinedDate: new FormControl(null),
+    dateBought: new FormControl(null, { updateOn: 'blur' }),
+    bestBefore: new FormControl(null, { updateOn: 'blur' }),
+    useBy: new FormControl(null, { updateOn: 'blur' }),
+    userDefinedDate: new FormControl(null, { updateOn: 'blur' }),
+    chiefDate: new FormControl({ value: null, disabled: true }),
     comments: new FormControl('', { nonNullable: true }),
   });
 
@@ -49,7 +53,27 @@ export class AddItemComponent implements OnInit {
     private _firestore: Firestore
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    combineLatest([
+      this.form.get('bestBefore')!.valueChanges.pipe(startWith(null)),
+      this.form.get('useBy')!.valueChanges.pipe(startWith(null)),
+      this.form.get('userDefinedDate')!.valueChanges.pipe(startWith(null)),
+    ]).subscribe(([bestBefore, useBy, userDefinedDate]) => {
+      if (userDefinedDate) {
+        this.form.get('chiefDate')?.patchValue(userDefinedDate);
+        return;
+      }
+      if (!userDefinedDate && useBy) {
+        this.form.get('chiefDate')?.patchValue(useBy);
+        return;
+      }
+      if (!userDefinedDate && !useBy && bestBefore) {
+        this.form.get('chiefDate')?.patchValue(bestBefore);
+        return;
+      }
+      this.form.get('chiefDate')?.patchValue(null);
+    });
+  }
 
   async onAdd() {
     if (!this.form.valid) return;
@@ -57,7 +81,7 @@ export class AddItemComponent implements OnInit {
     this.disableSubmitButton = true;
     await addDoc(
       collection(this._firestore, `homes/${this._data.homeId}/items`),
-      this.form.value
+      this.form.getRawValue()
     );
 
     this.form.reset();

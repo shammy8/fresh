@@ -47,6 +47,9 @@ import { Home } from '../item.interface';
   `,
   styles: [
     `
+      mat-icon {
+        cursor: pointer;
+      }
       h1 {
         margin-left: 10px;
       }

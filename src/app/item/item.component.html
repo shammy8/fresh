@@ -11,16 +11,8 @@
       </div>
     </mat-panel-title>
     <mat-panel-description>
-      <div *ngIf="item.userDefinedDate">
-        {{ item.userDefinedDate | date: "mediumDate" }}
-      </div>
-
-      <div *ngIf="!item.userDefinedDate && item.useBy">
-        {{ item.useBy | date: "mediumDate" }}
-      </div>
-
-      <div *ngIf="!item.userDefinedDate && !item.useBy && item.bestBefore">
-        {{ item.bestBefore | date: "mediumDate" }}
+      <div *ngIf="item.chiefDate">
+        {{ item.chiefDate | date: "mediumDate" }}
       </div>
     </mat-panel-description>
   </mat-expansion-panel-header>
