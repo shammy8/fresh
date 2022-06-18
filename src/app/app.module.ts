@@ -11,7 +11,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import {
   MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
@@ -77,6 +77,7 @@ import { QueryItemsComponent } from './query-items/query-items.component';
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
       useValue: { duration: 3000, verticalPosition: 'top' },
     },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
   ],
   bootstrap: [AppComponent],
 })
