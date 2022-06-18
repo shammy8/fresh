@@ -92,6 +92,8 @@ export class EditItemComponent implements OnInit, OnDestroy {
     this.disableSubmitButton = true;
     const storedInValue = this.form.get('storedIn')!.value;
 
+    this.closeBottomSheet();
+
     try {
       await this._itemService.updateItem(
         storedInValue,
@@ -102,7 +104,6 @@ export class EditItemComponent implements OnInit, OnDestroy {
       );
 
       this._snackBar.open('Successfully Updated Item', 'Close');
-      this.closeBottomSheet();
     } catch (error) {
       console.error(error);
       this._snackBar.open('Error Updating Item', 'Close');
