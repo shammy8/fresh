@@ -18,23 +18,23 @@
   </mat-expansion-panel-header>
 
   <div *ngIf="item.userDefinedDate">
-    User defined date
+    <span class="date-title-text"> User defined date </span>
     <span>{{ item.userDefinedDate | date: "mediumDate" }}</span>
-    <!-- TODO add style to above? -->
   </div>
 
   <div *ngIf="item.useBy">
-    Use by <span>{{ item.useBy | date: "mediumDate" }}</span>
+    <span class="date-title-text">Use by</span>
+    <span>{{ item.useBy | date: "mediumDate" }}</span>
   </div>
 
   <div *ngIf="item.bestBefore">
-    Best before
+    <span class="date-title-text"> Best before </span>
     <span>{{ item.bestBefore | date: "mediumDate" }}</span>
   </div>
 
   <div *ngIf="item.dateBought">
     <br />
-    Bought on
+    <span class="date-title-text">Bought on </span>
     <span>{{ item.dateBought | date: "mediumDate" }}</span>
   </div>
 

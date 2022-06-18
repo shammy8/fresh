@@ -105,7 +105,7 @@ export class EditItemComponent implements OnInit, OnDestroy {
       this.closeBottomSheet();
     } catch (error) {
       console.error(error);
-      this._snackBar.open('Error Adding Item', 'Close');
+      this._snackBar.open('Error Updating Item', 'Close');
       this.disableSubmitButton = false;
       // TODO handle error better
     }

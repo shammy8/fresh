@@ -14,6 +14,9 @@ import { Item } from '../item.interface';
         color: rgba(255, 255, 255, 0.7);
         font-size: 12px;
       }
+      .date-title-text {
+        color: rgba(255, 255, 255, 0.7);
+      }
     `,
   ],
 })
