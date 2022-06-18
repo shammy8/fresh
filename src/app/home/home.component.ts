@@ -102,6 +102,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   });
 
   // TODO move to service
+  // TODO how to handle searching by name and comment, fuzzy searching
+  // TODO how to handle pagination / infinite scrolling to reduce documents reads.
+  // Maybe best just to get all the documents and handle sorting and searching on the front end.
+  // Does the virtual scrolling cdk allowing different heights as we have expansion panels
   items$ = combineLatest([this._route.paramMap, this.query$]).pipe(
     switchMap(([params, queryOptions]) => {
       this.homeId = params.get('homeId') ?? '';
@@ -123,7 +127,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         collection(this._firestore, `homes/${this.homeId}/items`),
         ...queryCondition,
         ...orderByCondition,
-        limit(50)
+        // limit(50)
       );
 
       return collectionData(itemsQuery, { idField: 'id' }) as Observable<
@@ -131,6 +135,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       >;
     }),
     map((items) => items.map((item) => this._itemService.fromDto(item)))
+    // TODO maybe just need to use fromDto when opening edit component
+    // this will save some cpu
   );
 
   homeId = '';

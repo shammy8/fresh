@@ -10,7 +10,7 @@
         </div>
       </div>
     </mat-panel-title>
-    <mat-panel-description>
+    <mat-panel-description class="right-aligned">
       <div *ngIf="item.primaryDate">
         {{ item.primaryDate | date: "mediumDate" }}
       </div>
@@ -23,7 +23,7 @@
   </div>
 
   <div *ngIf="item.useBy">
-    <span class="date-title-text">Use by</span>
+    <span class="date-title-text">Use by </span>
     <span>{{ item.useBy | date: "mediumDate" }}</span>
   </div>
 
@@ -44,7 +44,7 @@
   </div>
 
   <mat-action-row>
-    <button mat-mini-fab (click)="delete.emit()">
+    <button mat-mini-fab color="warn" (click)="delete.emit()">
       <mat-icon>close</mat-icon>
     </button>
     <button mat-mini-fab color="primary" (click)="edit.emit()">

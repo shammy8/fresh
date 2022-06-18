@@ -17,6 +17,9 @@ import { Item } from '../item.interface';
       .date-title-text {
         color: rgba(255, 255, 255, 0.7);
       }
+      mat-panel-description.right-aligned {
+        flex-grow: 0;
+      }
     `,
   ],
 })
