@@ -7,6 +7,7 @@ import {
   Firestore,
   serverTimestamp,
   writeBatch,
+  deleteDoc,
 } from '@angular/fire/firestore';
 
 import { Item, ItemDto } from '../item.interface';
@@ -62,6 +63,12 @@ export class ItemService {
     });
 
     return batch.commit();
+  }
+
+  deleteItem(homeId: string, itemId: string) {
+    return deleteDoc(
+      doc(this._firestore, `homes/${homeId}/items/${itemId}`)
+    );
   }
 
   fromDto(itemDto: ItemDto): Item {

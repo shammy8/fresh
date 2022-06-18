@@ -16,8 +16,6 @@ import { map, takeUntil } from 'rxjs/operators';
 import {
   collection,
   collectionData,
-  deleteDoc,
-  doc,
   Firestore,
   limit,
   query,
@@ -184,12 +182,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (confirm(`Are you sure you want to delete ${item.name}?`) === false)
       return;
 
-    await deleteDoc(
-      doc(this._firestore, `homes/${this.homeId}/items/${item.id}`)
-    );
-
-    this._snackBar.open('Successfully Deleted Item', 'Close');
-    // TODO handle error
+    try {
+      await this._itemService.deleteItem(this.homeId, item.id!);
+      this._snackBar.open('Successfully Deleted Item', 'Close');
+    } catch (error) {
+      console.error(error);
+      this._snackBar.open('Error Deleting Item', 'Close');
+      // TODO handle error better
+    }
   }
 
   ngOnDestroy(): void {
