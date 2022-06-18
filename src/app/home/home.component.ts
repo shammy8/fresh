@@ -1,11 +1,17 @@
-import { Component, OnInit, TrackByFunction } from '@angular/core';
+import { Component, OnDestroy, OnInit, TrackByFunction } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { BehaviorSubject, combineLatest, Observable, switchMap } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  Subject,
+  switchMap,
+} from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 
 import {
   collection,
@@ -66,7 +72,7 @@ import { HomeService } from '../services/home.service';
     `,
   ],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   query$ = new BehaviorSubject<QueryItems>({
     storedIn: '',
     sortBy: 'createdAt',
@@ -85,10 +91,9 @@ export class HomeComponent implements OnInit {
           ? [where('storedIn', '==', queryOptions.storedIn)]
           : [];
 
-      // can't use where('storedIn', ....) then orderBy('storedIn')     
+      // can't use where('storedIn', ....) then orderBy('storedIn')
       const orderByCondition =
-        queryOptions.storedIn !== '' &&
-        queryOptions.sortBy === 'storedIn'
+        queryOptions.storedIn !== '' && queryOptions.sortBy === 'storedIn'
           ? []
           : [orderBy(queryOptions.sortBy, queryOptions.sortOrder)];
 
@@ -110,6 +115,8 @@ export class HomeComponent implements OnInit {
 
   itemTrackByFn: TrackByFunction<Item> = (index: number, item: Item) => item.id;
 
+  private _destroy = new Subject<void>();
+
   constructor(
     private _route: ActivatedRoute,
     private _firestore: Firestore,
@@ -128,11 +135,13 @@ export class HomeComponent implements OnInit {
         storedInOptions: this._homeService.getStorageFromHome(this.homeId),
       },
     });
-    // TODO unsubscribe
-    bottomSheetRef.afterDismissed().subscribe((data: QueryItems) => {
-      if (!data) return;
-      this.query$.next(data);
-    });
+    bottomSheetRef
+      .afterDismissed()
+      .pipe(takeUntil(this._destroy))
+      .subscribe((data: QueryItems) => {
+        if (!data) return;
+        this.query$.next(data);
+      });
   }
 
   openAddItemBottomSheet() {
@@ -164,5 +173,9 @@ export class HomeComponent implements OnInit {
 
     this._snackBar.open('Successfully Deleted Item', 'Close');
     // TODO handle error
+  }
+
+  ngOnDestroy(): void {
+    this._destroy.next();
   }
 }

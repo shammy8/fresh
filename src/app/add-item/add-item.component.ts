@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 
 import {
   addDoc,
@@ -11,7 +11,7 @@ import {
 } from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { combineLatest, map, startWith } from 'rxjs';
+import { combineLatest, map, startWith, Subject, takeUntil } from 'rxjs';
 
 import {
   MatBottomSheetRef,
@@ -37,7 +37,7 @@ import { ItemFormGroup } from '../item.interface';
     `,
   ],
 })
-export class AddItemComponent implements OnInit {
+export class AddItemComponent implements OnInit, OnDestroy {
   form = new FormGroup<ItemFormGroup>({
     name: new FormControl('', {
       nonNullable: true,
@@ -59,6 +59,8 @@ export class AddItemComponent implements OnInit {
 
   disableSubmitButton = false;
 
+  private _destroy = new Subject<void>();
+
   constructor(
     private _snackBar: MatSnackBar,
     private _bottomSheetRef: MatBottomSheetRef<AddItemComponent>,
@@ -68,26 +70,27 @@ export class AddItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // TODO unsubscribe
     combineLatest([
       this.form.get('bestBefore')!.valueChanges.pipe(startWith(null)),
       this.form.get('useBy')!.valueChanges.pipe(startWith(null)),
       this.form.get('userDefinedDate')!.valueChanges.pipe(startWith(null)),
-    ]).subscribe(([bestBefore, useBy, userDefinedDate]) => {
-      if (userDefinedDate) {
-        this.form.get('chiefDate')?.patchValue(userDefinedDate);
-        return;
-      }
-      if (!userDefinedDate && useBy) {
-        this.form.get('chiefDate')?.patchValue(useBy);
-        return;
-      }
-      if (!userDefinedDate && !useBy && bestBefore) {
-        this.form.get('chiefDate')?.patchValue(bestBefore);
-        return;
-      }
-      this.form.get('chiefDate')?.patchValue(null);
-    });
+    ])
+      .pipe(takeUntil(this._destroy))
+      .subscribe(([bestBefore, useBy, userDefinedDate]) => {
+        if (userDefinedDate) {
+          this.form.get('chiefDate')?.patchValue(userDefinedDate);
+          return;
+        }
+        if (!userDefinedDate && useBy) {
+          this.form.get('chiefDate')?.patchValue(useBy);
+          return;
+        }
+        if (!userDefinedDate && !useBy && bestBefore) {
+          this.form.get('chiefDate')?.patchValue(bestBefore);
+          return;
+        }
+        this.form.get('chiefDate')?.patchValue(null);
+      });
   }
 
   // TODO move to item service
@@ -118,6 +121,10 @@ export class AddItemComponent implements OnInit {
 
   closeBottomSheet() {
     this._bottomSheetRef.dismiss();
+  }
+
+  ngOnDestroy(): void {
+    this._destroy.next();
   }
 
   private _filter(value: string): string[] {
