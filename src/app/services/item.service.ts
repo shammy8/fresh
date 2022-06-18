@@ -1,11 +1,69 @@
 import { Injectable } from '@angular/core';
 
+import {
+  arrayUnion,
+  doc,
+  collection,
+  Firestore,
+  serverTimestamp,
+  writeBatch,
+} from '@angular/fire/firestore';
+
 import { Item, ItemDto } from '../item.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ItemService {
+  constructor(private _firestore: Firestore) {}
+
+  addItem(
+    storedInValue: string,
+    homeId: string,
+    item: Item,
+    updateStorage: boolean
+  ) {
+    const batch = writeBatch(this._firestore);
+
+    if (updateStorage) {
+      batch.update(doc(this._firestore, `homes/${homeId}`), {
+        storage: arrayUnion(storedInValue),
+      });
+    }
+
+    const newItemRef = doc(
+      collection(this._firestore, `homes/${homeId}/items`)
+    );
+    batch.set(newItemRef, {
+      ...item,
+      createdAt: serverTimestamp(),
+    });
+
+    return batch.commit();
+  }
+
+  updateItem(
+    storedInValue: string,
+    homeId: string,
+    itemId: string,
+    item: Item,
+    updateStorage: boolean
+  ) {
+    const batch = writeBatch(this._firestore);
+
+    if (updateStorage) {
+      batch.update(doc(this._firestore, `homes/${homeId}`), {
+        storage: arrayUnion(storedInValue),
+      });
+    }
+
+    batch.update(doc(this._firestore, `homes/${homeId}/items/${itemId}`), {
+      ...item,
+    });
+
+    return batch.commit();
+  }
+
   fromDto(itemDto: ItemDto): Item {
     return {
       id: itemDto.id,

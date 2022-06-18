@@ -1,13 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import {
-  arrayUnion,
-  doc,
-  Firestore,
-  writeBatch,
-} from '@angular/fire/firestore';
-
 import { combineLatest, map, Subject, takeUntil } from 'rxjs';
 
 import {
@@ -17,6 +10,7 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Item, ItemFormGroup } from '../item.interface';
+import { ItemService } from '../services/item.service';
 
 @Component({
   selector: 'fresh-edit-item',
@@ -46,6 +40,7 @@ export class EditItemComponent implements OnInit, OnDestroy {
     useBy: new FormControl(null, { updateOn: 'blur' }),
     userDefinedDate: new FormControl(null, { updateOn: 'blur' }),
     primaryDate: new FormControl({ value: null, disabled: true }),
+    createdAt: new FormControl({ value: null, disabled: true }),
     comments: new FormControl('', { nonNullable: true }),
   });
 
@@ -62,7 +57,7 @@ export class EditItemComponent implements OnInit, OnDestroy {
     private _bottomSheetRef: MatBottomSheetRef<EditItemComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA)
     private _data: { homeId: string; item: Item; storedInOptions: string[] },
-    private _firestore: Firestore
+    private _itemService: ItemService
   ) {}
 
   ngOnInit(): void {
@@ -97,30 +92,22 @@ export class EditItemComponent implements OnInit, OnDestroy {
     this.disableSubmitButton = true;
     const storedInValue = this.form.get('storedIn')!.value;
 
-    const batch = writeBatch(this._firestore);
-
-    if (!this._data.storedInOptions.includes(storedInValue)) {
-      batch.update(doc(this._firestore, `homes/${this._data.homeId}`), {
-        storage: arrayUnion(storedInValue),
-      });
-    }
-
-    batch.update(
-      doc(
-        this._firestore,
-        `homes/${this._data.homeId}/items/${this._data.item.id}`
-      ),
-      this.form.getRawValue()
-    );
-
     try {
-      await batch.commit();
+      await this._itemService.updateItem(
+        storedInValue,
+        this._data.homeId,
+        this._data.item.id!,
+        this.form.getRawValue(),
+        !this._data.storedInOptions.includes(storedInValue)
+      );
+
       this._snackBar.open('Successfully Updated Item', 'Close');
       this.closeBottomSheet();
     } catch (error) {
       console.error(error);
+      this._snackBar.open('Error Adding Item', 'Close');
       this.disableSubmitButton = false;
-      // TODO handle error
+      // TODO handle error better
     }
   }
 

@@ -1,13 +1,4 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-
-import {
-  arrayUnion,
-  collection,
-  doc,
-  Firestore,
-  serverTimestamp,
-  writeBatch,
-} from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { combineLatest, map, startWith, Subject, takeUntil } from 'rxjs';
@@ -19,6 +10,7 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ItemFormGroup } from '../item.interface';
+import { ItemService } from '../services/item.service';
 
 @Component({
   selector: 'fresh-add-item',
@@ -48,6 +40,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
     useBy: new FormControl(null, { updateOn: 'blur' }),
     userDefinedDate: new FormControl(null, { updateOn: 'blur' }),
     primaryDate: new FormControl({ value: null, disabled: true }),
+    createdAt: new FormControl({ value: null, disabled: true }),
     comments: new FormControl('', { nonNullable: true }),
   });
 
@@ -65,7 +58,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
     private _bottomSheetRef: MatBottomSheetRef<AddItemComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA)
     private _data: { homeId: string; storedInOptions: string[] },
-    private _firestore: Firestore
+    private _itemService: ItemService
   ) {}
 
   ngOnInit(): void {
@@ -92,39 +85,27 @@ export class AddItemComponent implements OnInit, OnDestroy {
       });
   }
 
-  // TODO move to item service
   async onAdd() {
     if (!this.form.valid) return;
 
     this.disableSubmitButton = true;
     const storedInValue = this.form.get('storedIn')!.value;
 
-    const batch = writeBatch(this._firestore);
-
-    if (!this._data.storedInOptions.includes(storedInValue)) {
-      batch.update(doc(this._firestore, `homes/${this._data.homeId}`), {
-        storage: arrayUnion(storedInValue),
-      });
-    }
-
-    const newItemRef = doc(
-      collection(this._firestore, `homes/${this._data.homeId}/items`)
-    );
-    batch.set(newItemRef, {
-      ...this.form.getRawValue(),
-      createdAt: serverTimestamp(),
-    });
-
     try {
-      await batch.commit();
-      // this.form.reset();
-      this._snackBar.open('Successfully Updated Item', 'Close');
+      await this._itemService.addItem(
+        storedInValue,
+        this._data.homeId,
+        this.form.getRawValue(),
+        !this._data.storedInOptions.includes(storedInValue)
+      );
+
+      this._snackBar.open('Successfully Added Item', 'Close');
       this.closeBottomSheet();
-      // setTimeout(() => (this.disableSubmitButton = false), 3000); // stops user constantly adding items
     } catch (error) {
       console.error(error);
+      this._snackBar.open('Error Adding Item', 'Close');
       this.disableSubmitButton = false;
-      // TODO handle error
+      // TODO handle error better
     }
   }
 

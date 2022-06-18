@@ -28,7 +28,7 @@ export interface Item {
   userDefinedDate: null | Date;
   useBy: null | Date;
   bestBefore: null | Date;
-  notifyOn: null | Date;
+  notifyOn?: null | Date;
   createdAt: null | Date;
   comments: string;
 }
@@ -43,7 +43,8 @@ export interface ItemFormGroup {
   useBy: FormControl<null | Date>;
   bestBefore: FormControl<null | Date>;
   notifyOn?: FormControl<null | Date>;
-  comments: FormControl<string | null>;
+  createdAt: FormControl<null | Date>;
+  comments: FormControl<string>;
 }
 
 export interface QueryItemsFormGroup {
