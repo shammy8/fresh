@@ -33,22 +33,6 @@ import { HomeService } from '../services/home.service';
 @Component({
   selector: 'fresh-home',
   template: `
-    <button
-      mat-fab
-      color="primary"
-      class="add-item-button"
-      (click)="openAddItemBottomSheet()"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-    <button
-      mat-mini-fab
-      class="query-button"
-      (click)="openQueryItemsBottomSheet()"
-    >
-      <mat-icon>search</mat-icon>
-    </button>
-
     <ng-container *ngIf="items$ | async as items">
       <ng-container *ngIf="items.length > 0; else noItems">
         <fresh-item
@@ -60,6 +44,8 @@ import { HomeService } from '../services/home.service';
       </ng-container>
     </ng-container>
 
+    <div class="add-empty-height"></div>
+
     <ng-template #noItems>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -68,6 +54,22 @@ import { HomeService } from '../services/home.service';
         Please add an item or change your search criteria in the bottom right
       </mat-expansion-panel>
     </ng-template>
+
+    <button
+      mat-mini-fab
+      class="query-button"
+      (click)="openQueryItemsBottomSheet()"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+    <button
+      mat-fab
+      color="primary"
+      class="add-item-button"
+      (click)="openAddItemBottomSheet()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
   `,
   styles: [
     `
@@ -75,14 +77,19 @@ import { HomeService } from '../services/home.service';
         position: fixed;
         bottom: 20px;
         right: 20px;
+        z-index: 100;
       }
       .query-button {
         position: fixed;
         bottom: 85px;
         right: 30px;
+        z-index: 100;
       }
       mat-expansion-panel {
         margin: 5px 0;
+      }
+      .add-empty-height {
+        height: 110px;
       }
     `,
   ],
