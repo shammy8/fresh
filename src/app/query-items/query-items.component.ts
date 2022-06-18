@@ -20,6 +20,9 @@ import { QueryItems, QueryItemsFormGroup } from '../item.interface';
       mat-radio-button {
         margin-right: 20px;
       }
+      mat-divider {
+        margin-bottom: 20px;
+      }
       .button-container {
         display: flex;
         flex-direction: row-reverse;
@@ -29,18 +32,18 @@ import { QueryItems, QueryItemsFormGroup } from '../item.interface';
 })
 export class QueryItemsComponent implements OnInit {
   form = new FormGroup<QueryItemsFormGroup>({
-    name: new FormControl('', { nonNullable: true }),
-    storedIn: new FormControl([], { nonNullable: true }),
+    storedIn: new FormControl('', { nonNullable: true }),
     sortBy: new FormControl('createdAt', { nonNullable: true }),
     sortOrder: new FormControl('desc', { nonNullable: true }),
   });
 
   sortOptions = [
+    { label: 'Order Added', value: 'createdAt' },
     { label: 'Chief Date', value: 'chiefDate' },
     { label: 'Best Before', value: 'bestBefore' },
     { label: 'Use By', value: 'useBy' },
     { label: 'User Defined Use By', value: 'userDefinedDate' },
-    { label: 'Order Added', value: 'createdAt' },
+    { label: 'Date Bought', value: 'dateBought' },
     { label: 'Stored In', value: 'storedIn' },
   ];
 

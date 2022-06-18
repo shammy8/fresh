@@ -68,8 +68,7 @@ import { HomeService } from '../services/home.service';
 })
 export class HomeComponent implements OnInit {
   query$ = new BehaviorSubject<QueryItems>({
-    name: '',
-    storedIn: [],
+    storedIn: '',
     sortBy: 'createdAt',
     sortOrder: 'desc',
   });
@@ -82,20 +81,21 @@ export class HomeComponent implements OnInit {
       console.log(queryOptions);
 
       const queryCondition =
-        queryOptions.name !== ''
-          ? [where('name', '==', queryOptions.name)]
+        queryOptions.storedIn !== ''
+          ? [where('storedIn', '==', queryOptions.storedIn)]
           : [];
 
-      const queryCondition2 =
-        queryOptions.storedIn.length > 0
-          ? [where('storedIn', 'in', queryOptions.storedIn)] // TODO this only allows 10 elements in the array
-          : [];
+      // can't use where('storedIn', ....) then orderBy('storedIn')     
+      const orderByCondition =
+        queryOptions.storedIn !== '' &&
+        queryOptions.sortBy === 'storedIn'
+          ? []
+          : [orderBy(queryOptions.sortBy, queryOptions.sortOrder)];
 
       const itemsQuery = query(
         collection(this._firestore, `homes/${this.homeId}/items`),
         ...queryCondition,
-        ...queryCondition2,
-        orderBy(queryOptions.sortBy, queryOptions.sortOrder),
+        ...orderByCondition,
         limit(50)
       );
 

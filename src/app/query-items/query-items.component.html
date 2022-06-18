@@ -1,12 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="onApply()">
   <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput formControlName="name" placeholder="Chicken" />
-  </mat-form-field>
-
-  <mat-form-field>
     <mat-label>Stored In</mat-label>
-    <mat-select formControlName="storedIn" multiple>
+    <mat-select formControlName="storedIn">
       <mat-option
         *ngFor="let option of data.storedInOptions"
         [value]="option"
