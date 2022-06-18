@@ -26,7 +26,7 @@ export class ItemService {
   ) {
     const batch = writeBatch(this._firestore);
 
-    if (updateStorage) {
+    if (updateStorage && storedInValue !== '') {
       batch.update(doc(this._firestore, `homes/${homeId}`), {
         storage: arrayUnion(storedInValue),
       });
@@ -52,7 +52,7 @@ export class ItemService {
   ) {
     const batch = writeBatch(this._firestore);
 
-    if (updateStorage) {
+    if (updateStorage && storedInValue !== '') {
       batch.update(doc(this._firestore, `homes/${homeId}`), {
         storage: arrayUnion(storedInValue),
       });
@@ -66,9 +66,7 @@ export class ItemService {
   }
 
   deleteItem(homeId: string, itemId: string) {
-    return deleteDoc(
-      doc(this._firestore, `homes/${homeId}/items/${itemId}`)
-    );
+    return deleteDoc(doc(this._firestore, `homes/${homeId}/items/${itemId}`));
   }
 
   fromDto(itemDto: ItemDto): Item {

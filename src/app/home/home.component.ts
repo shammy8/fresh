@@ -126,7 +126,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       const itemsQuery = query(
         collection(this._firestore, `homes/${this.homeId}/items`),
         ...queryCondition,
-        ...orderByCondition,
+        ...orderByCondition
         // limit(50)
       );
 
