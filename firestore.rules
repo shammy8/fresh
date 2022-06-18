@@ -1,16 +1,53 @@
 rules_version = '2';
 service cloud.firestore {
-  match /databases/{database}/documents {
-    match /homes/{homeId} {
-        allow read: if request.auth != null && resource.data.users[request.auth.uid] == true;
-        allow write: if true; // TODO
+    match /databases/{database}/documents {
+        // TODO test all the security rules
+        function isLoggedIn() {
+            return request.auth != null;
+        }
 
-        match /items/{itemId} {
-            allow read: if true; // TODO
-            allow write: if true; // TODO
+        match /homes/{homeId} {
+            function isValidHome() {
+                return request.resource.data.name is string &&
+                request.resource.data.name.size() > 0 &&
+                request.resource.data.storage is list &&
+                request.resource.data.users[request.auth.uid] == true;
+            }
+
+            function isHomeUser() {
+                return resource.data.users[request.auth.uid] == true;
+            }
+
+            allow read, delete: if isLoggedIn() != null && isHomeUser();
+            allow create: if isLoggedIn() != null && isValidHome();
+            allow update: if isLoggedIn() != null && isHomeUser();
+
+            match /items/{itemId} {
+                function isHomeUserTwo() { // can there be two function of the same name
+                    return get(/databases/$(database)/documents/homes/$(homeId)).data.users[request.auth.uid] == true;
+                }
+
+                function isValidItem() {
+                    return request.resource.data.name is string &&
+                    request.resource.data.name.size() > 0 &&
+                    request.resource.data.storedIn is string &&
+                    request.resource.data.comments is string &&
+                    (request.resource.data.bestBefore == null || request.resource.data.bestBefore is timestamp) &&
+                    (request.resource.data.createdAt == null || request.resource.data.createdAt is timestamp) &&
+                    (request.resource.data.dateBought == null || request.resource.data.dateBought is timestamp) &&
+                    (request.resource.data.primaryDate == null || request.resource.data.primaryDate is timestamp) &&
+                    (request.resource.data.useBy == null || request.resource.data.useBy is timestamp) &&
+                    (request.resource.data.userDefinedDate == null || request.resource.data.userDefinedDate is timestamp)
+                }
+
+                allow read, delete: if isLoggedIn() && isHomeUserTwo();
+                allow create, update: if isLoggedIn() && isHomeUserTwo() && isValidItem();
+            }
         }
     }
-  }
 }
+
+// request.resource.data is the new document coming in
+// resource.data is the document already on Firestore
 
 // firebase deploy --only firestore:rules
