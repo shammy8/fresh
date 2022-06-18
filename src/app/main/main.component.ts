@@ -76,6 +76,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {}
 
   logout() {
+    if (!confirm('Are you sure you want to log out?')) return;
     this._auth.signOut().then(() => {
       this._router.navigate(['login']);
     });
