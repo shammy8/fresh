@@ -50,12 +50,26 @@ import { HomeService } from '../services/home.service';
     >
       <mat-icon>search</mat-icon>
     </button>
-    <fresh-item
-      *ngFor="let item of items$ | async; trackBy: itemTrackByFn"
-      [item]="item"
-      (edit)="openEditItemBottomSheet(item)"
-      (delete)="deleteItem(item)"
-    ></fresh-item>
+
+    <ng-container *ngIf="items$ | async as items">
+      <ng-container *ngIf="items.length > 0; else noItems">
+        <fresh-item
+          *ngFor="let item of items$ | async; trackBy: itemTrackByFn"
+          [item]="item"
+          (edit)="openEditItemBottomSheet(item)"
+          (delete)="deleteItem(item)"
+        ></fresh-item>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #noItems>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> No items found </mat-panel-title>
+        </mat-expansion-panel-header>
+        Please add an item or change your search criteria in the bottom right
+      </mat-expansion-panel>
+    </ng-template>
   `,
   styles: [
     `
@@ -68,6 +82,9 @@ import { HomeService } from '../services/home.service';
         position: fixed;
         bottom: 85px;
         right: 30px;
+      }
+      mat-expansion-panel {
+        margin: 5px 0;
       }
     `,
   ],

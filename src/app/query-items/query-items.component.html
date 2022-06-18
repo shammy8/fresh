@@ -2,6 +2,7 @@
   <mat-form-field>
     <mat-label>Stored In</mat-label>
     <mat-select formControlName="storedIn">
+      <mat-option [value]="''">All Storages</mat-option>
       <mat-option
         *ngFor="let option of data.storedInOptions"
         [value]="option"
