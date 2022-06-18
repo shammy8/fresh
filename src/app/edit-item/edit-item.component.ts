@@ -1,7 +1,12 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { arrayUnion, doc, Firestore, updateDoc } from '@angular/fire/firestore';
+import {
+  arrayUnion,
+  doc,
+  Firestore,
+  writeBatch,
+} from '@angular/fire/firestore';
 
 import { combineLatest, map, Subject, takeUntil } from 'rxjs';
 
@@ -92,14 +97,15 @@ export class EditItemComponent implements OnInit, OnDestroy {
     this.disableSubmitButton = true;
     const storedInValue = this.form.get('storedIn')!.value;
 
-    // TODO might be better to do a batch write for below two?
+    const batch = writeBatch(this._firestore);
+
     if (!this._data.storedInOptions.includes(storedInValue)) {
-      await updateDoc(doc(this._firestore, `homes/${this._data.homeId}`), {
+      batch.update(doc(this._firestore, `homes/${this._data.homeId}`), {
         storage: arrayUnion(storedInValue),
       });
     }
 
-    await updateDoc(
+    batch.update(
       doc(
         this._firestore,
         `homes/${this._data.homeId}/items/${this._data.item.id}`
@@ -107,9 +113,15 @@ export class EditItemComponent implements OnInit, OnDestroy {
       this.form.getRawValue()
     );
 
-    this._snackBar.open('Successfully Updated Item', 'Close');
-    this.closeBottomSheet();
-    // TODO handle error
+    try {
+      await batch.commit();
+      this._snackBar.open('Successfully Updated Item', 'Close');
+      this.closeBottomSheet();
+    } catch (error) {
+      console.error(error);
+      this.disableSubmitButton = false;
+      // TODO handle error
+    }
   }
 
   closeBottomSheet() {

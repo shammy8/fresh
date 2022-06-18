@@ -1,13 +1,12 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 
 import {
-  addDoc,
   arrayUnion,
   collection,
   doc,
   Firestore,
   serverTimestamp,
-  updateDoc,
+  writeBatch,
 } from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -100,23 +99,33 @@ export class AddItemComponent implements OnInit, OnDestroy {
     this.disableSubmitButton = true;
     const storedInValue = this.form.get('storedIn')!.value;
 
-    // TODO might be better to do a batch write for below two?
+    const batch = writeBatch(this._firestore);
+
     if (!this._data.storedInOptions.includes(storedInValue)) {
-      await updateDoc(doc(this._firestore, `homes/${this._data.homeId}`), {
+      batch.update(doc(this._firestore, `homes/${this._data.homeId}`), {
         storage: arrayUnion(storedInValue),
       });
     }
 
-    await addDoc(
-      collection(this._firestore, `homes/${this._data.homeId}/items`),
-      { ...this.form.getRawValue(), createdAt: serverTimestamp() }
+    const newItemRef = doc(
+      collection(this._firestore, `homes/${this._data.homeId}/items`)
     );
+    batch.set(newItemRef, {
+      ...this.form.getRawValue(),
+      createdAt: serverTimestamp(),
+    });
 
-    // this.form.reset();
-    this._snackBar.open('Successfully Added Item', 'Close');
-    this.closeBottomSheet();
-    // setTimeout(() => (this.disableSubmitButton = false), 3000); // stops user constantly adding items
-    // TODO handle error
+    try {
+      await batch.commit();
+      // this.form.reset();
+      this._snackBar.open('Successfully Updated Item', 'Close');
+      this.closeBottomSheet();
+      // setTimeout(() => (this.disableSubmitButton = false), 3000); // stops user constantly adding items
+    } catch (error) {
+      console.error(error);
+      this.disableSubmitButton = false;
+      // TODO handle error
+    }
   }
 
   closeBottomSheet() {
