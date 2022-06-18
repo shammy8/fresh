@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { Item, ItemDto } from '../item.interface';
+import { Item } from '../item.interface';
 
 @Component({
   selector: 'fresh-item',
@@ -22,7 +22,7 @@ export class ItemComponent implements OnInit {
     name: '',
     storedIn: '',
     dateBought: null,
-    chiefDate: null,
+    primaryDate: null,
     userDefinedDate: null,
     useBy: null,
     bestBefore: null,

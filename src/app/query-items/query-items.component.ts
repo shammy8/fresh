@@ -39,7 +39,7 @@ export class QueryItemsComponent implements OnInit {
 
   sortOptions = [
     { label: 'Order Added', value: 'createdAt' },
-    { label: 'Chief Date', value: 'chiefDate' },
+    { label: 'Primary Date', value: 'primaryDate' },
     { label: 'Best Before', value: 'bestBefore' },
     { label: 'Use By', value: 'useBy' },
     { label: 'User Defined Use By', value: 'userDefinedDate' },

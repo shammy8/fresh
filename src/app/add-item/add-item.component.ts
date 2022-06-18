@@ -47,7 +47,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
     bestBefore: new FormControl(null, { updateOn: 'blur' }),
     useBy: new FormControl(null, { updateOn: 'blur' }),
     userDefinedDate: new FormControl(null, { updateOn: 'blur' }),
-    chiefDate: new FormControl({ value: null, disabled: true }),
+    primaryDate: new FormControl({ value: null, disabled: true }),
     comments: new FormControl('', { nonNullable: true }),
   });
 
@@ -77,18 +77,18 @@ export class AddItemComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._destroy))
       .subscribe(([bestBefore, useBy, userDefinedDate]) => {
         if (userDefinedDate) {
-          this.form.get('chiefDate')?.patchValue(userDefinedDate);
+          this.form.get('primaryDate')?.patchValue(userDefinedDate);
           return;
         }
         if (!userDefinedDate && useBy) {
-          this.form.get('chiefDate')?.patchValue(useBy);
+          this.form.get('primaryDate')?.patchValue(useBy);
           return;
         }
         if (!userDefinedDate && !useBy && bestBefore) {
-          this.form.get('chiefDate')?.patchValue(bestBefore);
+          this.form.get('primaryDate')?.patchValue(bestBefore);
           return;
         }
-        this.form.get('chiefDate')?.patchValue(null);
+        this.form.get('primaryDate')?.patchValue(null);
       });
   }
 
