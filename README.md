@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4201/`. The application will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -28,4 +28,19 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Firestore Rules
 
-Run `firebase deploy --only firestore:rules` to deploy the Firestore rules. You can not pull updates to the rules down into this repo. So if you make a change in the Firebase Console you need to copy and paste it here too.
+Run `firebase deploy --only firestore:rules` to deploy the Firestore rules. You can not pull updates to the rules from the console down into this repo. So if you make a change in the Firebase Console you need to copy and paste it here too.
+
+## TODO
+
+Version 0.1:
+- Notification
+- Allow add, remove homes. Allow adding/removing users to homes.
+- Allow removal of storages.
+
+
+For later:
+- Set initial home on app load.
+- Should I allow users to drag items to different storage, like one column for each storage?
+- Figure what to do with searching and pagination / infinite scrolling
+- Add virtual scrolling to items?
+- HInts for how to add storage
