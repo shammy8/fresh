@@ -32,16 +32,21 @@ export class AddItemComponent implements OnInit, OnDestroy {
   form = new FormGroup<ItemFormGroup>({
     name: new FormControl('', {
       nonNullable: true,
-      validators: Validators.required,
+      validators: [Validators.required, Validators.maxLength(30)],
     }),
-    storedIn: new FormControl('', { nonNullable: true }),
+    storedIn: new FormControl('', {
+      nonNullable: true,
+    }),
     dateBought: new FormControl(null, { updateOn: 'blur' }),
     bestBefore: new FormControl(null, { updateOn: 'blur' }),
     useBy: new FormControl(null, { updateOn: 'blur' }),
     userDefinedDate: new FormControl(null, { updateOn: 'blur' }),
     primaryDate: new FormControl({ value: null, disabled: true }),
     createdAt: new FormControl({ value: null, disabled: true }),
-    comments: new FormControl('', { nonNullable: true }),
+    comments: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.maxLength(300),
+    }),
   });
 
   filteredStoredInOptions$ = this.form.get('storedIn')?.valueChanges.pipe(

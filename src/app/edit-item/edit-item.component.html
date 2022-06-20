@@ -2,6 +2,10 @@
   <mat-form-field>
     <mat-label>Item</mat-label>
     <input matInput formControlName="name" placeholder="Chicken" />
+    <mat-error *ngIf="form.hasError('required', 'name')">Required</mat-error>
+    <mat-error *ngIf="form.hasError('maxlength', 'name')"
+      >Name must be lest than 31 characters</mat-error
+    >
   </mat-form-field>
 
   <mat-form-field>
@@ -89,6 +93,9 @@
       formControlName="comments"
       placeholder="Move to freezer"
     ></textarea>
+    <mat-error *ngIf="form.hasError('maxlength', 'comments')"
+      >Comments must be less than 301 characters</mat-error
+    >
   </mat-form-field>
 
   <br />

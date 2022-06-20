@@ -30,8 +30,10 @@ service cloud.firestore {
                 function isValidItem() {
                     return request.resource.data.name is string &&
                     request.resource.data.name.size() > 0 &&
+                    request.resource.data.name.size() < 31 &&
                     request.resource.data.storedIn is string &&
                     request.resource.data.comments is string &&
+                    request.resource.data.comments.size() < 301 &&
                     (request.resource.data.bestBefore == null || request.resource.data.bestBefore is timestamp) &&
                     (request.resource.data.createdAt == null || request.resource.data.createdAt is timestamp) &&
                     (request.resource.data.dateBought == null || request.resource.data.dateBought is timestamp) &&

@@ -32,7 +32,7 @@ export class EditItemComponent implements OnInit, OnDestroy {
   form = new FormGroup<ItemFormGroup>({
     name: new FormControl('', {
       nonNullable: true,
-      validators: Validators.required,
+      validators: [Validators.required, Validators.maxLength(30)],
     }),
     storedIn: new FormControl('', { nonNullable: true }),
     dateBought: new FormControl(null, { updateOn: 'blur' }),
@@ -41,7 +41,10 @@ export class EditItemComponent implements OnInit, OnDestroy {
     userDefinedDate: new FormControl(null, { updateOn: 'blur' }),
     primaryDate: new FormControl({ value: null, disabled: true }),
     createdAt: new FormControl({ value: null, disabled: true }),
-    comments: new FormControl('', { nonNullable: true }),
+    comments: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.maxLength(300),
+    }),
   });
 
   filteredStoredInOptions$ = this.form
