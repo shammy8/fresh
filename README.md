@@ -40,7 +40,7 @@ Version 0.1:
 - Allow removal of storages. Renaming of storage might need to be done on cloud functions.
 - Handle errors to do with promises and observables
 - Add a version number
-- Change to PWA
+<!-- - Change to PWA -->
 - Deploy to Firebase hosting
 
 For later:
