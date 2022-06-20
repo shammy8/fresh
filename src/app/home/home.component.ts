@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, TrackByFunction } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,10 +8,11 @@ import {
   BehaviorSubject,
   combineLatest,
   Observable,
+  of,
   Subject,
   switchMap,
 } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { catchError, map, takeUntil } from 'rxjs/operators';
 
 import {
   collection,
@@ -130,9 +131,16 @@ export class HomeComponent implements OnInit, OnDestroy {
         // limit(50)
       );
 
-      return collectionData(itemsQuery, { idField: 'id' }) as Observable<
-        ItemDto[]
-      >;
+      // TODO is the below casting the best way to do this?
+      return (collectionData(itemsQuery, { idField: 'id' }) as unknown as Observable<ItemDto>).pipe(
+        catchError(() => {
+          alert(
+            `This home doesn't exist or you are not authorised to access this home. Please check the URL is correct or that owner has given you accessed.`
+          );
+          this._router.navigate(['']);
+          return of([]) ;
+        })
+      ) as Observable<ItemDto[]>;
     }),
     map((items) => items.map((item) => this._itemService.fromDto(item)))
     // TODO maybe just need to use fromDto when opening edit component
@@ -147,6 +155,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private _route: ActivatedRoute,
+    private _router: Router,
     private _firestore: Firestore,
     private _bottomSheet: MatBottomSheet,
     private _snackBar: MatSnackBar,

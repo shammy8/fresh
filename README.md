@@ -34,9 +34,11 @@ Run `firebase deploy --only firestore:rules` to deploy the Firestore rules. You 
 
 Version 0.1:
 - Notification
-- Allow add, remove homes. Allow adding/removing users to homes.
-- Allow removal of storages.
-
+- Allow add, remove homes.
+- Allow adding/removing users to homes.
+- Allow removal of storages. Renaming of storage might need to be done on cloud functions.
+- Handle routing to homes that don't exist
+- Handle errors to do with promises and observables
 
 For later:
 - Set initial home on app load.
