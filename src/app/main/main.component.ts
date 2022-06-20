@@ -13,7 +13,7 @@ import { HomeService } from '../services/home.service';
   template: `
     <mat-toolbar color="primary">
       <mat-icon (click)="matSidenav.toggle()">menu</mat-icon>
-      <h1>Fresh</h1>
+      <h1><a routerLink="">Fresh</a></h1>
       <mat-icon class="logout-button" (click)="logout()">logout</mat-icon>
     </mat-toolbar>
 
@@ -42,11 +42,16 @@ import { HomeService } from '../services/home.service';
   `,
   styles: [
     `
-      mat-icon {
+      mat-icon,
+      h1 {
         cursor: pointer;
       }
       h1 {
         margin-left: 10px;
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
       }
       mat-sidenav-container {
         height: calc(100% - 64px);

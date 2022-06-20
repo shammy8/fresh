@@ -11,6 +11,7 @@ import {
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { HomeComponent } from './home/home.component';
+import { NoHomeSelectedComponent } from './no-home-selected/no-home-selected.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { authGuardPipe: () => redirectUnauthorizedTo(['login']) },
     children: [
+      {
+        path: '',
+        component: NoHomeSelectedComponent,
+        canActivate: [AuthGuard],
+        data: { authGuardPipe: () => redirectUnauthorizedTo(['login']) },
+      },
       {
         path: ':homeId',
         component: HomeComponent,

@@ -37,6 +37,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ItemComponent } from './item/item.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
 import { QueryItemsComponent } from './query-items/query-items.component';
+import { NoHomeSelectedComponent } from './no-home-selected/no-home-selected.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { QueryItemsComponent } from './query-items/query-items.component';
     ItemComponent,
     EditItemComponent,
     QueryItemsComponent,
+    NoHomeSelectedComponent,
   ],
   imports: [
     BrowserModule,
