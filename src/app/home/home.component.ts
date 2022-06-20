@@ -103,10 +103,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   });
 
   // TODO move to service
-  // TODO how to handle searching by name and comment, fuzzy searching
-  // TODO how to handle pagination / infinite scrolling to reduce documents reads.
-  // Maybe best just to get all the documents and handle sorting and searching on the front end.
-  // Does the virtual scrolling cdk allowing different heights as we have expansion panels
   items$ = combineLatest([this._route.paramMap, this.query$]).pipe(
     switchMap(([params, queryOptions]) => {
       this.homeId = params.get('homeId') ?? '';
