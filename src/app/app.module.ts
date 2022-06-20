@@ -23,11 +23,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import {
-  provideFirestore,
-  getFirestore,
-  Firestore,
-} from '@angular/fire/firestore';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { enableIndexedDbPersistence } from '@firebase/firestore';
 
 import { AppComponent } from './app.component';
@@ -75,7 +71,20 @@ import { QueryItemsComponent } from './query-items/query-items.component';
     MatAutocompleteModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
+    provideFirestore(() => {
+      const firestore = getFirestore();
+      enableIndexedDbPersistence(firestore)
+        .then((success) => {
+          console.log('success', success);
+        })
+        .catch((error) => {
+          alert(
+            'Offline mode has errored, make sure the app is only opened in one tab. ' +
+              error
+          );
+        });
+      return firestore;
+    }),
   ],
   providers: [
     {
@@ -86,19 +95,4 @@ import { QueryItemsComponent } from './query-items/query-items.component';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-  constructor(private _firestore: Firestore) {
-    // TODO is this the correct way to enable persistence?
-    // Test app in offline mode
-    enableIndexedDbPersistence(this._firestore)
-      .then((success) => {
-        console.log('success', success);
-      })
-      .catch((error) => {
-        alert(
-          'Offline mode has errored, make sure the app is only opened in one tab. ' +
-            error
-        );
-      });
-  }
-}
+export class AppModule {}
