@@ -45,6 +45,7 @@ export class QueryItemsComponent implements OnInit {
     { label: 'User Defined Use By', value: 'userDefinedDate' },
     { label: 'Date Bought', value: 'dateBought' },
     { label: 'Stored In', value: 'storedIn' },
+    { label: 'Name', value: 'name' },
   ];
 
   constructor(
