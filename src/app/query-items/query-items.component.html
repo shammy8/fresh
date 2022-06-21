@@ -4,7 +4,7 @@
     <mat-select formControlName="storedIn">
       <mat-option [value]="''">All Storages</mat-option>
       <mat-option
-        *ngFor="let option of data.storedInOptions"
+        *ngFor="let option of data.storedInOptions$ | async"
         [value]="option"
         >{{ option }}</mat-option
       >
