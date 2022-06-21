@@ -185,7 +185,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     const bottomSheetRef = this._bottomSheet.open(AddItemComponent, {
       data: {
         homeId: this.homeId,
-        storedInOptions: this._homeService.getStorageFromHome(this.homeId),
+        storedInOptions$: this._homeService.getCurrentStorageFromHomeAsObservable(this.homeId)
       },
     });
   }
@@ -195,7 +195,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       data: {
         homeId: this.homeId,
         item,
-        storedInOptions: this._homeService.getStorageFromHome(this.homeId),
+        storedInOptions$: this._homeService.getCurrentStorageFromHomeAsObservable(this.homeId)
       },
     });
   }

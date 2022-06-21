@@ -21,7 +21,10 @@
         *ngFor="let option of filteredStoredInOptions$ | async"
         [value]="option"
       >
-        {{ option }}
+        <div>{{ option }}</div>
+        <div>
+          <mat-icon (click)="removeStorage($event, option)">close</mat-icon>
+        </div>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

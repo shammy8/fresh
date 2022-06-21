@@ -34,7 +34,6 @@ Run `firebase deploy --only firestore:rules` to deploy the Firestore rules. You 
 
 Version 0.1:
 
-- Notification
 - Allow add, remove homes.
 - Allow adding/removing users to homes.
 - Allow removal of storages. Renaming of storage might need to be done on cloud functions.
@@ -53,4 +52,5 @@ For later:
 - Add virtual scrolling to items? Does it handle expansion boxes since the height can be changed.
 - Hints for how to add storage
 - Change all expansion panels to cards. Don't need to all the items dates and comments in the card. Users can see them in the edit screen. Is this OK?
+- Better configure cloud messaging.
 - Add barcode scanner to quickly add items??

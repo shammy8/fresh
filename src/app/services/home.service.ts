@@ -7,8 +7,19 @@ import {
   collectionData,
   query,
   where,
+  updateDoc,
+  doc,
+  arrayRemove,
 } from '@angular/fire/firestore';
-import { EMPTY, Observable, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  EMPTY,
+  filter,
+  map,
+  Observable,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 import { Home } from '../item.interface';
 
@@ -17,6 +28,8 @@ import { Home } from '../item.interface';
 })
 export class HomeService {
   private _homes: Home[] = [];
+
+  private _homes$: BehaviorSubject<Home[]> = new BehaviorSubject([] as Home[]);
 
   constructor(private _auth: Auth, private _firestore: Firestore) {}
 
@@ -35,11 +48,26 @@ export class HomeService {
       }),
       tap((homes) => {
         this._homes = homes;
+        this._homes$.next(homes);
       })
     );
   }
 
+  getCurrentStorageFromHomeAsObservable(homeId: string) {
+    return this._homes$.pipe(
+      map((homes) => homes.find((home) => home.id === homeId)),
+      map((home) => (home ? home.storage : []))
+    );
+  }
+
+  // TODO remove and use above
   getStorageFromHome(homeId: string) {
     return this._homes.find((home) => home.id === homeId)?.storage ?? [];
+  }
+
+  removeStorage(homeId: string, storage: string) {
+    updateDoc(doc(this._firestore, `homes/${homeId}`), {
+      storage: arrayRemove(storage),
+    });
   }
 }

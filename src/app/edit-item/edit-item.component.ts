@@ -1,7 +1,14 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { combineLatest, map, Subject, takeUntil } from 'rxjs';
+import {
+  combineLatest,
+  map,
+  Observable,
+  startWith,
+  Subject,
+  takeUntil,
+} from 'rxjs';
 
 import {
   MatBottomSheetRef,
@@ -11,6 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Item, ItemFormGroup } from '../item.interface';
 import { ItemService } from '../services/item.service';
+import { HomeService } from '../services/home.service';
 
 @Component({
   selector: 'fresh-edit-item',
@@ -20,6 +28,11 @@ import { ItemService } from '../services/item.service';
       form {
         display: flex;
         flex-direction: column;
+      }
+      ::ng-deep .mat-option-text {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
       }
       .button-container {
         display: flex;
@@ -47,9 +60,14 @@ export class EditItemComponent implements OnInit, OnDestroy {
     }),
   });
 
-  filteredStoredInOptions$ = this.form
-    .get('storedIn')
-    ?.valueChanges.pipe(map((value) => this._filter(value || '')));
+  filteredStoredInOptions$ = combineLatest([
+    this.form.get('storedIn')!.valueChanges.pipe(startWith('')),
+    this._data.storedInOptions$,
+  ]).pipe(
+    map(([value, storedInOptions]) =>
+      this._filter(value || '', storedInOptions)
+    )
+  );
 
   disableSubmitButton = false;
 
@@ -59,8 +77,13 @@ export class EditItemComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar,
     private _bottomSheetRef: MatBottomSheetRef<EditItemComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA)
-    private _data: { homeId: string; item: Item; storedInOptions: string[] },
-    private _itemService: ItemService
+    private _data: {
+      homeId: string;
+      item: Item;
+      storedInOptions$: Observable<string[]>;
+    },
+    private _itemService: ItemService,
+    private _homeService: HomeService
   ) {}
 
   ngOnInit(): void {
@@ -95,6 +118,9 @@ export class EditItemComponent implements OnInit, OnDestroy {
     this.disableSubmitButton = true;
     const storedInValue = this.form.get('storedIn')!.value;
 
+    let storages: string[] = [];
+    this._data.storedInOptions$.subscribe((storedIn) => (storages = storedIn));
+
     this.closeBottomSheet();
 
     try {
@@ -103,7 +129,7 @@ export class EditItemComponent implements OnInit, OnDestroy {
         this._data.homeId,
         this._data.item.id!,
         this.form.getRawValue(),
-        !this._data.storedInOptions.includes(storedInValue)
+        !storages.includes(storedInValue)
       );
 
       this._snackBar.open('Successfully Updated Item', 'Close');
@@ -115,6 +141,17 @@ export class EditItemComponent implements OnInit, OnDestroy {
     }
   }
 
+  removeStorage(event: MouseEvent, storage: string) {
+    event.stopPropagation();
+    if (
+      confirm(`Are you sure you want to remove this storage?
+Removing will just remove it from the list. All items under this storage will continue to have it as the Stored In value.
+If you go into another item and edit it without changing the Stored In value the stored in will then be added back into the list.`)
+    ) {
+      this._homeService.removeStorage(this._data.homeId, storage);
+    }
+  }
+
   closeBottomSheet() {
     this._bottomSheetRef.dismiss();
   }
@@ -123,9 +160,9 @@ export class EditItemComponent implements OnInit, OnDestroy {
     this._destroy.next();
   }
 
-  private _filter(value: string): string[] {
+  private _filter(value: string, storedInOptions: string[]): string[] {
     const filterValue = value.toLowerCase();
-    return this._data.storedInOptions.filter((option) =>
+    return storedInOptions.filter((option) =>
       option.toLowerCase().includes(filterValue)
     );
   }
