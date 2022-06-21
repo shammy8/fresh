@@ -5,6 +5,7 @@ import {
   isSupported,
 } from 'https://www.gstatic.com/firebasejs/9.0.1/firebase-messaging-sw.js';
 
+// TODO got email saying something(appKey??) in here should not be publicly accessible
 const app = initializeApp({
   projectId: 'fresh-4c845',
   appId: '1:963700420428:web:431be7be7405e53e20a9e9',

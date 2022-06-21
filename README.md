@@ -45,9 +45,12 @@ Version 0.1:
 
 For later:
 
+- Change the styling of the app
+- Create custom logos for the app, use it in the manifest.webmanifest
 - Set initial home on app load.
 - Should I allow users to drag items to different storage, like one column for each storage?
 - Figure what to do with full text searching and pagination / infinite scrolling, to reduce document reads.
 - Add virtual scrolling to items? Does it handle expansion boxes since the height can be changed.
 - Hints for how to add storage
 - Change all expansion panels to cards. Don't need to all the items dates and comments in the card. Users can see them in the edit screen. Is this OK?
+- Add barcode scanner to quickly add items??

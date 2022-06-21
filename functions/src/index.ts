@@ -20,6 +20,7 @@ exports.addNameLowerCase = functions.region("europe-west2").firestore
 
 // export const subscribeToTopic = functions.https.onCall(
 //     async (data, context) => {
+//       admin.messaging().
 //       await admin.messaging().subscribeToTopic(data.token, data.topic);
 //       return `Subscribed to ${data.topic}`;
 //     }
