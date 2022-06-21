@@ -128,13 +128,17 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
 
       // TODO is the below casting the best way to do this?
-      return (collectionData(itemsQuery, { idField: 'id' }) as unknown as Observable<ItemDto>).pipe(
+      return (
+        collectionData(itemsQuery, {
+          idField: 'id',
+        }) as unknown as Observable<ItemDto>
+      ).pipe(
         catchError(() => {
           alert(
             `This home doesn't exist or you are not authorised to access this home. Please check the URL is correct or that owner has given you accessed.`
           );
           this._router.navigate(['']);
-          return of([]) ;
+          return of([]);
         })
       ) as Observable<ItemDto[]>;
     }),

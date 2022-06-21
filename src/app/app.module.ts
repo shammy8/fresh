@@ -24,8 +24,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { enableIndexedDbPersistence } from '@firebase/firestore';
+import { provideFirestore, getFirestore, enableIndexedDbPersistence } from '@angular/fire/firestore';
+import { getMessaging, provideMessaging } from '@angular/fire/messaging';
+import { getFunctions, provideFunctions } from '@angular/fire/functions';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -77,8 +78,8 @@ import { NoHomeSelectedComponent } from './no-home-selected/no-home-selected.com
     provideFirestore(() => {
       const firestore = getFirestore();
       enableIndexedDbPersistence(firestore)
-        .then((success) => {
-          console.log('success', success);
+        .then(() => {
+          console.log('Successfully enabled persistence');
         })
         .catch((error) => {
           alert(
@@ -88,6 +89,8 @@ import { NoHomeSelectedComponent } from './no-home-selected/no-home-selected.com
         });
       return firestore;
     }),
+    provideMessaging(() => getMessaging()),
+    provideFunctions(() => getFunctions()),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
