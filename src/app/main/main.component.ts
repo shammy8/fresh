@@ -1,22 +1,16 @@
-import { Component, OnDestroy, OnInit, Optional } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Auth } from '@angular/fire/auth';
-import {
-  getToken,
-  MessagePayload,
-  Messaging,
-  onMessage,
-} from '@angular/fire/messaging';
 
-import { takeUntil, tap } from 'rxjs/operators';
-import { EMPTY, from, Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
-import { environment } from 'src/environments/environment';
 import { Home } from '../item.interface';
 import { HomeService } from '../services/home.service';
+import { CloudNotificationService } from '../services/cloud-notification.service';
 
 @Component({
   selector: 'fresh-main',
@@ -47,7 +41,7 @@ import { HomeService } from '../services/home.service';
 
       <mat-sidenav-content>
         <!-- TODO put this request button somewhere else
-        <button mat-button (click)="(request)">Request</button> -->
+        <button mat-button (click)="requestPermissionToSendNotifications()">Request</button> -->
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>
@@ -80,11 +74,12 @@ import { HomeService } from '../services/home.service';
       }
     `,
   ],
+  providers: [CloudNotificationService],
 })
 export class MainComponent implements OnInit, OnDestroy {
   homes$: Observable<Home[]> = this._homeService.fetchHomes();
 
-  cloudMessage$: Observable<MessagePayload> = EMPTY;
+  cloudMessage$ = this._cloudNotificationService.cloudMessage$;
 
   private _destroy = new Subject<void>();
 
@@ -93,41 +88,19 @@ export class MainComponent implements OnInit, OnDestroy {
     private _auth: Auth,
     private _snackBar: MatSnackBar,
     private _homeService: HomeService,
-    @Optional() private _fcm: Messaging
+    private _cloudNotificationService: CloudNotificationService
   ) {
-    console.log('messaging', _fcm);
-    if (_fcm) {
-      from(
-        navigator.serviceWorker
-          .register('firebase-messaging-sw.js', { type: 'module', scope: '__' })
-          .then((serviceWorkerRegistration) =>
-            getToken(_fcm, {
-              serviceWorkerRegistration,
-              vapidKey: environment.vapidKey,
-            })
-          )
-      )
-        .pipe(
-          tap((token) => console.log('FCM', { token })),
-          takeUntil(this._destroy)
-        )
-        .subscribe();
-
-      this.cloudMessage$ = new Observable((sub) =>
-        onMessage(_fcm, (payload) => sub.next(payload))
-      );
-      this.cloudMessage$.pipe(takeUntil(this._destroy)).subscribe((payload) => {
-        console.log(payload);
-        if (payload.notification?.body) {
-          this._snackBar.open(payload.notification.body);
-        }
-      });
-    }
+    this.cloudMessage$.pipe(takeUntil(this._destroy)).subscribe((payload) => {
+      console.log(payload);
+      if (payload.notification?.body) {
+        this._snackBar.open(payload.notification.body);
+      }
+    });
   }
 
   ngOnInit(): void {}
 
-  request() {
+  requestPermissionToSendNotifications() {
     Notification.requestPermission();
   }
 
