@@ -14,6 +14,7 @@ import { Home } from '../item.interface';
 import { HomeService } from '../services/home.service';
 import { CloudNotificationService } from '../services/cloud-notification.service';
 import { AddHomeComponent } from '../add-home/add-home.component';
+import { ManageUsersComponent } from '../manage-users/manage-users.component';
 
 @Component({
   selector: 'fresh-main',
@@ -46,7 +47,20 @@ import { AddHomeComponent } from '../add-home/add-home.component';
             >
               {{ home.name }}
             </a>
-            <mat-icon *ngIf="rla.isActive">checkbox</mat-icon>
+            <mat-icon *ngIf="rla.isActive" [matMenuTriggerFor]="menu"
+              >settings</mat-icon
+            >
+            <mat-menu #menu="matMenu">
+              <button
+                mat-menu-item
+                (click)="openBottomSheetToManageUsers(home)"
+              >
+                Manage Users
+              </button>
+              <button mat-menu-item color="warn" (click)="deleteHome(home)">
+                Delete Home
+              </button>
+            </mat-menu>
           </mat-list-item>
         </mat-nav-list>
       </mat-sidenav>
@@ -130,6 +144,18 @@ export class MainComponent implements OnInit, OnDestroy {
       this._router.navigate([docId]);
       this.matSideNav?.close();
     });
+  }
+
+  openBottomSheetToManageUsers(home: Home) {
+    const bottomSheetRef = this._bottomSheet.open(ManageUsersComponent, {
+      data: { home },
+    });
+  }
+
+  deleteHome(home: Home) {
+    if (confirm(`Are you sure you want to delete this ${home.name}?`)) {
+      alert('This feature is not implemented yet');
+    }
   }
 
   logout() {

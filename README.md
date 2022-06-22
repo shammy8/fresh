@@ -35,7 +35,7 @@ Run `firebase deploy --only firestore:rules` to deploy the Firestore rules. You 
 Version 0.1:
 
 - [x] Allow adding homes
-- [ ] Change tick next to home to a cog which opens a little menu with more options like managing users, deleting home
+- [x] Change tick next to home to a cog which opens a little menu with more options like managing users, deleting home
 - [ ] Allow removing homes
 - [ ] Allow adding/removing users to homes.
 - [x] Allow removal of storages.
