@@ -38,7 +38,7 @@ Version 0.1:
 - [ ] Allow adding/removing users to homes.
 - [x] Allow removal of storages.
 - [ ] Handle errors to do with promises and observables
-- [ ] Hints for how to add storage
+- [x] Hints for how to add storage
 - [ ] Hints for what primary date is
 - [ ] Hints for what desc/asc mean?
 - [x] Change to PWA
@@ -57,3 +57,4 @@ For later:
 - [ ] Better configure cloud messaging.
 - [ ] Add barcode scanner to quickly add items??
 - [ ] Renaming of storages under all items??
+- [ ] Fix notification for non chrome browser

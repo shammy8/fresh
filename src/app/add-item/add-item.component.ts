@@ -29,6 +29,9 @@ import { HomeService } from '../services/home.service';
         display: flex;
         flex-direction: column;
       }
+      .storedIn-form-field {
+        margin-bottom: 10px;
+      }
       ::ng-deep .mat-option-text {
         display: flex !important;
         flex-direction: row !important;
