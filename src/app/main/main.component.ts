@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatSidenav } from '@angular/material/sidenav';
 
 import { Auth } from '@angular/fire/auth';
 
@@ -11,6 +13,7 @@ import { Observable, Subject } from 'rxjs';
 import { Home } from '../item.interface';
 import { HomeService } from '../services/home.service';
 import { CloudNotificationService } from '../services/cloud-notification.service';
+import { AddHomeComponent } from '../add-home/add-home.component';
 
 @Component({
   selector: 'fresh-main',
@@ -23,6 +26,15 @@ import { CloudNotificationService } from '../services/cloud-notification.service
 
     <mat-sidenav-container>
       <mat-sidenav #matSidenav="matSidenav" mode="over">
+        <button
+          class="add-home-button"
+          mat-raised-button
+          color="primary"
+          (click)="addHome()"
+        >
+          <mat-icon>add</mat-icon>
+          Home
+        </button>
         <mat-nav-list>
           <mat-list-item *ngFor="let home of homes$ | async">
             <a
@@ -65,6 +77,10 @@ import { CloudNotificationService } from '../services/cloud-notification.service
       mat-sidenav {
         width: 200px;
       }
+      .add-home-button {
+        margin: 10px auto 0 auto;
+        display: block;
+      }
       mat-sidenav-content {
         padding: 0px 5px;
       }
@@ -77,6 +93,8 @@ import { CloudNotificationService } from '../services/cloud-notification.service
   providers: [CloudNotificationService],
 })
 export class MainComponent implements OnInit, OnDestroy {
+  @ViewChild(MatSidenav) matSideNav: MatSidenav | null = null;
+
   homes$: Observable<Home[]> = this._homeService.fetchHomes();
 
   cloudMessage$ = this._cloudNotificationService.cloudMessage$;
@@ -88,7 +106,8 @@ export class MainComponent implements OnInit, OnDestroy {
     private _auth: Auth,
     private _snackBar: MatSnackBar,
     private _homeService: HomeService,
-    private _cloudNotificationService: CloudNotificationService
+    private _cloudNotificationService: CloudNotificationService,
+    private _bottomSheet: MatBottomSheet
   ) {
     this.cloudMessage$.pipe(takeUntil(this._destroy)).subscribe((payload) => {
       console.log(payload);
@@ -102,6 +121,15 @@ export class MainComponent implements OnInit, OnDestroy {
 
   requestPermissionToSendNotifications() {
     Notification.requestPermission();
+  }
+
+  addHome() {
+    const bottomSheetRef = this._bottomSheet.open(AddHomeComponent);
+    bottomSheetRef.afterDismissed().subscribe((docId) => {
+      if (!docId) return;
+      this._router.navigate([docId]);
+      this.matSideNav?.close();
+    });
   }
 
   logout() {

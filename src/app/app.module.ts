@@ -21,10 +21,15 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore, enableIndexedDbPersistence } from '@angular/fire/firestore';
+import {
+  provideFirestore,
+  getFirestore,
+  enableIndexedDbPersistence,
+} from '@angular/fire/firestore';
 import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 import { getFunctions, provideFunctions } from '@angular/fire/functions';
 
@@ -40,6 +45,7 @@ import { ItemComponent } from './item/item.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
 import { QueryItemsComponent } from './query-items/query-items.component';
 import { NoHomeSelectedComponent } from './no-home-selected/no-home-selected.component';
+import { AddHomeComponent } from './add-home/add-home.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +58,7 @@ import { NoHomeSelectedComponent } from './no-home-selected/no-home-selected.com
     EditItemComponent,
     QueryItemsComponent,
     NoHomeSelectedComponent,
+    AddHomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +80,7 @@ import { NoHomeSelectedComponent } from './no-home-selected/no-home-selected.com
     MatRadioModule,
     MatSelectModule,
     MatAutocompleteModule,
+    MatChipsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => {
@@ -95,7 +103,7 @@ import { NoHomeSelectedComponent } from './no-home-selected/no-home-selected.com
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
   providers: [

@@ -66,3 +66,9 @@ export interface Home {
   storage: string[];
   items?: Item[]; // this would be a sub collection in Firestore
 }
+
+export interface HomeFormGroup {
+  name: FormControl<string>;
+  users: FormControl<string[]>;
+  storage: FormControl<string[]>;
+}

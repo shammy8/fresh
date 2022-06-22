@@ -10,11 +10,11 @@ import {
   updateDoc,
   doc,
   arrayRemove,
+  addDoc,
 } from '@angular/fire/firestore';
 import {
   BehaviorSubject,
   EMPTY,
-  filter,
   map,
   Observable,
   switchMap,
@@ -48,6 +48,14 @@ export class HomeService {
         this._homes$.next(homes);
       })
     );
+  }
+
+  addHome(home: Home) {
+    const user = this._auth.currentUser?.uid
+    if (!user) throw Error('Not logged in')
+
+    home.users[user] = true
+    return addDoc(collection(this._firestore, 'homes'), home);
   }
 
   getCurrentStorageFromHome$(homeId: string) {

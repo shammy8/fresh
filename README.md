@@ -34,13 +34,13 @@ Run `firebase deploy --only firestore:rules` to deploy the Firestore rules. You 
 
 Version 0.1:
 
-- [ ] Allow add, remove homes.
+- [x] Allow adding homes
+- [ ] Change tick next to home to a cog which opens a little menu with more options like managing users, deleting home
+- [ ] Allow removing homes
 - [ ] Allow adding/removing users to homes.
 - [x] Allow removal of storages.
 - [ ] Handle errors to do with promises and observables
 - [x] Hints for how to add storage
-- [ ] Hints for what primary date is
-- [ ] Hints for what desc/asc mean?
 - [x] Change to PWA
 - [ ] Add a version number
 - [ ] Deploy to Firebase hosting
@@ -58,3 +58,6 @@ For later:
 - [ ] Add barcode scanner to quickly add items??
 - [ ] Renaming of storages under all items??
 - [ ] Fix notification for non chrome browser
+- [ ] Hints for what desc/asc mean?
+- [ ] Hints for what primary date is
+- [ ] Think how to handle closing bottom sheet to work well in online and offline mode

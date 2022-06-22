@@ -53,7 +53,10 @@ export class QueryItemsComponent implements OnInit {
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<QueryItemsComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA)
-    public data: { currentQuery: QueryItems; storedInOptions$: Observable<string[]> }
+    public data: {
+      currentQuery: QueryItems;
+      storedInOptions$: Observable<string[]>;
+    }
   ) {}
 
   ngOnInit(): void {
