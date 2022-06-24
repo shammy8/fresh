@@ -32,6 +32,7 @@ service cloud.firestore {
                     request.resource.data.name.size() > 0 &&
                     request.resource.data.name.size() < 31 &&
                     request.resource.data.storedIn is string &&
+                    request.resource.data.storedIn.size() < 31 &&
                     request.resource.data.comments is string &&
                     request.resource.data.comments.size() < 301 &&
                     (request.resource.data.bestBefore == null || request.resource.data.bestBefore is timestamp) &&
