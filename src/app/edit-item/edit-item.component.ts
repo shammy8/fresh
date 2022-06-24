@@ -50,7 +50,10 @@ export class EditItemComponent implements OnInit, OnDestroy {
       nonNullable: true,
       validators: [Validators.required, Validators.maxLength(30)],
     }),
-    storedIn: new FormControl('', { nonNullable: true }),
+    storedIn: new FormControl('', {
+      validators: [Validators.maxLength(30)],
+      nonNullable: true,
+    }),
     dateBought: new FormControl(null, { updateOn: 'blur' }),
     bestBefore: new FormControl(null, { updateOn: 'blur' }),
     useBy: new FormControl(null, { updateOn: 'blur' }),

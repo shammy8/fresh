@@ -11,8 +11,8 @@ Version 0.1:
 - [ ] Allow removing homes
 - [ ] Allow adding/removing users to homes.
 - [x] Allow removal of storages.
-- [ ] Handle long home / item storage names
-  - [ ] Add verification for storedIn length
+- [x] Handle long home / item storage names
+  - [x] Add verification for storedIn length
 - [ ] Handle errors to do with promises and observables
 - [x] Hints for how to add storage
 - [x] Change to PWA

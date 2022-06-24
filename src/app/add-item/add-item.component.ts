@@ -51,6 +51,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
       validators: [Validators.required, Validators.maxLength(30)],
     }),
     storedIn: new FormControl('', {
+      validators: [Validators.maxLength(30)],
       nonNullable: true,
     }),
     dateBought: new FormControl(null, { updateOn: 'blur' }),

@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -58,6 +65,9 @@ import { HomeService } from '../services/home.service';
           [matChipInputFor]="storagesList"
           (matChipInputTokenEnd)="addStorage($event)"
         />
+        <mat-error *ngIf="form.hasError('arrayElementMaxLength', 'storage')"
+          >Each storage must be less than 31 characters</mat-error
+        >
         <mat-hint align="end">Press enter after each one</mat-hint>
       </mat-form-field>
 
@@ -97,7 +107,10 @@ export class AddHomeComponent implements OnInit {
       validators: [Validators.required, Validators.maxLength(30)],
     }),
     users: new FormControl([], { nonNullable: true }),
-    storage: new FormControl([], { nonNullable: true }),
+    storage: new FormControl([], {
+      validators: [arrayElementMaxLength(30)],
+      nonNullable: true,
+    }),
   });
 
   uidList: Set<string> = new Set();
@@ -176,3 +189,34 @@ export class AddHomeComponent implements OnInit {
     return usersMap;
   }
 }
+
+/**
+ * Validator that requires the length of each element of a string array to be less than or equal to the provided maximum length.
+ *
+ * @param maxLength
+ * @returns
+ */
+const arrayElementMaxLength =
+  (maxLength: number): ValidatorFn =>
+  (control: AbstractControl): ValidationErrors | null => {
+    const value: string[] = control.value;
+    if (!Array.isArray(value)) {
+      console.error(
+        'Form control value of arrayElementMaxLength must be an array of strings'
+      );
+      return null;
+    }
+
+    for (let i = 0; i < value.length; i++) {
+      if (typeof value[i] !== 'string') {
+        console.error(
+          'Form control value of arrayElementMaxLength must be an array of strings'
+        );
+        return null;
+      } else if (value[i].length > maxLength) {
+        return { arrayElementMaxLength: true };
+      }
+    }
+
+    return null;
+  };

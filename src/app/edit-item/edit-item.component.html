@@ -23,11 +23,18 @@
       >
         <div>{{ option }}</div>
         <div>
-          <mat-icon (click)="removeStorage($event, option)">delete_forever</mat-icon>
+          <mat-icon (click)="removeStorage($event, option)"
+            >delete_forever</mat-icon
+          >
         </div>
       </mat-option>
     </mat-autocomplete>
-    <mat-hint align="end">Choose from drop down or type a new value to add it to the list </mat-hint>
+    <mat-error *ngIf="form.hasError('maxlength', 'storedIn')"
+      >Stored In must be less than 31 characters</mat-error
+    >
+    <mat-hint align="end"
+      >Choose from drop down or type a new value to add it to the list
+    </mat-hint>
   </mat-form-field>
 
   <mat-form-field>
