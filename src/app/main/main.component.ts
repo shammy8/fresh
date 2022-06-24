@@ -18,7 +18,7 @@ import { ManageUsersComponent } from '../manage-users/manage-users.component';
 
 @Component({
   selector: 'fresh-main',
-  templateUrl: './main.component.html' ,
+  templateUrl: './main.component.html',
   styles: [
     `
       mat-icon,
@@ -36,7 +36,7 @@ import { ManageUsersComponent } from '../manage-users/manage-users.component';
         height: calc(100% - 64px);
       }
       mat-sidenav {
-        width: 200px;
+        width: 250px;
       }
       .add-home-button {
         margin: 10px auto 0 auto;
@@ -45,6 +45,15 @@ import { ManageUsersComponent } from '../manage-users/manage-users.component';
       mat-nav-list {
         max-height: calc(100% - 80px);
         overflow-y: auto;
+      }
+      .mat-list-item {
+        a {
+          width: 180px;
+          overflow-x: hidden;
+        }
+        mat-icon {
+          margin-left: auto;
+        }
       }
       mat-sidenav-content {
         padding: 0px 5px;
@@ -60,7 +69,7 @@ import { ManageUsersComponent } from '../manage-users/manage-users.component';
       .version-number {
         margin: auto auto 0 auto;
         font-size: 12px;
-        opacity: 0.6
+        opacity: 0.6;
       }
     `,
   ],

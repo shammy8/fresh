@@ -12,7 +12,7 @@ Version 0.1:
 - [x] Allow adding/removing users to homes.
 - [ ] Allow user to copy their own userId
 - [x] Allow removal of storages.
-- [ ] Handle long home / item storage names
+- [x] Handle long home / item storage names
   - [x] Add verification for storedIn length
 - [ ] Handle errors to do with promises and observables
 - [x] Hints for how to add storage
@@ -26,6 +26,7 @@ For later:
 - [ ] Add barcode scanner to quickly add items??
 - [ ] Renaming of storages under all items??
 - [ ] Think how to handle closing bottom sheet to work well in online and offline mode
+- [ ] Add different users level like home owner / regular user
 - [ ] Styling
   - [ ] Change the styling of the app
   - [ ] Create custom logos for the app, use it in the manifest.webmanifest
