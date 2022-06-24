@@ -11,6 +11,7 @@ import {
   doc,
   arrayRemove,
   addDoc,
+  orderBy,
 } from '@angular/fire/firestore';
 import {
   BehaviorSubject,
@@ -38,7 +39,8 @@ export class HomeService {
 
         const homesForUserQuery = query(
           collection(this._firestore, 'homes'),
-          where(`users.${user.uid}`, '==', true)
+          where(`users.${user.uid}`, '==', true),
+          orderBy('name')
         );
         return collectionData(homesForUserQuery, {
           idField: 'id',
