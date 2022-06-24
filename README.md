@@ -47,17 +47,21 @@ Version 0.1:
 
 For later:
 
-- [ ] Change the styling of the app
-- [ ] Create custom logos for the app, use it in the manifest.webmanifest
+- [ ] Styling
+  - [ ] Change the styling of the app
+  - [ ] Create custom logos for the app, use it in the manifest.webmanifest
 - [ ] Set initial home on app load.
-- [ ] Should I allow users to drag items to different storage, like one column for each storage?
-- [ ] Figure what to do with full text searching and pagination / infinite scrolling, to reduce document reads.
-- [ ] Add virtual scrolling to items? Does it handle expansion boxes since the height can be changed.
-- [ ] Change all expansion panels to cards. Don't need to all the items dates and comments in the card. Users can see them in the edit screen. Is this OK?
-- [ ] Better configure cloud messaging.
+- [ ] Scrolling / pagination
+  - [ ] Should I allow users to drag items to different storage, like one column for each storage?
+  - [ ] Figure what to do with full text searching and pagination / infinite scrolling, to reduce document reads.
+  - [ ] Add virtual scrolling to items? Does it handle expansion boxes since the height can be changed.
+  - [ ] Change all expansion panels to cards. Don't need to all the items dates and comments in the card. Users can see them in the edit screen. Makes virtual scrolling easier Is this OK?
+- [ ] Cloud messaging
+  - [ ] Better configure cloud messaging.
+  - [ ] Fix notification for non chrome browser
 - [ ] Add barcode scanner to quickly add items??
 - [ ] Renaming of storages under all items??
-- [ ] Fix notification for non chrome browser
-- [ ] Hints for what desc/asc mean?
-- [ ] Hints for what primary date is
+- [ ] Hints
+  - [ ] Hints for what desc/asc mean?
+  - [ ] Hints for what primary date is
 - [ ] Think how to handle closing bottom sheet to work well in online and offline mode
