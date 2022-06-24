@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Auth, signInWithPopup } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
@@ -15,6 +15,7 @@ import { GoogleAuthProvider } from 'firebase/auth';
       Login with Google
     </button>`,
   styles: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
   constructor(private _auth: Auth, private _router: Router) {}

@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -74,6 +80,7 @@ import { ManageUsersComponent } from '../manage-users/manage-users.component';
     `,
   ],
   providers: [CloudNotificationService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent implements OnInit, OnDestroy {
   @ViewChild(MatSidenav) matSideNav: MatSidenav | null = null;

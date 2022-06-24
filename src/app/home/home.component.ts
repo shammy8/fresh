@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, TrackByFunction } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  TrackByFunction,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -94,6 +100,7 @@ import { HomeService } from '../services/home.service';
       }
     `,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit, OnDestroy {
   query$ = new BehaviorSubject<QueryItems>({
@@ -169,7 +176,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     const bottomSheetRef = this._bottomSheet.open(QueryItemsComponent, {
       data: {
         currentQuery: this.query$.getValue(),
-        storedInOptions$: this._homeService.getCurrentStorageFromHome$(this.homeId)
+        storedInOptions$: this._homeService.getCurrentStorageFromHome$(
+          this.homeId
+        ),
       },
     });
     bottomSheetRef
@@ -185,7 +194,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     const bottomSheetRef = this._bottomSheet.open(AddItemComponent, {
       data: {
         homeId: this.homeId,
-        storedInOptions$: this._homeService.getCurrentStorageFromHome$(this.homeId)
+        storedInOptions$: this._homeService.getCurrentStorageFromHome$(
+          this.homeId
+        ),
       },
     });
   }
@@ -195,7 +206,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       data: {
         homeId: this.homeId,
         item,
-        storedInOptions$: this._homeService.getCurrentStorageFromHome$(this.homeId)
+        storedInOptions$: this._homeService.getCurrentStorageFromHome$(
+          this.homeId
+        ),
       },
     });
   }
