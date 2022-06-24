@@ -17,75 +17,7 @@ import { HomeService } from '../services/home.service';
 
 @Component({
   selector: 'fresh-add-home',
-  template: `
-    <form [formGroup]="form" (ngSubmit)="onAdd()">
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="name" />
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Users ID</mat-label>
-        <mat-chip-list #usersList multiple formControlName="users">
-          <mat-chip
-            *ngFor="let uid of uidList"
-            [selected]="uid"
-            [value]="uid"
-            (removed)="removeUid(uid)"
-          >
-            {{ uid }}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
-        </mat-chip-list>
-        <input
-          [matChipInputFor]="usersList"
-          (matChipInputTokenEnd)="addUid($event)"
-        />
-        <mat-hint align="end">Press enter after each one</mat-hint>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Storages</mat-label>
-        <mat-chip-list #storagesList multiple formControlName="storage">
-          <mat-chip
-            *ngFor="let storage of storageList"
-            [selected]="storage"
-            [value]="storage"
-            (removed)="removeStorage(storage)"
-          >
-            {{ storage }}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
-        </mat-chip-list>
-        <input
-          [matChipInputFor]="storagesList"
-          (matChipInputTokenEnd)="addStorage($event)"
-        />
-        <mat-error *ngIf="form.hasError('arrayElementMaxLength', 'storage')"
-          >Each storage must be less than 31 characters</mat-error
-        >
-        <mat-hint align="end">Press enter after each one</mat-hint>
-      </mat-form-field>
-
-      <div class="button-container">
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          [disabled]="disableSubmitButton"
-        >
-          Add Home
-        </button>
-        <button mat-button type="button" (click)="closeBottomSheet()">
-          Close
-        </button>
-      </div>
-    </form>
-  `,
+  templateUrl: './add-home.component.html',
   styles: [
     `
       form {
