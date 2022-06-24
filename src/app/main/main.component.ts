@@ -18,60 +18,7 @@ import { ManageUsersComponent } from '../manage-users/manage-users.component';
 
 @Component({
   selector: 'fresh-main',
-  template: `
-    <mat-toolbar color="primary">
-      <mat-icon (click)="matSidenav.toggle()">menu</mat-icon>
-      <h1><a routerLink="">Fresh</a></h1>
-      <mat-icon class="logout-button" (click)="logout()">logout</mat-icon>
-    </mat-toolbar>
-
-    <mat-sidenav-container>
-      <mat-sidenav #matSidenav="matSidenav" mode="over">
-        <button
-          class="add-home-button"
-          mat-raised-button
-          color="primary"
-          (click)="addHome()"
-        >
-          <mat-icon>add</mat-icon>
-          Home
-        </button>
-        <mat-nav-list>
-          <mat-list-item *ngFor="let home of homes$ | async">
-            <a
-              mat-list-item
-              [routerLink]="home.id"
-              routerLinkActive
-              #rla="routerLinkActive"
-              (click)="matSidenav.close()"
-            >
-              {{ home.name }}
-            </a>
-            <mat-icon *ngIf="rla.isActive" [matMenuTriggerFor]="menu"
-              >settings</mat-icon
-            >
-            <mat-menu #menu="matMenu">
-              <button
-                mat-menu-item
-                (click)="openBottomSheetToManageUsers(home)"
-              >
-                Manage Users
-              </button>
-              <button mat-menu-item color="warn" (click)="deleteHome(home)">
-                Delete Home
-              </button>
-            </mat-menu>
-          </mat-list-item>
-        </mat-nav-list>
-      </mat-sidenav>
-
-      <mat-sidenav-content>
-        <!-- TODO put this request button somewhere else
-        <button mat-button (click)="requestPermissionToSendNotifications()">Request</button> -->
-        <router-outlet></router-outlet>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-  `,
+  templateUrl: './main.component.html' ,
   styles: [
     `
       mat-icon,
@@ -101,6 +48,15 @@ import { ManageUsersComponent } from '../manage-users/manage-users.component';
       .logout-button {
         margin-left: auto;
         cursor: pointer;
+      }
+      ::ng-deep .mat-drawer-inner-container {
+        display: flex;
+        flex-direction: column;
+      }
+      .version-number {
+        margin: auto auto 0 auto;
+        font-size: 12px;
+        opacity: 0.6
       }
     `,
   ],

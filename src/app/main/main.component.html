@@ -1,0 +1,50 @@
+<mat-toolbar color="primary">
+  <mat-icon (click)="matSidenav.toggle()">menu</mat-icon>
+  <h1><a routerLink="">Fresh</a></h1>
+  <mat-icon class="logout-button" (click)="logout()">logout</mat-icon>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #matSidenav="matSidenav" mode="over">
+    <button
+      class="add-home-button"
+      mat-raised-button
+      color="primary"
+      (click)="addHome()"
+    >
+      <mat-icon>add</mat-icon>
+      Home
+    </button>
+    <mat-nav-list>
+      <mat-list-item *ngFor="let home of homes$ | async">
+        <a
+          mat-list-item
+          [routerLink]="home.id"
+          routerLinkActive
+          #rla="routerLinkActive"
+          (click)="matSidenav.close()"
+        >
+          {{ home.name }}
+        </a>
+        <mat-icon *ngIf="rla.isActive" [matMenuTriggerFor]="menu"
+          >settings</mat-icon
+        >
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openBottomSheetToManageUsers(home)">
+            Manage Users
+          </button>
+          <button mat-menu-item color="warn" (click)="deleteHome(home)">
+            Delete Home
+          </button>
+        </mat-menu>
+      </mat-list-item>
+    </mat-nav-list>
+    <div class="version-number">v0.1.0</div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <!-- TODO put this request button somewhere else
+        <button mat-button (click)="requestPermissionToSendNotifications()">Request</button> -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

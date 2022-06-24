@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.1.
 
-## TODO
+## TODOs
 
 Version 0.1:
 
@@ -11,10 +11,12 @@ Version 0.1:
 - [ ] Allow removing homes
 - [ ] Allow adding/removing users to homes.
 - [x] Allow removal of storages.
+- [ ] Handle long home / item storage names
+  - [ ] Add verification for storedIn length
 - [ ] Handle errors to do with promises and observables
 - [x] Hints for how to add storage
 - [x] Change to PWA
-- [ ] Add a version number
+- [x] Add a version number
 - [ ] Deploy to Firebase hosting
 
 For later:
@@ -26,6 +28,7 @@ For later:
 - [ ] Styling
   - [ ] Change the styling of the app
   - [ ] Create custom logos for the app, use it in the manifest.webmanifest
+  - [ ] Handle overflow of homes
 - [ ] Scrolling / pagination / searching
   - [ ] Should I allow users to drag items to different storage, like one column for each storage?
   - [ ] Figure what to do with full text searching and pagination / infinite scrolling, to reduce document reads.
