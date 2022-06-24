@@ -28,7 +28,7 @@ For later:
 - [ ] Styling
   - [ ] Change the styling of the app
   - [ ] Create custom logos for the app, use it in the manifest.webmanifest
-  - [ ] Handle overflow of homes
+  - [x] Handle overflow of homes
 - [ ] Scrolling / pagination / searching
   - [ ] Should I allow users to drag items to different storage, like one column for each storage?
   - [ ] Figure what to do with full text searching and pagination / infinite scrolling, to reduce document reads.
