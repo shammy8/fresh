@@ -44,7 +44,7 @@ import { ManageUsersComponent } from '../manage-users/manage-users.component';
       }
       mat-nav-list {
         max-height: calc(100% - 80px);
-        overflow-y: scroll;
+        overflow-y: auto;
       }
       mat-sidenav-content {
         padding: 0px 5px;

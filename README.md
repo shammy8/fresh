@@ -9,9 +9,10 @@ Version 0.1:
 - [x] Allow adding homes
 - [x] Change tick next to home to a cog which opens a little menu with more options like managing users, deleting home
 - [ ] Allow removing homes
-- [ ] Allow adding/removing users to homes.
+- [x] Allow adding/removing users to homes.
+- [ ] Allow user to copy their own userId
 - [x] Allow removal of storages.
-- [x] Handle long home / item storage names
+- [ ] Handle long home / item storage names
   - [x] Add verification for storedIn length
 - [ ] Handle errors to do with promises and observables
 - [x] Hints for how to add storage

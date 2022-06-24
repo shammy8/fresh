@@ -1,4 +1,4 @@
-import { FormControl } from '@angular/forms';
+import { FormControl, FormRecord } from '@angular/forms';
 
 import { Timestamp } from '@angular/fire/firestore';
 
@@ -71,4 +71,8 @@ export interface HomeFormGroup {
   name: FormControl<string>;
   users: FormControl<string[]>;
   storage: FormControl<string[]>;
+}
+
+export interface ManageUsersFormGroup {
+  users: FormRecord<FormControl<boolean>>;
 }

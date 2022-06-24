@@ -13,14 +13,8 @@ import {
   addDoc,
   orderBy,
 } from '@angular/fire/firestore';
-import {
-  BehaviorSubject,
-  EMPTY,
-  map,
-  Observable,
-  switchMap,
-  tap,
-} from 'rxjs';
+
+import { BehaviorSubject, EMPTY, map, Observable, switchMap, tap } from 'rxjs';
 
 import { Home } from '../item.interface';
 
@@ -53,10 +47,10 @@ export class HomeService {
   }
 
   addHome(home: Home) {
-    const user = this._auth.currentUser?.uid
-    if (!user) throw Error('Not logged in')
+    const user = this._auth.currentUser?.uid;
+    if (!user) throw Error('Not logged in');
 
-    home.users[user] = true
+    home.users[user] = true;
     return addDoc(collection(this._firestore, 'homes'), home);
   }
 
@@ -67,9 +61,17 @@ export class HomeService {
     );
   }
 
+  // TODO return???
   removeStorage(homeId: string, storage: string) {
     updateDoc(doc(this._firestore, `homes/${homeId}`), {
       storage: arrayRemove(storage),
+    });
+  }
+
+  updateUsers(homeId: string | undefined, users: { [key: string]: boolean }) {
+    if (!homeId) return;
+    return updateDoc(doc(this._firestore, `homes/${homeId}`), {
+      users: { ...users },
     });
   }
 }
