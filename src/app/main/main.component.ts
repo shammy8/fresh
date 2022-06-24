@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { Auth } from '@angular/fire/auth';
+import { Auth, authState } from '@angular/fire/auth';
 
 import { takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
@@ -87,7 +87,9 @@ export class MainComponent implements OnInit, OnDestroy {
 
   homes$: Observable<Home[]> = this._homeService.fetchHomes();
 
-  cloudMessage$ = this._cloudNotificationService.cloudMessage$;
+  private _cloudMessage$ = this._cloudNotificationService.cloudMessage$;
+
+  private _userId = '';
 
   private _destroy = new Subject<void>();
 
@@ -99,12 +101,18 @@ export class MainComponent implements OnInit, OnDestroy {
     private _cloudNotificationService: CloudNotificationService,
     private _bottomSheet: MatBottomSheet
   ) {
-    this.cloudMessage$.pipe(takeUntil(this._destroy)).subscribe((payload) => {
+    this._cloudMessage$.pipe(takeUntil(this._destroy)).subscribe((payload) => {
       console.log(payload);
       if (payload.notification?.body) {
         this._snackBar.open(payload.notification.body);
       }
     });
+
+    authState(this._auth)
+      .pipe(takeUntil(this._destroy))
+      .subscribe((user) => {
+        this._userId = user?.uid ?? '';
+      });
   }
 
   ngOnInit(): void {}
@@ -114,7 +122,9 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   addHome() {
-    const bottomSheetRef = this._bottomSheet.open(AddHomeComponent);
+    const bottomSheetRef = this._bottomSheet.open(AddHomeComponent, {
+      data: { userId: this._userId },
+    });
     bottomSheetRef.afterDismissed().subscribe((docId) => {
       if (!docId) return;
       this._router.navigate([docId]);
@@ -124,7 +134,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   openBottomSheetToManageUsers(home: Home) {
     const bottomSheetRef = this._bottomSheet.open(ManageUsersComponent, {
-      data: { home },
+      data: { home, userId: this._userId },
     });
   }
 
@@ -143,5 +153,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._destroy.next();
+    this._destroy.complete();
   }
 }

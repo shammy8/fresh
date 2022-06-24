@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -8,15 +8,11 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 
-import { Auth, authState } from '@angular/fire/auth';
-
 import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
 } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-import { Subject, takeUntil } from 'rxjs';
 
 import { Home, ManageUsersFormGroup } from '../item.interface';
 import { HomeService } from '../services/home.service';
@@ -48,7 +44,7 @@ import { HomeService } from '../services/home.service';
     `,
   ],
 })
-export class ManageUsersComponent implements OnInit, OnDestroy {
+export class ManageUsersComponent implements OnInit {
   form = new FormGroup<ManageUsersFormGroup>({
     users: new FormRecord<FormControl<boolean>>(
       {},
@@ -62,30 +58,22 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
 
   disableSubmitButton = false;
 
-  private _destroy = new Subject<void>();
-
   get usersFormRecord() {
     return this.form.get('users') as FormRecord<FormControl<boolean>>;
   }
 
   constructor(
-    public auth: Auth,
     private _bottomSheetRef: MatBottomSheetRef<ManageUsersComponent>,
     private _homeService: HomeService,
     private _snackBar: MatSnackBar,
     @Inject(MAT_BOTTOM_SHEET_DATA)
     public data: {
       home: Home;
+      userId: string;
     }
   ) {}
 
   ngOnInit(): void {
-    authState(this.auth)
-      .pipe(takeUntil(this._destroy))
-      .subscribe((user) => {
-        this.userId = user?.uid ?? '';
-      });
-
     const users = this.data.home.users;
     for (const user of Object.keys(users)) {
       this.usersFormRecord.addControl(
@@ -140,14 +128,10 @@ Are you sure you want to continue?`)
   closeBottomSheet(docRef?: string) {
     this._bottomSheetRef.dismiss(docRef);
   }
-
-  ngOnDestroy(): void {
-    this._destroy.next();
-    this._destroy.complete();
-  }
 }
 
-const minFormControlsInFormRecord =
+// TODO move somewhere else
+export const minFormControlsInFormRecord =
   (min: number): ValidatorFn =>
   (control: AbstractControl): ValidationErrors | null => {
     const c = control as FormRecord;

@@ -2,7 +2,7 @@
   <mat-list formGroupName="users">
     <mat-list-item *ngFor="let user of form.value.users | keyvalue">
       <div matLine class="userId-text">{{ user.key }}</div>
-      <div matLine *ngIf="user.key === userId">You</div>
+      <div matLine *ngIf="user.key === data.userId">You</div>
       <!-- <mat-form-field>
               <mat-label> {{ user.key }} </mat-label>
               <input matInput [formControlName]="user.key" />

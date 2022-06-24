@@ -11,6 +11,7 @@ Version 0.1:
 - [ ] Allow removing homes
 - [x] Allow adding/removing users to homes.
 - [ ] Allow user to copy their own userId
+- [ ] Style login page
 - [x] Allow removal of storages.
 - [x] Handle long home / item storage names
   - [x] Add verification for storedIn length
@@ -27,6 +28,7 @@ For later:
 - [ ] Renaming of storages under all items??
 - [ ] Think how to handle closing bottom sheet to work well in online and offline mode
 - [ ] Add different users level like home owner / regular user
+- [ ] Add other login provider
 - [ ] Styling
   - [ ] Change the styling of the app
   - [ ] Create custom logos for the app, use it in the manifest.webmanifest

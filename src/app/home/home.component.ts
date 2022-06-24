@@ -96,7 +96,7 @@ import { HomeService } from '../services/home.service';
         margin: 5px 0;
       }
       .add-empty-height {
-        height: 110px;
+        height: 120px;
       }
     `,
   ],
