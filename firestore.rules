@@ -10,6 +10,7 @@ service cloud.firestore {
             function isValidHome() {
                 return request.resource.data.name is string &&
                 request.resource.data.name.size() > 0 &&
+                request.resource.data.name.size() < 31 &&
                 request.resource.data.storage is list && // this should be a string list where each element is less than 31 characters
                 request.resource.data.users[request.auth.uid] == true;
             }

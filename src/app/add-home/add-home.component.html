@@ -2,6 +2,10 @@
   <mat-form-field>
     <mat-label>Name</mat-label>
     <input matInput formControlName="name" />
+    <mat-error *ngIf="form.hasError('required', 'name')">Required</mat-error>
+    <mat-error *ngIf="form.hasError('maxlength', 'name')"
+      >Name must be less than 31 characters</mat-error
+    >
   </mat-form-field>
 
   <mat-form-field>
