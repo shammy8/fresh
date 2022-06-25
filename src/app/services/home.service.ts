@@ -47,10 +47,6 @@ export class HomeService {
   }
 
   addHome(home: Home) {
-    const user = this._auth.currentUser?.uid;
-    if (!user) throw Error('Not logged in');
-
-    home.users[user] = true;
     return addDoc(collection(this._firestore, 'homes'), home);
   }
 
@@ -61,9 +57,8 @@ export class HomeService {
     );
   }
 
-  // TODO return???
   removeStorage(homeId: string, storage: string) {
-    updateDoc(doc(this._firestore, `homes/${homeId}`), {
+    return updateDoc(doc(this._firestore, `homes/${homeId}`), {
       storage: arrayRemove(storage),
     });
   }

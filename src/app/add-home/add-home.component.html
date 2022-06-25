@@ -13,12 +13,12 @@
     <mat-chip-list #usersList multiple formControlName="users">
       <mat-chip
         *ngFor="let uid of uidList"
-        [selected]="uid"
+        [selectable]="false"
         [value]="uid"
         (removed)="removeUid(uid)"
       >
-        {{ uid }}
-        <button matChipRemove>
+        {{ uid }} <span class="mat-caption" *ngIf="uid === data.userId"> - You </span>
+        <button matChipRemove *ngIf="uid !== data.userId">
           <mat-icon>cancel</mat-icon>
         </button>
       </mat-chip>
@@ -35,7 +35,7 @@
     <mat-chip-list #storagesList multiple formControlName="storage">
       <mat-chip
         *ngFor="let storage of storageList"
-        [selected]="storage"
+        [selectable]="false"
         [value]="storage"
         (removed)="removeStorage(storage)"
       >

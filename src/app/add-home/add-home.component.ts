@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -8,7 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import {
+  MatBottomSheetRef,
+  MAT_BOTTOM_SHEET_DATA,
+} from '@angular/material/bottom-sheet';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -38,14 +41,14 @@ export class AddHomeComponent {
       nonNullable: true,
       validators: [Validators.required, Validators.maxLength(30)],
     }),
-    users: new FormControl([], { nonNullable: true }),
+    users: new FormControl([this.data.userId], { nonNullable: true }),
     storage: new FormControl([], {
       validators: [arrayElementMaxLength(30)],
       nonNullable: true,
     }),
   });
 
-  uidList: Set<string> = new Set();
+  uidList: Set<string> = new Set([this.data.userId]);
   storageList: Set<string> = new Set();
 
   disableSubmitButton = false;
@@ -53,6 +56,10 @@ export class AddHomeComponent {
   constructor(
     private _snackBar: MatSnackBar,
     private _bottomSheetRef: MatBottomSheetRef<AddHomeComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA)
+    public data: {
+      userId: string;
+    },
     private _homeService: HomeService
   ) {}
 
