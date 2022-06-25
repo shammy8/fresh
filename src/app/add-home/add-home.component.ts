@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -32,7 +32,7 @@ import { HomeService } from '../services/home.service';
     `,
   ],
 })
-export class AddHomeComponent implements OnInit {
+export class AddHomeComponent {
   form = new FormGroup<HomeFormGroup>({
     name: new FormControl('', {
       nonNullable: true,
@@ -55,8 +55,6 @@ export class AddHomeComponent implements OnInit {
     private _bottomSheetRef: MatBottomSheetRef<AddHomeComponent>,
     private _homeService: HomeService
   ) {}
-
-  ngOnInit(): void {}
 
   closeBottomSheet(docRef?: string) {
     this._bottomSheetRef.dismiss(docRef);

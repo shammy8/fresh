@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -82,7 +81,7 @@ import { ManageUsersComponent } from '../manage-users/manage-users.component';
   providers: [CloudNotificationService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainComponent implements OnInit, OnDestroy {
+export class MainComponent implements OnDestroy {
   @ViewChild(MatSidenav) matSideNav: MatSidenav | null = null;
 
   homes$: Observable<Home[]> = this._homeService.fetchHomes();
@@ -114,8 +113,6 @@ export class MainComponent implements OnInit, OnDestroy {
         this._userId = user?.uid ?? '';
       });
   }
-
-  ngOnInit(): void {}
 
   requestPermissionToSendNotifications() {
     Notification.requestPermission();

@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
-  OnInit,
   TrackByFunction,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -102,7 +101,7 @@ import { HomeService } from '../services/home.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnDestroy {
   query$ = new BehaviorSubject<QueryItems>({
     storedIn: '',
     sortBy: 'createdAt',
@@ -169,8 +168,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     private _homeService: HomeService,
     private _itemService: ItemService
   ) {}
-
-  ngOnInit(): void {}
 
   openQueryItemsBottomSheet() {
     const bottomSheetRef = this._bottomSheet.open(QueryItemsComponent, {

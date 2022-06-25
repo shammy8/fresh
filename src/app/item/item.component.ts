@@ -3,7 +3,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
 } from '@angular/core';
 
@@ -31,7 +30,7 @@ import { Item } from '../item.interface';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent {
   @Input() item: Item = {
     name: '',
     storedIn: '',
@@ -48,8 +47,4 @@ export class ItemComponent implements OnInit {
   @Output() delete = new EventEmitter();
 
   @Output() edit = new EventEmitter();
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }
