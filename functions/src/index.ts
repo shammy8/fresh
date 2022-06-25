@@ -1,6 +1,10 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
+admin.initializeApp();
+
+const firestore = admin.firestore();
+
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 // // firebase deploy --only functions
@@ -9,14 +13,23 @@ import * as admin from "firebase-admin";
 //   response.send("Hello from Firebase!");
 // });
 
-// TODO remove
-exports.addNameLowerCase = functions.region("europe-west2").firestore
-    .document("homes/{homeId}/items/{itemsId}")
-    .onCreate((snap) => {
-      const incomingData = snap.data();
-      const nameLowerCase = incomingData.name.toLowerCase();
-      return snap.ref.update({nameLowerCase});
+exports.onUserCreate = functions.region("europe-west2")
+    .auth.user().onCreate((user) => {
+      const userRef = firestore.doc(`users/${user.uid}`);
+      return userRef.set({
+        displayName: user.displayName,
+        uid: user.uid,
+      });
     });
+
+// TODO remove
+// exports.addNameLowerCase = functions.region("europe-west2").firestore
+//     .document("homes/{homeId}/items/{itemsId}")
+//     .onCreate((snap) => {
+//       const incomingData = snap.data();
+//       const nameLowerCase = incomingData.name.toLowerCase();
+//       return snap.ref.update({nameLowerCase});
+//     });
 
 // export const subscribeToTopic = functions.https.onCall(
 //     async (data, context) => {
