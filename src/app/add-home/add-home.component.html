@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="onAdd()">
   <mat-form-field>
     <mat-label>Name</mat-label>
-    <input matInput formControlName="name" />
+    <input matInput formControlName="name" name="name" />
     <mat-error *ngIf="form.hasError('required', 'name')">Required</mat-error>
     <mat-error *ngIf="form.hasError('maxlength', 'name')"
       >Name must be less than 31 characters</mat-error
