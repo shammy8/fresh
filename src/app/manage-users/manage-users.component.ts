@@ -1,12 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  FormRecord,
-  ValidationErrors,
-  ValidatorFn,
-} from '@angular/forms';
+import { Component, Inject } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 
 import {
   MatBottomSheetRef,
@@ -14,7 +7,9 @@ import {
 } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Home, ManageUsersFormGroup } from '../item.interface';
+import { Observable } from 'rxjs';
+
+import { Home, UserDetails } from '../item.interface';
 import { HomeService } from '../services/home.service';
 
 @Component({
@@ -30,11 +25,12 @@ import { HomeService } from '../services/home.service';
         font-size: 12px !important;
         opacity: 0.8;
       }
+      .no-display-name-text {
+        font-style: italic;
+        opacity: 0.8;
+      }
       mat-form-field {
         width: 100%;
-      }
-      .mat-error {
-        margin-top: 10px;
       }
       .button-container {
         display: flex;
@@ -44,23 +40,18 @@ import { HomeService } from '../services/home.service';
     `,
   ],
 })
-export class ManageUsersComponent implements OnInit {
-  form = new FormGroup<ManageUsersFormGroup>({
-    users: new FormRecord<FormControl<boolean>>(
-      {},
-      { validators: [minFormControlsInFormRecord(1)] }
-    ),
-  });
-
-  newUserIdControl = new FormControl<string>('', { nonNullable: true });
+export class ManageUsersComponent {
+    // newUserIdControl = new FormControl<string>('', { nonNullable: true });
+    
+    newUserEmailControl = new FormControl<string>('', {
+        validators: [Validators.email],
+        nonNullable: true,
+    });
 
   userId = '';
+  usersDetails: { [key: string]: UserDetails } = {};
 
   disableSubmitButton = false;
-
-  get usersFormRecord() {
-    return this.form.get('users') as FormRecord<FormControl<boolean>>;
-  }
 
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<ManageUsersComponent>,
@@ -68,60 +59,49 @@ export class ManageUsersComponent implements OnInit {
     private _snackBar: MatSnackBar,
     @Inject(MAT_BOTTOM_SHEET_DATA)
     public data: {
-      home: Home;
       userId: string;
+      home$: Observable<Home>;
     }
   ) {}
 
-  ngOnInit(): void {
-    const users = this.data.home.users;
-    for (const user of Object.keys(users)) {
-      this.usersFormRecord.addControl(
-        user,
-        new FormControl(users[user], { nonNullable: true })
+  async addUserEmailToForm(homeId: string) {
+    if (!this.newUserEmailControl.value || !this.newUserEmailControl.valid) return;
+
+    try {
+      // TODO add loading spinner
+      await this._homeService.addUserToHomeUsingEmail(
+        homeId,
+        this.newUserEmailControl.value
       );
+      this.newUserEmailControl.reset();
+      this._snackBar.open('Successfully Added User', 'Close');
+    } catch (error) {
+      this.newUserEmailControl.setErrors({ backendError: error });
+      this._snackBar.open('Error Adding User', 'Close');
     }
   }
 
-  addUserIdToForm() {
-    if (!this.newUserIdControl.value) return;
-
-    this.usersFormRecord.addControl(
-      this.newUserIdControl.value,
-      new FormControl(true, { nonNullable: true })
-    );
-    this.newUserIdControl.reset();
-  }
-
-  removeUserIdFromForm(userId: string) {
-    this.usersFormRecord.removeControl(userId);
-  }
-
-  async saveForm() {
-    if (!this.form.valid) return;
-
+  async deleteUserId(homeId: string, userId: string, userEmail: string) {
     if (
-      !confirm(`Any users added will have full control of the home including deleting the whole home and removing users.
-Removing yourself will mean you no longer have access to the home until a user adds you back in.
-Are you sure you want to continue?`)
-    )
+      userId === this.data.userId &&
+      !confirm(
+        `Removing yourself will mean you no longer have access to the home until a user adds you back in. Are you sure you want to continue?`
+      )
+    ) {
       return;
-
-    this.disableSubmitButton = true;
-
-    this.closeBottomSheet();
+    } else if (
+      !confirm(`Are you sure you want to remove ${userEmail} from this home?`)
+    ) {
+      return;
+    }
 
     try {
-      await this._homeService.updateUsers(
-        this.data.home.id,
-        this.form.getRawValue().users
-      );
-      this._snackBar.open('Successfully Updated Users', 'Close');
+      await this._homeService.deleteUser(homeId, userId);
+      this._snackBar.open('Successfully Deleted User', 'Close');
     } catch (error) {
+      // TODO
       console.error(error);
-      this._snackBar.open('Error Updating Users', 'Close');
-      this.disableSubmitButton = false;
-      // TODO handle error better
+      this._snackBar.open('Error Deleting User', 'Close');
     }
   }
 
@@ -129,14 +109,3 @@ Are you sure you want to continue?`)
     this._bottomSheetRef.dismiss(docRef);
   }
 }
-
-// TODO move somewhere else
-export const minFormControlsInFormRecord =
-  (min: number): ValidatorFn =>
-  (control: AbstractControl): ValidationErrors | null => {
-    const c = control as FormRecord;
-    if (Object.keys(c.controls).length < min) {
-      return { minFormControlsInFormRecord: true };
-    }
-    return null;
-  };

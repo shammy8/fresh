@@ -1,4 +1,4 @@
-import { FormControl, FormRecord } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 import { Timestamp } from '@angular/fire/firestore';
 
@@ -63,6 +63,7 @@ export interface Home {
   id?: string;
   name: string;
   users: { [key: string]: true };
+  usersDetails: { [key: string]: UserDetails };
   storage: string[];
   items?: Item[]; // this would be a sub collection in Firestore
 }
@@ -73,6 +74,8 @@ export interface HomeFormGroup {
   storage: FormControl<string[]>;
 }
 
-export interface ManageUsersFormGroup {
-  users: FormRecord<FormControl<boolean>>;
+export interface UserDetails {
+  displayName: string;
+  email: string;
+  uid: string;
 }

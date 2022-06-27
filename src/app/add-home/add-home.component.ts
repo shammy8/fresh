@@ -105,6 +105,7 @@ export class AddHomeComponent {
       const docRef = await this._homeService.addHome({
         ...this.form.getRawValue(),
         users: usersMap,
+        usersDetails: {}
       });
       this.closeBottomSheet(docRef.id);
       this._snackBar.open('Successfully Added Home', 'Close');

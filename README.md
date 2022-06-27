@@ -25,6 +25,7 @@ Version 0.1:
 
 For later:
 
+- [ ] Allow to add user by using id in manage users?
 - [ ] Set initial home on app load.
 - [ ] Add barcode scanner to quickly add items??
 - [ ] Renaming of storages under all items??

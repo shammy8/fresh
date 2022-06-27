@@ -1,41 +1,41 @@
-<form [formGroup]="form" (ngSubmit)="saveForm()">
-  <mat-list formGroupName="users">
-    <mat-list-item *ngFor="let user of form.value.users | keyvalue">
+<ng-container *ngIf="data.home$ | async as home">
+  <mat-list>
+    <mat-list-item *ngFor="let user of home.usersDetails | keyvalue">
       <div matLine class="userId-text">{{ user.key }}</div>
-      <div matLine *ngIf="user.key === data.userId">You</div>
-      <!-- <mat-form-field>
-              <mat-label> {{ user.key }} </mat-label>
-              <input matInput [formControlName]="user.key" />
-            </mat-form-field> -->
-      <mat-icon (click)="removeUserIdFromForm(user.key)">delete</mat-icon>
-    </mat-list-item>
-
-    <mat-list-item>
-      <mat-form-field>
-        <mat-label>User ID</mat-label>
-        <input matInput [formControl]="newUserIdControl" />
-        <mat-icon matSuffix type="button" (click)="addUserIdToForm()">
-          add
-        </mat-icon>
-        <mat-hint align="end">
-          Press the + button after entering the User ID</mat-hint
+      <div matLine>
+        <span *ngIf="user.value.displayName; else noDisplayName">
+          {{ user.value.displayName }}
+        </span>
+        <ng-template #noDisplayName
+          ><span class="no-display-name-text"
+            >No Display Name</span
+          ></ng-template
         >
-      </mat-form-field>
+        <span *ngIf="user.key === data.userId"> - You </span>
+      </div>
+      <mat-icon (click)="deleteUserId(home.id!, user.key, user.value.email)"
+        >delete</mat-icon
+      >
     </mat-list-item>
   </mat-list>
 
-  <mat-error *ngIf="form.hasError('minFormControlsInFormRecord', 'users')"
-    >There must be at least one user</mat-error
-  >
-  <div class="button-container">
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      [disabled]="disableSubmitButton"
+  <mat-form-field>
+    <mat-label>User Email</mat-label>
+    <input matInput [formControl]="newUserEmailControl" type="email" />
+    <mat-icon matSuffix type="button" (click)="addUserEmailToForm(home.id!)">
+      add
+    </mat-icon>
+    <mat-hint align="end">
+      Press the + button after entering the User Email</mat-hint
     >
-      Save
-    </button>
-    <button mat-button type="button" (click)="closeBottomSheet()">Close</button>
-  </div>
-</form>
+    <mat-error *ngIf="newUserEmailControl.hasError('email')">Email must be a valid email</mat-error
+    >
+    <mat-error *ngIf="newUserEmailControl.hasError('backendError')">
+      {{ newUserEmailControl.errors?.['backendError'] }}</mat-error
+    >
+  </mat-form-field>
+</ng-container>
+
+<div class="button-container">
+  <button mat-button type="button" (click)="closeBottomSheet()">Close</button>
+</div>

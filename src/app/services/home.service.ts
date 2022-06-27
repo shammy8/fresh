@@ -12,6 +12,7 @@ import {
   arrayRemove,
   addDoc,
   orderBy,
+  deleteField,
 } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 
@@ -88,5 +89,12 @@ export class HomeService {
       any // TODO type this
     >(this._fireFunctions, 'addUsersToHomeUsingEmail');
     return fn({ homeId, email });
+  }
+
+  deleteUser(homeId: string, userId: string) {
+    return updateDoc(doc(this._firestore, `homes/${homeId}`), {
+        [`users.${userId}`]: deleteField(),
+        [`usersDetails.${userId}`]: deleteField(),
+    })
   }
 }
