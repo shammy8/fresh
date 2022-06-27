@@ -41,17 +41,17 @@ import { HomeService } from '../services/home.service';
   ],
 })
 export class ManageUsersComponent {
-    // newUserIdControl = new FormControl<string>('', { nonNullable: true });
-    
-    newUserEmailControl = new FormControl<string>('', {
-        validators: [Validators.email],
-        nonNullable: true,
-    });
+  // newUserIdControl = new FormControl<string>('', { nonNullable: true });
+
+  newUserEmailControl = new FormControl<string>('', {
+    validators: [Validators.email],
+    nonNullable: true,
+  });
 
   userId = '';
   usersDetails: { [key: string]: UserDetails } = {};
 
-  disableSubmitButton = false;
+  isLoadingAddUser = false;
 
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<ManageUsersComponent>,
@@ -65,22 +65,26 @@ export class ManageUsersComponent {
   ) {}
 
   async addUserEmailToForm(homeId: string) {
-    if (!this.newUserEmailControl.value || !this.newUserEmailControl.valid) return;
+    if (!this.newUserEmailControl.value || !this.newUserEmailControl.valid)
+      return;
 
     try {
-      // TODO add loading spinner
+      this.isLoadingAddUser = true;
       await this._homeService.addUserToHomeUsingEmail(
         homeId,
         this.newUserEmailControl.value
       );
       this.newUserEmailControl.reset();
       this._snackBar.open('Successfully Added User', 'Close');
+      this.isLoadingAddUser = false;
     } catch (error) {
       this.newUserEmailControl.setErrors({ backendError: error });
       this._snackBar.open('Error Adding User', 'Close');
+      this.isLoadingAddUser = false;
     }
   }
 
+  // TODO remove delete button when there is only one users
   async deleteUserId(homeId: string, userId: string, userEmail: string) {
     if (
       userId === this.data.userId &&

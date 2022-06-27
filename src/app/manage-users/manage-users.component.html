@@ -21,18 +21,28 @@
 
   <mat-form-field>
     <mat-label>User Email</mat-label>
-    <input matInput [formControl]="newUserEmailControl" type="email" />
-    <mat-icon matSuffix type="button" (click)="addUserEmailToForm(home.id!)">
+    <input matInput [formControl]="newUserEmailControl" type="email" name="newUserEmailControl" />
+    <mat-icon
+      *ngIf="!isLoadingAddUser; else loadingAddUserTemplate"
+      matSuffix
+      type="button"
+      (click)="addUserEmailToForm(home.id!)"
+    >
       add
     </mat-icon>
     <mat-hint align="end">
       Press the + button after entering the User Email</mat-hint
     >
-    <mat-error *ngIf="newUserEmailControl.hasError('email')">Email must be a valid email</mat-error
+    <mat-error *ngIf="newUserEmailControl.hasError('email')"
+      >Email must be a valid email</mat-error
     >
     <mat-error *ngIf="newUserEmailControl.hasError('backendError')">
       {{ newUserEmailControl.errors?.['backendError'] }}</mat-error
     >
+
+    <ng-template #loadingAddUserTemplate>
+        <mat-spinner matSuffix [diameter]="22"></mat-spinner>
+    </ng-template>
   </mat-form-field>
 </ng-container>
 
