@@ -32,7 +32,7 @@ import {
   enableIndexedDbPersistence,
 } from '@angular/fire/firestore';
 import { getMessaging, provideMessaging } from '@angular/fire/messaging';
-import { getFunctions, provideFunctions } from '@angular/fire/functions';
+import { FunctionsModule, getFunctions, provideFunctions } from '@angular/fire/functions';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -102,7 +102,8 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
       return firestore;
     }),
     provideMessaging(() => getMessaging()),
-    provideFunctions(() => getFunctions()),
+    FunctionsModule, // TODO do I need this?
+    provideFunctions(() => getFunctions()), // TODO figure out how to set the region
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable

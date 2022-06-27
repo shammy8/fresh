@@ -13,6 +13,7 @@ import {
   addDoc,
   orderBy,
 } from '@angular/fire/firestore';
+import { Functions, httpsCallable } from '@angular/fire/functions';
 
 import { BehaviorSubject, EMPTY, map, Observable, switchMap, tap } from 'rxjs';
 
@@ -24,7 +25,11 @@ import { Home } from '../item.interface';
 export class HomeService {
   private _homes$: BehaviorSubject<Home[]> = new BehaviorSubject([] as Home[]);
 
-  constructor(private _auth: Auth, private _firestore: Firestore) {}
+  constructor(
+    private _auth: Auth,
+    private _firestore: Firestore,
+    private _fireFunctions: Functions
+  ) {}
 
   fetchHomes() {
     return authState(this._auth).pipe(
@@ -50,6 +55,13 @@ export class HomeService {
     return addDoc(collection(this._firestore, 'homes'), home);
   }
 
+  getCurrentHomeFromHome$(homeId: string) {
+    return this._homes$.pipe(
+      map((homes) => homes.find((home) => home.id === homeId)),
+      map((home) => (home ? home : null))
+    );
+  }
+
   getCurrentStorageFromHome$(homeId: string) {
     return this._homes$.pipe(
       map((homes) => homes.find((home) => home.id === homeId)),
@@ -68,5 +80,13 @@ export class HomeService {
     return updateDoc(doc(this._firestore, `homes/${homeId}`), {
       users: { ...users },
     });
+  }
+
+  addUserToHomeUsingEmail(homeId: string | undefined, email: string) {
+    const fn = httpsCallable<
+      { homeId: string | undefined; email: string },
+      any // TODO type this
+    >(this._fireFunctions, 'addUsersToHomeUsingEmail');
+    return fn({ homeId, email });
   }
 }

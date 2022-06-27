@@ -10,6 +10,7 @@ Version 0.1:
 - [x] Change tick next to home to a cog which opens a little menu with more options like managing users, deleting home
 - [ ] Allow removing homes
 - [x] Allow adding/removing users to homes.
+  - [ ] Refactor to allow adding by email and subscribe to home in the manage-users component
 - [ ] Allow user to copy their own userId
 - [ ] Style login page
 - [x] Allow removal of storages.
@@ -17,6 +18,7 @@ Version 0.1:
   - [x] Add verification for storedIn length
 - [ ] Handle errors to do with promises and observables
 - [x] Hints for how to add storage
+- [ ] Add name/id to input fields. Take a look at the autocomplete attribute
 - [x] Change to PWA
 - [x] Add a version number
 - [ ] Deploy to Firebase hosting
