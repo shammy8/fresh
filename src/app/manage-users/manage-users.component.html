@@ -1,6 +1,6 @@
 <ng-container *ngIf="data.home$ | async as home">
   <mat-list>
-    <mat-list-item *ngFor="let user of home.usersDetails | keyvalue">
+    <mat-list-item *ngFor="let user of home.usersDetails | keyvalue; count as count">
       <div matLine class="userId-text">{{ user.key }}</div>
       <div matLine>
         <span *ngIf="user.value.displayName; else noDisplayName">
@@ -13,7 +13,7 @@
         >
         <span *ngIf="user.key === data.userId"> - You </span>
       </div>
-      <mat-icon (click)="deleteUserId(home.id!, user.key, user.value.email)"
+      <mat-icon *ngIf="count > 1" (click)="deleteUserId(home.id!, user.key, user.value.email)"
         >delete</mat-icon
       >
     </mat-list-item>

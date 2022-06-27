@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable } from 'rxjs';
 
-import { Home, UserDetails } from '../item.interface';
+import { Home } from '../item.interface';
 import { HomeService } from '../services/home.service';
 
 @Component({
@@ -48,9 +48,6 @@ export class ManageUsersComponent {
     nonNullable: true,
   });
 
-  userId = '';
-  usersDetails: { [key: string]: UserDetails } = {};
-
   isLoadingAddUser = false;
 
   constructor(
@@ -84,7 +81,6 @@ export class ManageUsersComponent {
     }
   }
 
-  // TODO remove delete button when there is only one users
   async deleteUserId(homeId: string, userId: string, userEmail: string) {
     if (
       userId === this.data.userId &&
