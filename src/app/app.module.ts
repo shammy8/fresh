@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -32,7 +33,11 @@ import {
   enableIndexedDbPersistence,
 } from '@angular/fire/firestore';
 import { getMessaging, provideMessaging } from '@angular/fire/messaging';
-import { FunctionsModule, getFunctions, provideFunctions } from '@angular/fire/functions';
+import {
+  FunctionsModule,
+  getFunctions,
+  provideFunctions,
+} from '@angular/fire/functions';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -85,6 +90,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
     MatAutocompleteModule,
     MatChipsModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => {

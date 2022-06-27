@@ -10,14 +10,15 @@ Version 0.1:
 - [x] Change tick next to home to a cog which opens a little menu with more options like managing users, deleting home
 - [ ] Allow removing homes
 - [x] Allow adding/removing users to homes.
-  - [ ] Refactor to allow adding by email and subscribe to home in the manage-users component
-- [ ] Allow user to copy their own userId
+  - [x] Refactor to allow adding by email and subscribe to home in the manage-users component
+- [ ] Add a users page to allowing changing display name and to show their email/uid
 - [ ] Style login page
 - [x] Allow removal of storages.
 - [x] Handle long home / item storage names
   - [x] Add verification for storedIn length
 - [ ] Handle errors to do with promises and observables
 - [x] Hints for how to add storage
+- [ ] Users collection update trigger to update the usersDetails property in homes when display name is changed
 - [ ] Add name/id to input fields. Take a look at the autocomplete attribute
 - [x] Change to PWA
 - [x] Add a version number
@@ -26,17 +27,19 @@ Version 0.1:
 For later:
 
 - [ ] Allow to add user by using id in manage users?
+  - [ ] Allow adding users by email/uid in add home component?
 - [ ] Set initial home on app load.
 - [ ] Add barcode scanner to quickly add items??
 - [ ] Renaming of storages under all items??
 - [ ] Think how to handle closing bottom sheet to work well in online and offline mode
 - [ ] Add different users level like home owner / regular user
-- [ ] Add other login provider
+- [ ] Add other login providers
 - [ ] Styling
   - [ ] Change the styling of the app
   - [ ] Create custom logos for the app, use it in the manifest.webmanifest
   - [x] Handle overflow of homes
 - [ ] Scrolling / pagination / searching
+  - [ ] Tag functionality to easier search items for now while I think about the below indented ones
   - [ ] Should I allow users to drag items to different storage, like one column for each storage?
   - [ ] Figure what to do with full text searching and pagination / infinite scrolling, to reduce document reads.
   - [ ] Add virtual scrolling to items? Does it handle expansion boxes since the height can be changed.

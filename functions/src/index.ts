@@ -37,6 +37,7 @@ exports.addUsersToHomeUsingEmail = functions // .region("europe-west2")
       const homeId = data.homeId;
       const email = data.email;
 
+      // TODO change this to a transaction?
       // TODO try catch
       const usersSnapshot = await firestore.collection("users")
           .where("email", "==", email).limit(2).get();

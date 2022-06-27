@@ -67,19 +67,19 @@ export class AddHomeComponent {
     this._bottomSheetRef.dismiss(docRef);
   }
 
-  addUid(event: MatChipInputEvent) {
-    if (!event.value) return;
-    this.uidList.add(event.value);
-    const newUsersValue = Array.from(this.uidList.values());
-    this.form.get('users')?.patchValue(newUsersValue);
-    event.chipInput!.clear();
-  }
+//   addUid(event: MatChipInputEvent) {
+//     if (!event.value) return;
+//     this.uidList.add(event.value);
+//     const newUsersValue = Array.from(this.uidList.values());
+//     this.form.get('users')?.patchValue(newUsersValue);
+//     event.chipInput!.clear();
+//   }
 
-  removeUid(uid: string) {
-    this.uidList.delete(uid);
-    const newUsersValue = Array.from(this.uidList.values());
-    this.form.get('users')?.patchValue(newUsersValue);
-  }
+//   removeUid(uid: string) {
+//     this.uidList.delete(uid);
+//     const newUsersValue = Array.from(this.uidList.values());
+//     this.form.get('users')?.patchValue(newUsersValue);
+//   }
 
   addStorage(event: MatChipInputEvent) {
     if (!event.value) return;
