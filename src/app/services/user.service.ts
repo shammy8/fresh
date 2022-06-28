@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Auth, authState } from '@angular/fire/auth';
-import { Firestore, doc, docData } from '@angular/fire/firestore';
+import { Firestore, doc, docData, updateDoc } from '@angular/fire/firestore';
 
 import { EMPTY, Observable, switchMap } from 'rxjs';
 
@@ -23,5 +23,12 @@ export class UserService {
       })
     );
     // TODO handle errors
+  }
+
+  updateDisplayName(userId: string, displayName: string) {
+    const userRef = doc(this._firestore, `users/${userId}`);
+    return updateDoc(userRef, {
+      displayName,
+    });
   }
 }

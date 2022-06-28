@@ -55,7 +55,10 @@ service cloud.firestore {
             allow update: if isLoggedIn() &&
                 request.auth.uid == userId &&  
                 resource.data.uid == request.resource.data.uid &&
-                resource.data.email == request.resource.data.email;
+                resource.data.email == request.resource.data.email &&
+                request.resource.data.displayName is string &&
+                request.resource.data.displayName.size() > 0 && 
+                request.resource.data.displayName.size() < 31;
         }
     }
 }
