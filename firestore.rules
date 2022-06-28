@@ -48,6 +48,15 @@ service cloud.firestore {
                 allow create, update: if isLoggedIn() && isHomeUserTwo() && isValidItem();
             }
         }
+
+        match /users/{userId} {
+            allow read: if isLoggedIn() && request.auth.uid == userId;
+            allow create, delete: if false;
+            allow update: if isLoggedIn() &&
+                request.auth.uid == userId &&  
+                resource.data.uid == request.resource.data.uid &&
+                resource.data.email == request.resource.data.email;
+        }
     }
 }
 

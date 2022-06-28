@@ -20,6 +20,7 @@ import { HomeService } from '../services/home.service';
 import { CloudNotificationService } from '../services/cloud-notification.service';
 import { AddHomeComponent } from '../add-home/add-home.component';
 import { ManageUsersComponent } from '../manage-users/manage-users.component';
+import { UserComponent } from '../user/user.component';
 
 @Component({
   selector: 'fresh-main',
@@ -131,7 +132,7 @@ export class MainComponent implements OnDestroy {
   openBottomSheetToManageUsers(home: Home) {
     const home$ = this._homeService.getCurrentHomeFromHome$(home.id!);
     const bottomSheetRef = this._bottomSheet.open(ManageUsersComponent, {
-      data: { home, userId: this._userId, home$ },
+      data: { userId: this._userId, home$ },
     });
   }
 
@@ -142,7 +143,9 @@ export class MainComponent implements OnDestroy {
   }
 
   goToUserPage() {
-    this._router.navigate(['user', this._userId]);
+    const bottomSheetRef = this._bottomSheet.open(UserComponent, {
+      data: { userId: this._userId },
+    });
   }
 
   logout() {

@@ -24,6 +24,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -93,6 +96,8 @@ import { UserComponent } from './user/user.component';
     MatChipsModule,
     MatMenuModule,
     MatProgressSpinnerModule,
+    MatTooltipModule,
+    ClipboardModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => {
