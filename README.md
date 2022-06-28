@@ -11,7 +11,7 @@ Version 0.1:
 - [ ] Allow removing homes
 - [x] Allow adding/removing users to homes.
   - [x] Refactor to allow adding by email and subscribe to home in the manage-users component
-- [ ] Add a users page to allowing changing display name and to show their email/uid
+- [x] Add a users page to allowing changing display name and to show their email/uid
 - [ ] Style login page
 - [x] Allow removal of storages.
 - [x] Handle long home / item storage names
