@@ -13,6 +13,7 @@ import {
   addDoc,
   orderBy,
   deleteField,
+  deleteDoc,
 } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 
@@ -56,6 +57,10 @@ export class HomeService {
     return addDoc(collection(this._firestore, 'homes'), home);
   }
 
+  deleteHome(home: Home) {
+    return deleteDoc(doc(this._firestore, `homes/${home.id!}`));
+  }
+
   getCurrentHomeFromHome$(homeId: string) {
     return this._homes$.pipe(
       map((homes) => homes.find((home) => home.id === homeId)),
@@ -93,8 +98,8 @@ export class HomeService {
 
   deleteUser(homeId: string, userId: string) {
     return updateDoc(doc(this._firestore, `homes/${homeId}`), {
-        [`users.${userId}`]: deleteField(),
-        [`usersDetails.${userId}`]: deleteField(),
-    })
+      [`users.${userId}`]: deleteField(),
+      [`usersDetails.${userId}`]: deleteField(),
+    });
   }
 }

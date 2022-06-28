@@ -136,9 +136,14 @@ export class MainComponent implements OnDestroy {
     });
   }
 
-  deleteHome(home: Home) {
-    if (confirm(`Are you sure you want to delete this ${home.name}?`)) {
-      alert('This feature is not implemented yet');
+  async deleteHome(home: Home) {
+    if (!confirm(`Are you sure you want to delete ${home.name}?`)) return;
+
+    try {
+      await this._homeService.deleteHome(home);
+      this._router.navigate(['']);
+    } catch (error) {
+      console.error(error);
     }
   }
 
