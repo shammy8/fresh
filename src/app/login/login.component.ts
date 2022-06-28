@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Auth, signInWithPopup } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+
+import { Auth, signInWithPopup } from '@angular/fire/auth';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { GoogleAuthProvider } from 'firebase/auth';
 
@@ -11,23 +13,33 @@ import { GoogleAuthProvider } from 'firebase/auth';
     </mat-toolbar>
 
     <br />
-    <button mat-raised-button color="primary" (click)="login()">
-      Login with Google
-    </button>`,
-  styles: [],
+    <button mat-raised-button (click)="login()">Login with Google</button>`,
+  styles: [
+    `
+      button {
+        display: block;
+        margin: 0 auto;
+      }
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  constructor(private _auth: Auth, private _router: Router) {}
+  constructor(
+    private _auth: Auth,
+    private _router: Router,
+    private _snackbar: MatSnackBar
+  ) {}
 
-  login() {
+  async login() {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(this._auth, provider)
-      .then(() => {
-        this._router.navigate(['']);
-      })
-      .catch((error) => {
-        // TODO
-      });
+    try {
+      await signInWithPopup(this._auth, provider);
+      this._router.navigate(['']);
+    } catch (error) {
+      console.error(error);
+      this._snackbar.open('Error Logging In', 'Close');
+      // TODO
+    }
   }
 }

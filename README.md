@@ -12,7 +12,6 @@ Version 0.1:
 - [x] Allow adding/removing users to homes.
   - [x] Refactor to allow adding by email and subscribe to home in the manage-users component
 - [x] Add a users page to allowing changing display name and to show their email/uid
-- [ ] Style login page
 - [x] Allow removal of storages.
 - [x] Handle long home / item storage names
   - [x] Add verification for storedIn length
@@ -34,6 +33,7 @@ For later:
 - [ ] Think how to handle closing bottom sheet to work well in online and offline mode
 - [ ] Add different users level like home owner / regular user
 - [ ] Add other login providers
+  - [ ] Style login page
 - [ ] Styling
   - [ ] Change the styling of the app
   - [ ] Create custom logos for the app, use it in the manifest.webmanifest
