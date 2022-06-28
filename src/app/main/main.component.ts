@@ -37,6 +37,9 @@ import { ManageUsersComponent } from '../manage-users/manage-users.component';
           text-decoration: none;
         }
       }
+      .more-button {
+        margin-left: auto;
+      }
       mat-sidenav-container {
         height: calc(100% - 64px);
       }
@@ -62,10 +65,6 @@ import { ManageUsersComponent } from '../manage-users/manage-users.component';
       }
       mat-sidenav-content {
         padding: 0px 5px;
-      }
-      .logout-button {
-        margin-left: auto;
-        cursor: pointer;
       }
       ::ng-deep .mat-drawer-inner-container {
         display: flex;
@@ -124,7 +123,7 @@ export class MainComponent implements OnDestroy {
     });
     bottomSheetRef.afterDismissed().subscribe((docId) => {
       if (!docId) return;
-      this._router.navigate([docId]);
+      this._router.navigate(['home', docId]);
       this.matSideNav?.close();
     });
   }
@@ -140,6 +139,10 @@ export class MainComponent implements OnDestroy {
     if (confirm(`Are you sure you want to delete this ${home.name}?`)) {
       alert('This feature is not implemented yet');
     }
+  }
+
+  goToUserPage() {
+    this._router.navigate(['user', this._userId]);
   }
 
   logout() {

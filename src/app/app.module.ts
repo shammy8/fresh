@@ -53,6 +53,7 @@ import { QueryItemsComponent } from './query-items/query-items.component';
 import { NoHomeSelectedComponent } from './no-home-selected/no-home-selected.component';
 import { AddHomeComponent } from './add-home/add-home.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
     NoHomeSelectedComponent,
     AddHomeComponent,
     ManageUsersComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,

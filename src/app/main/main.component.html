@@ -1,7 +1,20 @@
 <mat-toolbar color="primary">
   <mat-icon (click)="matSidenav.toggle()">menu</mat-icon>
   <h1><a routerLink="">Fresh</a></h1>
-  <mat-icon class="logout-button" (click)="logout()">logout</mat-icon>
+
+  <button class="more-button" mat-icon-button [matMenuTriggerFor]="userMenu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="goToUserPage()">
+      <mat-icon>account_circle</mat-icon>
+      <span>User</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>
 
 <mat-sidenav-container>
@@ -19,7 +32,7 @@
       <mat-list-item *ngFor="let home of homes$ | async">
         <a
           mat-list-item
-          [routerLink]="home.id"
+          [routerLink]="['home', home.id]"
           routerLinkActive
           #rla="routerLinkActive"
           (click)="matSidenav.close()"
