@@ -26,6 +26,7 @@ import { Home } from '../item.interface';
 })
 export class HomeService {
   private _homes$: BehaviorSubject<Home[]> = new BehaviorSubject([] as Home[]);
+  homes$ = this._homes$.asObservable();
 
   constructor(
     private _auth: Auth,

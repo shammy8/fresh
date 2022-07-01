@@ -85,13 +85,11 @@ import { UserService } from '../services/user.service';
 export class MainComponent implements OnDestroy {
   @ViewChild(MatSidenav) matSideNav: MatSidenav | null = null;
 
-  homes$: Observable<Home[]> = this._homeService.fetchHomes();
+  homes$ = this._homeService.homes$;
 
   userDoc$ = this._userService.userDoc$;
 
   private _cloudMessage$ = this._cloudNotificationService.cloudMessage$;
-
-  private _userId = '';
 
   private _destroy = new Subject<void>();
 
@@ -111,6 +109,7 @@ export class MainComponent implements OnDestroy {
       }
     });
 
+    this._homeService.fetchHomes().pipe(takeUntil(this._destroy)).subscribe();
     this._userService.fetchUserDoc().pipe(takeUntil(this._destroy)).subscribe();
   }
 
