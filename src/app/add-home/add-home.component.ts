@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -15,7 +15,9 @@ import {
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { HomeFormGroup } from '../item.interface';
+import { Observable, Subject, takeUntil } from 'rxjs';
+
+import { HomeFormGroup, UserDetails } from '../item.interface';
 import { HomeService } from '../services/home.service';
 
 @Component({
@@ -35,51 +37,62 @@ import { HomeService } from '../services/home.service';
     `,
   ],
 })
-export class AddHomeComponent {
+export class AddHomeComponent implements OnDestroy {
   form = new FormGroup<HomeFormGroup>({
     name: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.maxLength(30)],
     }),
-    users: new FormControl([this.data.userId], { nonNullable: true }),
+    users: new FormControl([], { nonNullable: true }),
     storage: new FormControl([], {
       validators: [arrayElementMaxLength(30)],
       nonNullable: true,
     }),
   });
 
-  uidList: Set<string> = new Set([this.data.userId]);
+//   uidList: Set<string> = new Set();
   storageList: Set<string> = new Set();
 
   disableSubmitButton = false;
+
+  private _userDoc: UserDetails = { displayName: '', email: '', uid: '' };
+
+  private _destroy = new Subject<void>();
 
   constructor(
     private _snackBar: MatSnackBar,
     private _bottomSheetRef: MatBottomSheetRef<AddHomeComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA)
     public data: {
-      userId: string;
+      userDoc$: Observable<UserDetails>;
     },
     private _homeService: HomeService
-  ) {}
+  ) {
+    this.data.userDoc$
+      .pipe(takeUntil(this._destroy))
+      .subscribe((user) => (this._userDoc = user));
+
+    this.form.get('users')?.setValue([this._userDoc.uid]);
+    // this.uidList.add(this._userDoc.uid)
+  }
 
   closeBottomSheet(docRef?: string) {
     this._bottomSheetRef.dismiss(docRef);
   }
 
-//   addUid(event: MatChipInputEvent) {
-//     if (!event.value) return;
-//     this.uidList.add(event.value);
-//     const newUsersValue = Array.from(this.uidList.values());
-//     this.form.get('users')?.patchValue(newUsersValue);
-//     event.chipInput!.clear();
-//   }
+  //   addUid(event: MatChipInputEvent) {
+  //     if (!event.value) return;
+  //     this.uidList.add(event.value);
+  //     const newUsersValue = Array.from(this.uidList.values());
+  //     this.form.get('users')?.patchValue(newUsersValue);
+  //     event.chipInput!.clear();
+  //   }
 
-//   removeUid(uid: string) {
-//     this.uidList.delete(uid);
-//     const newUsersValue = Array.from(this.uidList.values());
-//     this.form.get('users')?.patchValue(newUsersValue);
-//   }
+  //   removeUid(uid: string) {
+  //     this.uidList.delete(uid);
+  //     const newUsersValue = Array.from(this.uidList.values());
+  //     this.form.get('users')?.patchValue(newUsersValue);
+  //   }
 
   addStorage(event: MatChipInputEvent) {
     if (!event.value) return;
@@ -105,7 +118,7 @@ export class AddHomeComponent {
       const docRef = await this._homeService.addHome({
         ...this.form.getRawValue(),
         users: usersMap,
-        usersDetails: {}
+        usersDetails: { [this._userDoc.uid]: this._userDoc },
       });
       this.closeBottomSheet(docRef.id);
       this._snackBar.open('Successfully Added Home', 'Close');
@@ -115,6 +128,11 @@ export class AddHomeComponent {
       this.disableSubmitButton = false;
       // TODO better handle error
     }
+  }
+
+  ngOnDestroy() {
+    this._destroy.next();
+    this._destroy.complete();
   }
 
   private _mapUsersArrayToObject(users: string[] | undefined): {

@@ -21,6 +21,7 @@ import { CloudNotificationService } from '../services/cloud-notification.service
 import { AddHomeComponent } from '../add-home/add-home.component';
 import { ManageUsersComponent } from '../manage-users/manage-users.component';
 import { UserComponent } from '../user/user.component';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'fresh-main',
@@ -86,6 +87,8 @@ export class MainComponent implements OnDestroy {
 
   homes$: Observable<Home[]> = this._homeService.fetchHomes();
 
+  userDoc$ = this._userService.userDoc$;
+
   private _cloudMessage$ = this._cloudNotificationService.cloudMessage$;
 
   private _userId = '';
@@ -97,6 +100,7 @@ export class MainComponent implements OnDestroy {
     private _auth: Auth,
     private _snackBar: MatSnackBar,
     private _homeService: HomeService,
+    private _userService: UserService,
     private _cloudNotificationService: CloudNotificationService,
     private _bottomSheet: MatBottomSheet
   ) {
@@ -107,11 +111,10 @@ export class MainComponent implements OnDestroy {
       }
     });
 
-    authState(this._auth)
+    this._userService
+      .fetchUserDoc()
       .pipe(takeUntil(this._destroy))
-      .subscribe((user) => {
-        this._userId = user?.uid ?? '';
-      });
+      .subscribe();
   }
 
   requestPermissionToSendNotifications() {
@@ -120,7 +123,7 @@ export class MainComponent implements OnDestroy {
 
   openBottomSheetToAddHome() {
     const bottomSheetRef = this._bottomSheet.open(AddHomeComponent, {
-      data: { userId: this._userId },
+      data: { userDoc$: this.userDoc$ },
     });
     bottomSheetRef.afterDismissed().subscribe((docId) => {
       if (!docId) return;

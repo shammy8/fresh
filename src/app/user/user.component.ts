@@ -102,7 +102,7 @@ import { FormControl, Validators } from '@angular/forms';
   ],
 })
 export class UserComponent {
-  userDoc$ = this._userService.fetchUser();
+  userDoc$ = this._userService.fetchUserDoc();
 
   newNameControl = new FormControl('', {
     nonNullable: true,
