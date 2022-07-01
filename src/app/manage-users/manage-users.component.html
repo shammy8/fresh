@@ -11,7 +11,7 @@
             >No Display Name</span
           ></ng-template
         >
-        <span *ngIf="user.key === data.userId"> - You </span>
+        <span *ngIf="user.key === userDoc.uid"> - You </span>
       </div>
       <mat-icon *ngIf="count > 1" (click)="deleteUserId(home.id!, user.key, user.value.email)"
         >delete</mat-icon

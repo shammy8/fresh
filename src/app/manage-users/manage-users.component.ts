@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
 import {
@@ -7,9 +7,9 @@ import {
 } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
-import { Home } from '../item.interface';
+import { Home, UserDetails } from '../item.interface';
 import { HomeService } from '../services/home.service';
 
 @Component({
@@ -40,7 +40,7 @@ import { HomeService } from '../services/home.service';
     `,
   ],
 })
-export class ManageUsersComponent {
+export class ManageUsersComponent implements OnDestroy {
   // newUserIdControl = new FormControl<string>('', { nonNullable: true });
 
   newUserEmailControl = new FormControl<string>('', {
@@ -50,16 +50,24 @@ export class ManageUsersComponent {
 
   isLoadingAddUser = false;
 
+  userDoc: UserDetails = { displayName: '', email: '', uid: '' };
+
+  private _destroy = new Subject<void>();
+
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<ManageUsersComponent>,
     private _homeService: HomeService,
     private _snackBar: MatSnackBar,
     @Inject(MAT_BOTTOM_SHEET_DATA)
     public data: {
-      userId: string;
+      userDoc$: Observable<UserDetails>;
       home$: Observable<Home>;
     }
-  ) {}
+  ) {
+    this.data.userDoc$
+      .pipe(takeUntil(this._destroy))
+      .subscribe((user) => (this.userDoc = user));
+  }
 
   async addUserEmailToForm(homeId: string) {
     if (!this.newUserEmailControl.value || !this.newUserEmailControl.valid)
@@ -83,7 +91,7 @@ export class ManageUsersComponent {
 
   async deleteUserId(homeId: string, userId: string, userEmail: string) {
     if (
-      userId === this.data.userId &&
+      userId === this.userDoc.uid &&
       !confirm(
         `Removing yourself will mean you no longer have access to the home until a user adds you back in. Are you sure you want to continue?`
       )
@@ -107,5 +115,10 @@ export class ManageUsersComponent {
 
   closeBottomSheet(docRef?: string) {
     this._bottomSheetRef.dismiss(docRef);
+  }
+
+  ngOnDestroy() {
+    this._destroy.next();
+    this._destroy.complete();
   }
 }

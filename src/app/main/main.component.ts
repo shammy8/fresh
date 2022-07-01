@@ -111,10 +111,7 @@ export class MainComponent implements OnDestroy {
       }
     });
 
-    this._userService
-      .fetchUserDoc()
-      .pipe(takeUntil(this._destroy))
-      .subscribe();
+    this._userService.fetchUserDoc().pipe(takeUntil(this._destroy)).subscribe();
   }
 
   requestPermissionToSendNotifications() {
@@ -135,7 +132,7 @@ export class MainComponent implements OnDestroy {
   openBottomSheetToManageUsers(home: Home) {
     const home$ = this._homeService.getCurrentHomeFromHome$(home.id!);
     const bottomSheetRef = this._bottomSheet.open(ManageUsersComponent, {
-      data: { userId: this._userId, home$ },
+      data: { userDoc$: this.userDoc$, home$ },
     });
   }
 
