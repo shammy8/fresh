@@ -6,7 +6,7 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #userMenu="matMenu">
-    <button mat-menu-item (click)="goToUserPage()">
+    <button mat-menu-item (click)="openBottomSheetToUserPage()">
       <mat-icon>account_circle</mat-icon>
       <span>User</span>
     </button>
@@ -23,7 +23,7 @@
       class="add-home-button"
       mat-raised-button
       color="primary"
-      (click)="addHome()"
+      (click)="openBottomSheetToAddHome()"
     >
       <mat-icon>add</mat-icon>
       Home

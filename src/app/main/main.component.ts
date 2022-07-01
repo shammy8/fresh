@@ -118,7 +118,7 @@ export class MainComponent implements OnDestroy {
     Notification.requestPermission();
   }
 
-  addHome() {
+  openBottomSheetToAddHome() {
     const bottomSheetRef = this._bottomSheet.open(AddHomeComponent, {
       data: { userId: this._userId },
     });
@@ -136,6 +136,12 @@ export class MainComponent implements OnDestroy {
     });
   }
 
+  openBottomSheetToUserPage() {
+    const bottomSheetRef = this._bottomSheet.open(UserComponent, {
+      data: { userId: this._userId },
+    });
+  }
+
   async deleteHome(home: Home) {
     if (!confirm(`Are you sure you want to delete ${home.name}?`)) return;
 
@@ -145,12 +151,6 @@ export class MainComponent implements OnDestroy {
     } catch (error) {
       console.error(error);
     }
-  }
-
-  goToUserPage() {
-    const bottomSheetRef = this._bottomSheet.open(UserComponent, {
-      data: { userId: this._userId },
-    });
   }
 
   logout() {
