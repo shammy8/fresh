@@ -1,12 +1,16 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
 } from '@angular/material/bottom-sheet';
+
+import { Observable, Subject, takeUntil } from 'rxjs';
+
 import { UserService } from '../services/user.service';
-import { FormControl, Validators } from '@angular/forms';
+import { UserDetails } from '../item.interface';
 
 @Component({
   selector: 'fresh-user',
@@ -101,7 +105,7 @@ import { FormControl, Validators } from '@angular/forms';
     `,
   ],
 })
-export class UserComponent {
+export class UserComponent implements OnDestroy {
   userDoc$ = this._userService.fetchUserDoc();
 
   newNameControl = new FormControl('', {
@@ -111,15 +115,23 @@ export class UserComponent {
 
   isEditMode = false;
 
+  private _userDoc: UserDetails = { displayName: '', email: '', uid: '' };
+
+  private _destroy = new Subject<void>();
+
   constructor(
     private _snackBar: MatSnackBar,
     private _bottomSheetRef: MatBottomSheetRef<UserComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA)
     private _data: {
-      userId: string;
+      userDoc$: Observable<UserDetails>;
     },
     private _userService: UserService
-  ) {}
+  ) {
+    this._data.userDoc$
+      .pipe(takeUntil(this._destroy))
+      .subscribe((user) => (this._userDoc = user));
+  }
 
   onEdit(displayName: string) {
     this.isEditMode = true;
@@ -131,7 +143,7 @@ export class UserComponent {
 
     try {
       await this._userService.updateDisplayName(
-        this._data.userId,
+        this._userDoc.uid,
         this.newNameControl.value
       );
       this._snackBar.open('Successfully Updated Display Name', 'Close');
@@ -145,5 +157,10 @@ export class UserComponent {
 
   closeBottomSheet() {
     this._bottomSheetRef.dismiss();
+  }
+
+  ngOnDestroy() {
+    this._destroy.next();
+    this._destroy.complete();
   }
 }

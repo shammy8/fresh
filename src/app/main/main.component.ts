@@ -138,7 +138,7 @@ export class MainComponent implements OnDestroy {
 
   openBottomSheetToUserPage() {
     const bottomSheetRef = this._bottomSheet.open(UserComponent, {
-      data: { userId: this._userId },
+      data: { userDoc$: this.userDoc$ },
     });
   }
 
