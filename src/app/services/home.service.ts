@@ -107,7 +107,7 @@ export class HomeService {
   addUserToHomeUsingEmail(homeId: string | undefined, email: string) {
     const fn = httpsCallable<
       { homeId: string | undefined; email: string },
-      any // TODO type this
+      unknown // TODO type this
     >(this._fireFunctions, 'addUsersToHomeUsingEmail');
     return fn({ homeId, email });
   }

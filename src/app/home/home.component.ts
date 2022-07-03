@@ -39,46 +39,59 @@ import { HomeService } from '../services/home.service';
 @Component({
   selector: 'fresh-home',
   template: `
-    <ng-container *ngIf="items$ | async as items">
+    <ng-container *ngrxLet="items$ as items">
       <ng-container *ngIf="items.length > 0; else noItems">
         <fresh-item
-          *ngFor="let item of items$ | async; trackBy: itemTrackByFn"
+          *ngFor="let item of items; trackBy: itemTrackByFn"
           [item]="item"
           (edit)="openEditItemBottomSheet(item)"
           (delete)="deleteItem(item)"
         ></fresh-item>
       </ng-container>
+
+      <button
+        class="load-more-button"
+        mat-button
+        (click)="loadMoreItems()"
+        [disabled]="items.length < itemLimit"
+      >
+        Load more
+      </button>
+
+      <div class="add-empty-height"></div>
+
+      <ng-template #noItems>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> No items found </mat-panel-title>
+          </mat-expansion-panel-header>
+          Please add an item or change your search criteria in the bottom right
+        </mat-expansion-panel>
+      </ng-template>
+
+      <button
+        mat-mini-fab
+        class="query-button"
+        (click)="openQueryItemsBottomSheet()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+      <button
+        mat-fab
+        color="primary"
+        class="add-item-button"
+        (click)="openAddItemBottomSheet()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
     </ng-container>
-
-    <div class="add-empty-height"></div>
-
-    <ng-template #noItems>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title> No items found </mat-panel-title>
-        </mat-expansion-panel-header>
-        Please add an item or change your search criteria in the bottom right
-      </mat-expansion-panel>
-    </ng-template>
-
-    <button
-      mat-mini-fab
-      class="query-button"
-      (click)="openQueryItemsBottomSheet()"
-    >
-      <mat-icon>search</mat-icon>
-    </button>
-    <button
-      mat-fab
-      color="primary"
-      class="add-item-button"
-      (click)="openAddItemBottomSheet()"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
   `,
   styles: [
     `
+      .load-more-button {
+        display: block;
+        margin: 0 auto;
+      }
       .add-item-button {
         position: fixed;
         bottom: 20px;
@@ -102,51 +115,61 @@ import { HomeService } from '../services/home.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnDestroy {
-  query$ = new BehaviorSubject<QueryItems>({
+  private readonly _query$ = new BehaviorSubject<QueryItems>({
     storedIn: '',
     sortBy: 'createdAt',
     sortOrder: 'desc',
   });
 
-  // TODO move to service
-  items$ = combineLatest([this._route.paramMap, this.query$]).pipe(
+  private readonly _initialItemLimit = 30;
+  itemLimit: number = this._initialItemLimit;
+  private readonly _itemLimit$ = new BehaviorSubject<number>(this.itemLimit);
+
+  items$ = combineLatest([this._route.paramMap, this._query$]).pipe(
     switchMap(([params, queryOptions]) => {
-      this.homeId = params.get('homeId') ?? '';
+      this.itemLimit = this._initialItemLimit;
+      this._itemLimit$.next(this.itemLimit);
 
-      console.log(queryOptions);
+      return this._itemLimit$.pipe(
+        switchMap((limitCount) => {
+          this.homeId = params.get('homeId') ?? '';
 
-      const queryCondition =
-        queryOptions.storedIn !== ''
-          ? [where('storedIn', '==', queryOptions.storedIn)]
-          : [];
+          console.log(queryOptions, limitCount);
 
-      // can't use where('storedIn', ....) then orderBy('storedIn')
-      const orderByCondition =
-        queryOptions.storedIn !== '' && queryOptions.sortBy === 'storedIn'
-          ? []
-          : [orderBy(queryOptions.sortBy, queryOptions.sortOrder)];
+          const queryCondition =
+            queryOptions.storedIn !== ''
+              ? [where('storedIn', '==', queryOptions.storedIn)]
+              : [];
 
-      const itemsQuery = query(
-        collection(this._firestore, `homes/${this.homeId}/items`),
-        ...queryCondition,
-        ...orderByCondition
-        // limit(50)
-      );
+          // can't use where('storedIn', ....) then orderBy('storedIn')
+          const orderByCondition =
+            queryOptions.storedIn !== '' && queryOptions.sortBy === 'storedIn'
+              ? []
+              : [orderBy(queryOptions.sortBy, queryOptions.sortOrder)];
 
-      // TODO is the below casting the best way to do this?
-      return (
-        collectionData(itemsQuery, {
-          idField: 'id',
-        }) as unknown as Observable<ItemDto>
-      ).pipe(
-        catchError(() => {
-          alert(
-            `This home doesn't exist or you are not authorised to access this home. Please check the URL is correct or that owner has given you accessed.`
+          const itemsQuery = query(
+            collection(this._firestore, `homes/${this.homeId}/items`),
+            ...queryCondition,
+            ...orderByCondition,
+            limit(limitCount)
           );
-          this._router.navigate(['']);
-          return of([]);
+
+          // TODO is the below casting the best way to do this?
+          return (
+            collectionData(itemsQuery, {
+              idField: 'id',
+            }) as unknown as Observable<ItemDto>
+          ).pipe(
+            catchError(() => {
+              alert(
+                `This home doesn't exist or you are not authorised to access this home. Please check the URL is correct or that owner has given you accessed.`
+              );
+              this._router.navigate(['']);
+              return of([]);
+            })
+          ) as Observable<ItemDto[]>;
         })
-      ) as Observable<ItemDto[]>;
+      );
     }),
     map((items) => items.map((item) => this._itemService.fromDto(item)))
     // TODO maybe just need to use fromDto when opening edit component
@@ -169,10 +192,15 @@ export class HomeComponent implements OnDestroy {
     private _itemService: ItemService
   ) {}
 
+  loadMoreItems() {
+    this.itemLimit += this._initialItemLimit;
+    this._itemLimit$.next(this.itemLimit);
+  }
+
   openQueryItemsBottomSheet() {
     const bottomSheetRef = this._bottomSheet.open(QueryItemsComponent, {
       data: {
-        currentQuery: this.query$.getValue(),
+        currentQuery: this._query$.getValue(),
         storedInOptions$: this._homeService.getCurrentStorageFromHome$(
           this.homeId
         ),
@@ -183,7 +211,7 @@ export class HomeComponent implements OnDestroy {
       .pipe(takeUntil(this._destroy))
       .subscribe((data: QueryItems) => {
         if (!data) return;
-        this.query$.next(data);
+        this._query$.next(data);
       });
   }
 

@@ -15,7 +15,7 @@ Version 0.1:
 - [x] Allow removal of storages.
 - [x] Handle long home / item storage names
   - [x] Add verification for storedIn length
-- [ ] Handle errors to do with promises and observables
+- [x] Handle errors to do with promises and observables
 - [x] Hints for how to add storage
 - [x] Users collection update trigger to update the usersDetails property in homes when display name is changed
 - [x] Add name/id to input fields. Take a look at the autocomplete attribute
