@@ -39,7 +39,6 @@ export class LoginComponent {
     } catch (error) {
       console.error(error);
       this._snackbar.open('Error Logging In', 'Close');
-      // TODO
     }
   }
 }

@@ -151,7 +151,6 @@ export class UserComponent implements OnDestroy {
     } catch (error) {
       console.error(error);
       this._snackBar.open('Error Updating Display Name', 'Close');
-      // TODO
     }
   }
 

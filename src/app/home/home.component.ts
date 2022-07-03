@@ -220,7 +220,6 @@ export class HomeComponent implements OnDestroy {
     } catch (error) {
       console.error(error);
       this._snackBar.open('Error Deleting Item', 'Close');
-      // TODO handle error better
     }
   }
 

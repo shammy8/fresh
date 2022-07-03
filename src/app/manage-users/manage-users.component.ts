@@ -107,7 +107,6 @@ export class ManageUsersComponent implements OnDestroy {
       await this._homeService.deleteUser(homeId, userId);
       this._snackBar.open('Successfully Deleted User', 'Close');
     } catch (error) {
-      // TODO
       console.error(error);
       this._snackBar.open('Error Deleting User', 'Close');
     }

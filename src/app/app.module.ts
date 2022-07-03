@@ -115,7 +115,7 @@ import { UserComponent } from './user/user.component';
       return firestore;
     }),
     provideMessaging(() => getMessaging()),
-    FunctionsModule, // TODO do I need this?
+    FunctionsModule,
     provideFunctions(() => getFunctions()), // TODO figure out how to set the region
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,

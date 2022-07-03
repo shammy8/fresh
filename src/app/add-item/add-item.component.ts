@@ -139,7 +139,6 @@ export class AddItemComponent implements OnInit, OnDestroy {
       console.error(error);
       this._snackBar.open('Error Adding Item', 'Close');
       this.disableSubmitButton = false;
-      // TODO handle error better
     }
   }
 

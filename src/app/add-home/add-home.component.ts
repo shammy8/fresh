@@ -126,7 +126,6 @@ export class AddHomeComponent implements OnDestroy {
       console.error(error);
       this._snackBar.open('Error Adding Home', 'Close');
       this.disableSubmitButton = false;
-      // TODO better handle error
     }
   }
 

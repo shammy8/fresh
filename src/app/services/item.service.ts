@@ -84,7 +84,4 @@ export class ItemService {
       comments: itemDto.comments,
     };
   }
-
-  // TODO do we need toDto, firestore can take js dates
-  // toDto(item: Item): ItemDto {}
 }
