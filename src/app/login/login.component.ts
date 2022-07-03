@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Auth, signInWithPopup } from '@angular/fire/auth';
-import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { GoogleAuthProvider } from 'firebase/auth';
+import { Auth, signInWithPopup } from '@angular/fire/auth';
+
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'fresh-login',

@@ -25,6 +25,7 @@ Version 0.1:
 
 For later:
 
+- [ ] Some styling are repeated, can refactor eg expansion panel button container
 - [ ] Switch my BS in services to Ngrx / Ngrx component store?
 - [ ] Look at PWA best practices with Firebase
 - [ ] Allow to add user by using id in manage users?
