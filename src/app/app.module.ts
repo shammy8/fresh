@@ -28,6 +28,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
+import { LetModule } from '@ngrx/component';
+
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import {
@@ -98,6 +100,7 @@ import { UserComponent } from './user/user.component';
     MatProgressSpinnerModule,
     MatTooltipModule,
     ClipboardModule,
+    LetModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => {
