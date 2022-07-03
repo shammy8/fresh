@@ -10,10 +10,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { Auth, authState } from '@angular/fire/auth';
+import { Auth } from '@angular/fire/auth';
 
 import { takeUntil } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { Home } from '../item.interface';
 import { HomeService } from '../services/home.service';

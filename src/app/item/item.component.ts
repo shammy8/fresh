@@ -42,7 +42,7 @@ export class ItemComponent {
     notifyOn: null,
     createdAt: null,
     comments: '',
-  }; // TODO create a function which does this
+  };
 
   @Output() delete = new EventEmitter();
 

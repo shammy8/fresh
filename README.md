@@ -25,6 +25,7 @@ Version 0.1:
 
 For later:
 
+- [ ] Switch my BS in services to Ngrx / Ngrx component store?
 - [ ] Look at PWA best practices with Firebase
 - [ ] Allow to add user by using id in manage users?
   - [ ] Allow adding users by email/uid in add home component?
