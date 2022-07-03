@@ -17,7 +17,15 @@ import {
 } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 
-import { BehaviorSubject, EMPTY, map, Observable, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  EMPTY,
+  map,
+  Observable,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 import { Home } from '../item.interface';
 
@@ -44,9 +52,16 @@ export class HomeService {
           where(`users.${user.uid}`, '==', true),
           orderBy('name')
         );
-        return collectionData(homesForUserQuery, {
-          idField: 'id',
-        }) as Observable<Home[]>;
+        return (
+          collectionData(homesForUserQuery, {
+            idField: 'id',
+          }) as Observable<Home[]>
+        ).pipe(
+          catchError((error) => {
+            console.error(error);
+            return EMPTY;
+          })
+        );
       }),
       tap((homes) => {
         this._homes$.next(homes);
