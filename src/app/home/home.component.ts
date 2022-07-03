@@ -115,8 +115,8 @@ import { HomeService } from '../services/home.service';
 export class HomeComponent {
   private readonly _query$ = new BehaviorSubject<QueryItems>({
     storedIn: '',
-    sortBy: 'createdAt',
-    sortOrder: 'desc',
+    sortBy: 'primaryDate',
+    sortOrder: 'asc',
   });
 
   private readonly _initialItemLimit = 30;

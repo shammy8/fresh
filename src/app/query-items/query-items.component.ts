@@ -35,13 +35,13 @@ import { QueryItems, QueryItemsFormGroup } from '../item.interface';
 export class QueryItemsComponent implements OnInit {
   form = new FormGroup<QueryItemsFormGroup>({
     storedIn: new FormControl('', { nonNullable: true }),
-    sortBy: new FormControl('createdAt', { nonNullable: true }),
-    sortOrder: new FormControl('desc', { nonNullable: true }),
+    sortBy: new FormControl('primaryDate', { nonNullable: true }),
+    sortOrder: new FormControl('asc', { nonNullable: true }),
   });
 
   sortOptions = [
     { label: 'Order Added', value: 'createdAt' },
-    { label: 'Primary Date', value: 'primaryDate' },
+    { label: 'Primary Expiration Date', value: 'primaryDate' },
     { label: 'Best Before', value: 'bestBefore' },
     { label: 'Use By', value: 'useBy' },
     { label: 'User Defined Use By', value: 'userDefinedDate' },
