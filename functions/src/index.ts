@@ -37,6 +37,7 @@ exports.onDisplayNameChange = functions // .regions("europe-west2")
       const batch = firestore.batch();
       const userId: string = context.params.userId;
 
+      // TODO try catch
       const snapshot = await firestore.collection("homes")
           .where(`users.${userId}`, "==", true).get();
 
@@ -47,11 +48,7 @@ exports.onDisplayNameChange = functions // .regions("europe-west2")
         );
       }));
 
-      try {
-        return batch.commit();
-      } catch (error) {
-        return error; // TODO
-      }
+      return batch.commit();
     });
 
 
