@@ -3,7 +3,14 @@ import { Injectable } from '@angular/core';
 import { Auth, authState } from '@angular/fire/auth';
 import { Firestore, doc, docData, updateDoc } from '@angular/fire/firestore';
 
-import { BehaviorSubject, EMPTY, Observable, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  EMPTY,
+  Observable,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 import { UserDetails } from '../item.interface';
 
@@ -26,11 +33,22 @@ export class UserService {
         if (!user) return EMPTY;
 
         const docRef = doc(this._firestore, `users/${user.uid}`);
-        return docData(docRef) as Observable<UserDetails>; // TODO what if the user doc doesn't exist?
+        return (docData(docRef) as Observable<UserDetails | undefined>).pipe(
+          catchError((error) => {
+            console.error(error);
+            return EMPTY;
+          })
+        );
       }),
-      tap((userDetails) => this._userDocBS$.next(userDetails))
+      tap((userDetails) => {
+        if (!userDetails) {
+          console.error('User document does not exist');
+          this._userDocBS$.next({ displayName: '', email: '', uid: '' });
+        } else {
+          this._userDocBS$.next(userDetails);
+        }
+      }),
     );
-    // TODO handle errors
   }
 
   updateDisplayName(userId: string, displayName: string) {
