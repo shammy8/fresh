@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
   TrackByFunction,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,10 +13,9 @@ import {
   combineLatest,
   Observable,
   of,
-  Subject,
   switchMap,
 } from 'rxjs';
-import { catchError, map, takeUntil } from 'rxjs/operators';
+import { catchError, map, take } from 'rxjs/operators';
 
 import {
   collection,
@@ -114,7 +112,7 @@ import { HomeService } from '../services/home.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnDestroy {
+export class HomeComponent {
   private readonly _query$ = new BehaviorSubject<QueryItems>({
     storedIn: '',
     sortBy: 'createdAt',
@@ -180,8 +178,6 @@ export class HomeComponent implements OnDestroy {
 
   itemTrackByFn: TrackByFunction<Item> = (index: number, item: Item) => item.id;
 
-  private _destroy = new Subject<void>();
-
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
@@ -208,7 +204,7 @@ export class HomeComponent implements OnDestroy {
     });
     bottomSheetRef
       .afterDismissed()
-      .pipe(takeUntil(this._destroy))
+      .pipe(take(1))
       .subscribe((data: QueryItems) => {
         if (!data) return;
         this._query$.next(data);
@@ -249,9 +245,5 @@ export class HomeComponent implements OnDestroy {
       console.error(error);
       this._snackBar.open('Error Deleting Item', 'Close');
     }
-  }
-
-  ngOnDestroy(): void {
-    this._destroy.next();
   }
 }
