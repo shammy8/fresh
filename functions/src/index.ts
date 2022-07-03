@@ -15,6 +15,7 @@ const firestore = admin.firestore();
 // });
 
 // TODO figure how to set the functions region in the front end
+
 exports.onUserCreate = functions // .region("europe-west2")
     .auth.user().onCreate((user) => {
       const userRef = firestore.doc(`users/${user.uid}`);
@@ -24,6 +25,35 @@ exports.onUserCreate = functions // .region("europe-west2")
         email: user.email,
       });
     });
+
+exports.onDisplayNameChange = functions // .regions("europe-west2")
+    .firestore.document("users/{userId}")
+    .onUpdate(async (change, context) => {
+      const oldUserDetail = change.before.data();
+      const newUserDetail = change.after.data();
+
+      if (oldUserDetail.displayName === newUserDetail.displayName) return null;
+
+      const batch = firestore.batch();
+      const userId: string = context.params.userId;
+
+      const snapshot = await firestore.collection("homes")
+          .where(`users.${userId}`, "==", true).get();
+
+      snapshot.forEach(((home) => {
+        batch.update(
+            home.ref,
+            {[`usersDetails.${userId}`]: newUserDetail}
+        );
+      }));
+
+      try {
+        return batch.commit();
+      } catch (error) {
+        return error; // TODO
+      }
+    });
+
 
 exports.addUsersToHomeUsingEmail = functions // .region("europe-west2")
     .https.onCall(async (data, context) => {
@@ -37,7 +67,6 @@ exports.addUsersToHomeUsingEmail = functions // .region("europe-west2")
       const homeId = data.homeId;
       const email = data.email;
 
-      // TODO change this to a transaction?
       // TODO try catch
       const usersSnapshot = await firestore.collection("users")
           .where("email", "==", email).limit(2).get();
