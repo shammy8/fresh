@@ -15,22 +15,22 @@ import { UserDetails } from '../item.interface';
 @Component({
   selector: 'fresh-user',
   template: `
-    <div *ngIf="userDoc$ | async as user" class="grid">
-      <ng-container *ngIf="!isEditMode; else viewModeTemplate">
+    <div *ngrxLet="data.userDoc$ as userDoc" class="grid">
+      <ng-container *ngIf="!isEditMode; else editModeTemplate">
         <h2>
-          {{ user.displayName }}
+          {{ userDoc.displayName }}
         </h2>
 
         <button
           mat-icon-button
           matTooltip="Edit display name"
-          (click)="onEdit(user.displayName)"
+          (click)="onEdit(userDoc.displayName)"
         >
           <mat-icon>edit</mat-icon>
         </button>
       </ng-container>
 
-      <ng-template #viewModeTemplate>
+      <ng-template #editModeTemplate>
         <mat-form-field>
           <input
             matInput
@@ -54,27 +54,27 @@ import { UserDetails } from '../item.interface';
           <button
             mat-icon-button
             matTooltip="Save display name"
-            (click)="saveDisplayName()"
+            (click)="saveDisplayName(userDoc.uid)"
           >
             <mat-icon>check</mat-icon>
           </button>
         </div>
       </ng-template>
 
-      <p>{{ user.uid }}</p>
+      <p>{{ userDoc.uid }}</p>
 
       <button
         mat-icon-button
-        [cdkCopyToClipboard]="user.uid"
+        [cdkCopyToClipboard]="userDoc.uid"
         matTooltip="Copy user ID"
       >
         <mat-icon>content_copy</mat-icon>
       </button>
 
-      <p>{{ user.email }}</p>
+      <p>{{ userDoc.email }}</p>
       <button
         mat-icon-button
-        [cdkCopyToClipboard]="user.email"
+        [cdkCopyToClipboard]="userDoc.email"
         matTooltip="Copy email"
       >
         <mat-icon>content_copy</mat-icon>
@@ -106,8 +106,6 @@ import { UserDetails } from '../item.interface';
   ],
 })
 export class UserComponent implements OnDestroy {
-  userDoc$ = this._userService.fetchUserDoc();
-
   newNameControl = new FormControl('', {
     nonNullable: true,
     validators: [Validators.maxLength(30)],
@@ -115,37 +113,28 @@ export class UserComponent implements OnDestroy {
 
   isEditMode = false;
 
-  private _userDoc: UserDetails = { displayName: '', email: '', uid: '' };
-
   private _destroy = new Subject<void>();
 
   constructor(
     private _snackBar: MatSnackBar,
     private _bottomSheetRef: MatBottomSheetRef<UserComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA)
-    private _data: {
+    public data: {
       userDoc$: Observable<UserDetails>;
     },
     private _userService: UserService
-  ) {
-    this._data.userDoc$
-      .pipe(takeUntil(this._destroy))
-      .subscribe((user) => (this._userDoc = user));
-  }
+  ) {}
 
   onEdit(displayName: string) {
     this.isEditMode = true;
     this.newNameControl.setValue(displayName);
   }
 
-  async saveDisplayName() {
+  async saveDisplayName(uid: string) {
     if (!this.newNameControl.value) return;
 
     try {
-      await this._userService.updateDisplayName(
-        this._userDoc.uid,
-        this.newNameControl.value
-      );
+      await this._userService.updateDisplayName(uid, this.newNameControl.value);
       this._snackBar.open('Successfully Updated Display Name', 'Close');
       this.isEditMode = false;
     } catch (error) {
