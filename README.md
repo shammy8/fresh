@@ -21,10 +21,11 @@ Version 0.1:
 - [x] Add name/id to input fields. Take a look at the autocomplete attribute
 - [x] Change to PWA
 - [x] Add a version number
-- [ ] Deploy to Firebase hosting
+- [x] Deploy to Firebase hosting
 
 For later:
 
+- [ ] Change User to something like My Profile
 - [ ] Some styling are repeated, can refactor eg expansion panel button container
 - [ ] Switch my BS in services to Ngrx / Ngrx component store?
 - [ ] Look at PWA best practices with Firebase

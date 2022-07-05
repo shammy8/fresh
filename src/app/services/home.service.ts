@@ -50,7 +50,7 @@ export class HomeService {
         const homesForUserQuery = query(
           collection(this._firestore, 'homes'),
           where(`users.${user.uid}`, '==', true),
-          orderBy('name')
+        //   orderBy('name') // TODO order without creating an index?
         );
         return (
           collectionData(homesForUserQuery, {
