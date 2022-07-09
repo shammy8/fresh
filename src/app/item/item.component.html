@@ -17,31 +17,33 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
 
-  <div *ngIf="item.userDefinedDate">
-    <span class="date-title-text"> User defined date </span>
-    <span>{{ item.userDefinedDate | date: "mediumDate" }}</span>
-  </div>
+  <ng-template matExpansionPanelContent>
+    <div *ngIf="item.userDefinedDate">
+      <span class="date-title-text"> User defined date </span>
+      <span>{{ item.userDefinedDate | date: "mediumDate" }}</span>
+    </div>
 
-  <div *ngIf="item.useBy">
-    <span class="date-title-text">Use by </span>
-    <span>{{ item.useBy | date: "mediumDate" }}</span>
-  </div>
+    <div *ngIf="item.useBy">
+      <span class="date-title-text">Use by </span>
+      <span>{{ item.useBy | date: "mediumDate" }}</span>
+    </div>
 
-  <div *ngIf="item.bestBefore">
-    <span class="date-title-text"> Best before </span>
-    <span>{{ item.bestBefore | date: "mediumDate" }}</span>
-  </div>
+    <div *ngIf="item.bestBefore">
+      <span class="date-title-text"> Best before </span>
+      <span>{{ item.bestBefore | date: "mediumDate" }}</span>
+    </div>
 
-  <div *ngIf="item.dateBought">
-    <br />
-    <span class="date-title-text">Bought on </span>
-    <span>{{ item.dateBought | date: "mediumDate" }}</span>
-  </div>
+    <div *ngIf="item.dateBought">
+      <br />
+      <span class="date-title-text">Bought on </span>
+      <span>{{ item.dateBought | date: "mediumDate" }}</span>
+    </div>
 
-  <div *ngIf="item.comments">
-    <br />
-    <span>{{ item.comments }}</span>
-  </div>
+    <div *ngIf="item.comments">
+      <br />
+      <span>{{ item.comments }}</span>
+    </div>
+  </ng-template>
 
   <mat-action-row>
     <button mat-mini-fab color="warn" (click)="delete.emit()">
