@@ -26,59 +26,7 @@ import { UserService } from '../services/user.service';
 @Component({
   selector: 'fresh-main',
   templateUrl: './main.component.html',
-  styles: [
-    `
-      mat-icon,
-      h1 {
-        cursor: pointer;
-      }
-      h1 {
-        margin-left: 10px;
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-      }
-      .more-button {
-        margin-left: auto;
-      }
-      mat-sidenav-container {
-        height: calc(100% - 64px);
-      }
-      mat-sidenav {
-        width: 250px;
-      }
-      .add-home-button {
-        margin: 10px auto 0 auto;
-        display: block;
-      }
-      mat-nav-list {
-        max-height: calc(100% - 80px);
-        overflow-y: auto;
-      }
-      .mat-list-item {
-        a {
-          width: 180px;
-          overflow-x: hidden;
-        }
-        mat-icon {
-          margin-left: auto;
-        }
-      }
-      mat-sidenav-content {
-        padding: 0px 5px;
-      }
-      ::ng-deep .mat-drawer-inner-container {
-        display: flex;
-        flex-direction: column;
-      }
-      .version-number {
-        margin: auto auto 0 auto;
-        font-size: 12px;
-        opacity: 0.6;
-      }
-    `,
-  ],
+  styleUrls: ['./main.component.scss'],
   providers: [CloudNotificationService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
