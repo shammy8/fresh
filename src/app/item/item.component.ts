@@ -47,4 +47,15 @@ export class ItemComponent {
   @Output() delete = new EventEmitter();
 
   @Output() edit = new EventEmitter();
+
+  primaryDateColor(primaryDate: Date) {
+    const today = new Date();
+    const diffInMs = today.valueOf() - primaryDate.valueOf();
+    const diffInDays = diffInMs / 1000 / 60 / 60 / 24;
+
+    if (diffInDays < -7) {
+      return '';
+    }
+    return '#ff8c95'; // TODO make this dynamic
+  }
 }

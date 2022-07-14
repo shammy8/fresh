@@ -11,7 +11,7 @@
       </div>
     </mat-panel-title>
     <mat-panel-description class="right-aligned">
-      <div *ngIf="item.primaryDate">
+      <div *ngIf="item.primaryDate" [style.color]="primaryDateColor(item.primaryDate)">
         {{ item.primaryDate | date: "mediumDate" }}
       </div>
     </mat-panel-description>
