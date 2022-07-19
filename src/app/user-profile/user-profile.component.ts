@@ -13,8 +13,8 @@ import { UserService } from '../services/user.service';
 import { UserDetails } from '../item.interface';
 
 @Component({
-  selector: 'fresh-user',
-  templateUrl: './user.component.html',
+  selector: 'fresh-user-profile',
+  templateUrl: './user-profile.component.html',
   styles: [
     `
       .grid {
@@ -34,7 +34,7 @@ import { UserDetails } from '../item.interface';
     `,
   ],
 })
-export class UserComponent {
+export class UserProfileComponent {
   newNameControl = new FormControl('', {
     nonNullable: true,
     validators: [Validators.maxLength(30)],
@@ -44,7 +44,7 @@ export class UserComponent {
 
   constructor(
     private _snackBar: MatSnackBar,
-    private _bottomSheetRef: MatBottomSheetRef<UserComponent>,
+    private _bottomSheetRef: MatBottomSheetRef<UserProfileComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA)
     public data: {
       userDoc$: Observable<UserDetails>;

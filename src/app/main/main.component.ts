@@ -20,7 +20,7 @@ import { HomeService } from '../services/home.service';
 import { CloudNotificationService } from '../services/cloud-notification.service';
 import { AddHomeComponent } from '../add-home/add-home.component';
 import { ManageUsersComponent } from '../manage-users/manage-users.component';
-import { UserComponent } from '../user/user.component';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -84,7 +84,7 @@ export class MainComponent implements OnDestroy {
   }
 
   openBottomSheetToUserPage() {
-    const bottomSheetRef = this._bottomSheet.open(UserComponent, {
+    const bottomSheetRef = this._bottomSheet.open(UserProfileComponent, {
       data: { userDoc$: this.userDoc$ },
     });
   }

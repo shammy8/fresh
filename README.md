@@ -25,8 +25,9 @@ Version 0.1:
 
 For later:
 
+- [ ] Check the source maps size stuff
 - [ ] Allow user to choose the day difference to apply the primary date color
-- [ ] Change User to something like My Profile
+- [x] Change User to something like My Profile
 - [ ] Some styling are repeated, can refactor eg expansion panel button container
 - [ ] Switch my BS in services to Ngrx / Ngrx component store?
 - [ ] Look at PWA best practices with Firebase
