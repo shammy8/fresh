@@ -25,10 +25,11 @@ Version 0.1:
 
 For later:
 
+- [ ] Remember previous query, save on device instead of firebase
 - [ ] Check the source maps size stuff
-- [ ] Allow user to choose the day difference to apply the primary date color
+- [ ] Humanize duration instead of display the primary date on expansion panel?
+- [ ] Allow user to choose the day difference  to apply the primary date color
 - [x] Change User to something like My Profile
-- [ ] Some styling are repeated, can refactor eg expansion panel button container
 - [ ] Switch my BS in services to Ngrx / Ngrx component store?
 - [ ] Look at PWA best practices with Firebase
 - [ ] Allow to add user by using id in manage users?
@@ -37,11 +38,12 @@ For later:
 - [ ] Add barcode scanner to quickly add items??
 - [ ] Renaming of storages under all items??
 - [ ] Think how to handle closing bottom sheet to work well in online and offline mode
-- [ ] Add different users level like home owner / regular user
+- [ ] Add different users level like home owner / regular user?
 - [ ] Add other login providers
   - [ ] Style login page
 - [ ] Styling
   - [ ] Change the styling of the app
+  - [ ] Some styling are repeated, can refactor eg expansion panel button container
   - [ ] Create custom logos for the app, use it in the manifest.webmanifest
   - [x] Handle overflow of homes
 - [ ] Scrolling / pagination / searching
