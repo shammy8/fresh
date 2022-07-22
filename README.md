@@ -44,7 +44,7 @@ For later:
 - [ ] Styling
   - [ ] Change the styling of the app
   - [ ] Some styling are repeated, can refactor eg expansion panel button container
-  - [ ] Create custom logos for the app, use it in the manifest.webmanifest
+  - [x] Create custom logos for the app, use it in the manifest.webmanifest
   - [x] Handle overflow of homes
 - [ ] Scrolling / pagination / searching
   - [ ] Tag functionality to easier search items for now while I think about the below indented ones
