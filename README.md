@@ -25,7 +25,7 @@ Version 0.1:
 
 For later:
 
-- [ ] Remember previous query, save on device instead of firebase
+- [x] Remember previous query, save on device instead of firebase
 - [x] Check the source maps size stuff
 - [ ] Humanize duration instead of display the primary date on expansion panel?
 - [ ] Allow user to choose the day difference  to apply the primary date color
