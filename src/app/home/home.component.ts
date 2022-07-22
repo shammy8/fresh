@@ -43,6 +43,7 @@ import { QueryItems } from '../query-items/query-item';
         <fresh-item
           *ngFor="let item of items; trackBy: itemTrackByFn"
           [item]="item"
+          [today]="todayDate"
           (edit)="openEditItemBottomSheet(item)"
           (delete)="deleteItem(item)"
         ></fresh-item>
@@ -114,6 +115,11 @@ import { QueryItems } from '../query-items/query-item';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
+  /**
+   * Today's date as a number set to a time of 00:00
+   */
+  todayDate = new Date().setHours(0, 0, 0, 0);
+
   private readonly _initialItemLimit = 30;
   itemLimit: number = this._initialItemLimit;
   private readonly _itemLimit$ = new BehaviorSubject<number>(this.itemLimit);

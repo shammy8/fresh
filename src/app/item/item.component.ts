@@ -31,6 +31,11 @@ import { Item } from '../item.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemComponent {
+  /**
+   * Today's date as a number set to a time of 00:00
+   */
+  @Input() today!: number;
+
   @Input() item: Item = {
     name: '',
     storedIn: '',
@@ -48,14 +53,12 @@ export class ItemComponent {
 
   @Output() edit = new EventEmitter();
 
-  primaryDateColor(primaryDate: Date) {
-    const today = new Date();
-    const diffInMs = today.valueOf() - primaryDate.valueOf();
-    const diffInDays = diffInMs / 1000 / 60 / 60 / 24;
-
-    if (diffInDays < -7) {
-      return '';
-    }
-    return '#ff8c95'; // TODO make this dynamic
+  /**
+   * @param timeUntilExpiration 
+   * @returns True if timeUntilExpiration is 7 days or less, false otherwise 
+   */
+  isSevenDaysOrLess(timeUntilExpiration: number) {
+    const sevenDays = 604800000; // 7 * 24 * 60 * 60 * 1000; // TODO make dynamic
+    return timeUntilExpiration - sevenDays <= 0
   }
 }

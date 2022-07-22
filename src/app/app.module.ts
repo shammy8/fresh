@@ -59,6 +59,7 @@ import { NoHomeSelectedComponent } from './no-home-selected/no-home-selected.com
 import { AddHomeComponent } from './add-home/add-home.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { HumanizeDurationPipe } from './pipes/humanize-duration.pipe';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     AddHomeComponent,
     ManageUsersComponent,
     UserProfileComponent,
+    HumanizeDurationPipe,
   ],
   imports: [
     BrowserModule,

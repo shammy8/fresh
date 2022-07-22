@@ -11,13 +11,25 @@
       </div>
     </mat-panel-title>
     <mat-panel-description class="right-aligned">
-      <div *ngIf="item.primaryDate" [style.color]="primaryDateColor(item.primaryDate)">
-        {{ item.primaryDate | date: "mediumDate" }}
-      </div>
+      <ng-container *ngIf="item.primaryDate">
+        <ng-container
+          *ngrxLet="item.primaryDate.valueOf() - today as timeUntilExpiration"
+        >
+          <span *ngIf="timeUntilExpiration < 0" class="red">-</span>
+          <span [class.red]="isSevenDaysOrLess(timeUntilExpiration)">
+            {{ timeUntilExpiration | humanizeDuration }}
+          </span>
+        </ng-container>
+      </ng-container>
     </mat-panel-description>
   </mat-expansion-panel-header>
 
   <ng-template matExpansionPanelContent>
+    <div *ngIf="item.primaryDate">
+      <span class="date-title-text"> Primary Expiration Date </span>
+      <span>{{ item.primaryDate | date: "mediumDate" }}</span>
+    </div>
+
     <div *ngIf="item.userDefinedDate">
       <span class="date-title-text"> User defined date </span>
       <span>{{ item.userDefinedDate | date: "mediumDate" }}</span>
