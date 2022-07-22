@@ -8,7 +8,8 @@ import {
 
 import { Observable } from 'rxjs';
 
-import { QueryItems, QueryItemsFormGroup } from '../item.interface';
+import { QueryItemsFormGroup } from '../item.interface';
+import { QueryItems, SortByOptions } from './query-item';
 
 @Component({
   selector: 'fresh-query-items',
@@ -35,19 +36,19 @@ import { QueryItems, QueryItemsFormGroup } from '../item.interface';
 export class QueryItemsComponent implements OnInit {
   form = new FormGroup<QueryItemsFormGroup>({
     storedIn: new FormControl('', { nonNullable: true }),
-    sortBy: new FormControl('primaryDate', { nonNullable: true }),
+    sortBy: new FormControl(SortByOptions.PrimaryDate, { nonNullable: true }),
     sortOrder: new FormControl('asc', { nonNullable: true }),
   });
 
   sortOptions = [
-    { label: 'Order Added', value: 'createdAt' },
-    { label: 'Primary Expiration Date', value: 'primaryDate' },
-    { label: 'Best Before', value: 'bestBefore' },
-    { label: 'Use By', value: 'useBy' },
-    { label: 'User Defined Use By', value: 'userDefinedDate' },
-    { label: 'Date Bought', value: 'dateBought' },
-    { label: 'Stored In', value: 'storedIn' },
-    { label: 'Name', value: 'name' },
+    { label: 'Order Added', value: SortByOptions.CreatedAt },
+    { label: 'Primary Expiration Date', value: SortByOptions.PrimaryDate },
+    { label: 'Best Before', value: SortByOptions.BestBefore },
+    { label: 'Use By', value: SortByOptions.UseBy },
+    { label: 'User Defined Use By', value: SortByOptions.UserDefinedDate },
+    { label: 'Date Bought', value: SortByOptions.DateBought },
+    { label: 'Stored In', value: SortByOptions.StoredIn },
+    { label: 'Name', value: SortByOptions.Name },
   ];
 
   constructor(

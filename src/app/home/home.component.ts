@@ -29,10 +29,11 @@ import {
 
 import { AddItemComponent } from '../add-item/add-item.component';
 import { EditItemComponent } from '../edit-item/edit-item.component';
-import { Item, ItemDto, QueryItems } from '../item.interface';
+import { Item, ItemDto } from '../item.interface';
 import { ItemService } from '../services/item.service';
 import { QueryItemsComponent } from '../query-items/query-items.component';
 import { HomeService } from '../services/home.service';
+import { QueryItems } from '../query-items/query-item';
 
 @Component({
   selector: 'fresh-home',
@@ -113,37 +114,35 @@ import { HomeService } from '../services/home.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
-  private readonly _query$ = new BehaviorSubject<QueryItems>({
-    storedIn: '',
-    sortBy: 'primaryDate',
-    sortOrder: 'asc',
-  });
-
   private readonly _initialItemLimit = 30;
   itemLimit: number = this._initialItemLimit;
   private readonly _itemLimit$ = new BehaviorSubject<number>(this.itemLimit);
 
-  items$ = combineLatest([this._route.paramMap, this._query$]).pipe(
-    switchMap(([params, queryOptions]) => {
+  items$ = combineLatest([
+    this._route.paramMap,
+    this._route.queryParamMap,
+  ]).pipe(
+    switchMap(([params, queryParamMap]) => {
       this.itemLimit = this._initialItemLimit;
       this._itemLimit$.next(this.itemLimit);
 
       return this._itemLimit$.pipe(
         switchMap((limitCount) => {
           this.homeId = params.get('homeId') ?? '';
+          const queryItems = new QueryItems(queryParamMap);
 
-          console.log(queryOptions, limitCount);
+          console.log(queryItems, limitCount);
 
           const queryCondition =
-            queryOptions.storedIn !== ''
-              ? [where('storedIn', '==', queryOptions.storedIn)]
+            queryItems.storedIn !== ''
+              ? [where('storedIn', '==', queryItems.storedIn)]
               : [];
 
           // can't use where('storedIn', ....) then orderBy('storedIn')
           const orderByCondition =
-            queryOptions.storedIn !== '' && queryOptions.sortBy === 'storedIn'
+            queryItems.storedIn !== '' && queryItems.sortBy === 'storedIn'
               ? []
-              : [orderBy(queryOptions.sortBy, queryOptions.sortOrder)];
+              : [orderBy(queryItems.sortBy, queryItems.sortOrder)];
 
           const itemsQuery = query(
             collection(this._firestore, `homes/${this.homeId}/items`),
@@ -194,9 +193,14 @@ export class HomeComponent {
   }
 
   openQueryItemsBottomSheet() {
+    let currentQuery = new QueryItems();
+    this._route.queryParamMap.pipe(take(1)).subscribe((queryParams) => {
+      currentQuery = new QueryItems(queryParams);
+    });
+
     const bottomSheetRef = this._bottomSheet.open(QueryItemsComponent, {
       data: {
-        currentQuery: this._query$.getValue(),
+        currentQuery,
         storedInOptions$: this._homeService.getCurrentStorageFromHome$(
           this.homeId
         ),
@@ -207,7 +211,10 @@ export class HomeComponent {
       .pipe(take(1))
       .subscribe((data: QueryItems) => {
         if (!data) return;
-        this._query$.next(data);
+        this._router.navigate([], {
+          queryParams: data,
+          relativeTo: this._route,
+        });
       });
   }
 

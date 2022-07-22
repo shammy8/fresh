@@ -53,12 +53,6 @@ export interface QueryItemsFormGroup {
   sortOrder: FormControl<'asc' | 'desc'>;
 }
 
-export interface QueryItems {
-  storedIn: string;
-  sortBy: string;
-  sortOrder: 'asc' | 'desc';
-}
-
 export interface Home {
   id?: string;
   name: string;
