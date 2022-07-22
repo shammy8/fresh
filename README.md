@@ -28,7 +28,7 @@ For later:
 - [x] Remember previous query, save on device instead of firebase
 - [x] Check the source maps size stuff
 - [x] Humanize duration instead of display the primary date on expansion panel?
-- [ ] Allow user to choose the day difference  to apply the primary date color
+- [ ] Allow user to choose the day difference to apply the humanize duration color
 - [x] Change User to something like My Profile
 - [ ] Switch my BS in services to Ngrx / Ngrx component store?
 - [ ] Look at PWA best practices with Firebase

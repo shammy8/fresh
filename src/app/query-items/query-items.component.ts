@@ -41,14 +41,14 @@ export class QueryItemsComponent implements OnInit {
   });
 
   sortOptions = [
-    { label: 'Order Added', value: SortByOptions.CreatedAt },
     { label: 'Primary Expiration Date', value: SortByOptions.PrimaryDate },
+    { label: 'Order Added to Fresh', value: SortByOptions.CreatedAt },
+    { label: 'Stored In', value: SortByOptions.StoredIn },
+    { label: 'Name', value: SortByOptions.Name },
+    { label: 'Date Bought', value: SortByOptions.DateBought },
     { label: 'Best Before', value: SortByOptions.BestBefore },
     { label: 'Use By', value: SortByOptions.UseBy },
     { label: 'User Defined Use By', value: SortByOptions.UserDefinedDate },
-    { label: 'Date Bought', value: SortByOptions.DateBought },
-    { label: 'Stored In', value: SortByOptions.StoredIn },
-    { label: 'Name', value: SortByOptions.Name },
   ];
 
   constructor(
