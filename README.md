@@ -25,6 +25,7 @@ Version 0.1:
 
 For later:
 
+- [ ] Allow changing item names in shopping list
 - [ ] Add animations for adding removing items in both tabs
 - [ ] Firestore rules for shoppingList
 - [ ] Move the vertical scroll below the tabs
