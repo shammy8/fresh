@@ -62,6 +62,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { HumanizeDurationPipe } from './pipes/humanize-duration.pipe';
 import { InventoryComponent } from './inventory/inventory.component';
+import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { InventoryComponent } from './inventory/inventory.component';
     UserProfileComponent,
     HumanizeDurationPipe,
     InventoryComponent,
+    ShoppingListComponent,
   ],
   imports: [
     BrowserModule,
