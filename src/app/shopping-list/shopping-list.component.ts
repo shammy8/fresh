@@ -35,7 +35,7 @@ import { Subject } from 'rxjs';
       </li>
     </ul>
 
-    <mat-divider> </mat-divider>
+    <mat-divider *ngIf="bought.length > 0"> </mat-divider>
 
     <ul cdkDropList (cdkDropListDropped)="boughtDrop($event)">
       <li *ngFor="let item of bought" cdkDrag>

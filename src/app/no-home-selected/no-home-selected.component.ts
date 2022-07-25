@@ -14,7 +14,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styles: [
     `
       mat-expansion-panel {
-        margin: 5px 0;
+        margin: 10px;
       }
     `,
   ],

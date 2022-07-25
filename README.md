@@ -25,12 +25,11 @@ Version 0.1:
 
 For later:
 
-- [ ] Allow changing item names in shopping list
-- [ ] Add animations for adding removing items in both tabs
-- [ ] Firestore rules for shoppingList
 - [x] Move the vertical scroll below the tabs
 - [ ] Change the logo in the Chrome tab
-- [ ] Add a shopping list (similar to Google Notes), deleting from main app will ask user to move to shopping list
+- [x] Add a shopping list (similar to Google Notes), deleting from main app will ask user to move to shopping list
+  - [ ] Firestore rules for shoppingList
+  - [ ] Allow changing item names in shopping list
 - [x] Remember previous query, save on device instead of firebase
 - [x] Check the source maps size stuff
 - [x] Humanize duration instead of display the primary date on expansion panel?
@@ -48,6 +47,7 @@ For later:
 - [ ] Add other login providers
   - [ ] Style login page
 - [ ] Styling
+  - [ ] Add animations for adding removing items in both tabs
   - [ ] Change the styling of the app
   - [ ] Some styling are repeated, can refactor eg expansion panel button container
   - [x] Create custom logos for the app, use it in the manifest.webmanifest
