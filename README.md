@@ -25,13 +25,14 @@ Version 0.1:
 
 For later:
 
+- [ ] Add a shopping list (similar to Google Notes), deleting from main app will ask user to move to shopping list
 - [x] Remember previous query, save on device instead of firebase
 - [x] Check the source maps size stuff
 - [x] Humanize duration instead of display the primary date on expansion panel?
 - [ ] Allow user to choose the day difference to apply the humanize duration color
 - [x] Change User to something like My Profile
 - [ ] Switch my BS in services to Ngrx / Ngrx component store?
-- [ ] Look at PWA best practices with Firebase
+- [x] Look at PWA best practices with Firebase
 - [ ] Allow to add user by using id in manage users?
   - [ ] Allow adding users by email/uid in add home component?
 - [ ] Set initial home on app load.

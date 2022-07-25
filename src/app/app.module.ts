@@ -25,6 +25,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
@@ -60,6 +61,7 @@ import { AddHomeComponent } from './add-home/add-home.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { HumanizeDurationPipe } from './pipes/humanize-duration.pipe';
+import { InventoryComponent } from './inventory/inventory.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +78,7 @@ import { HumanizeDurationPipe } from './pipes/humanize-duration.pipe';
     ManageUsersComponent,
     UserProfileComponent,
     HumanizeDurationPipe,
+    InventoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -101,6 +104,7 @@ import { HumanizeDurationPipe } from './pipes/humanize-duration.pipe';
     MatMenuModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    MatTabsModule,
     ClipboardModule,
     LetModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
