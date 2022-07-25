@@ -54,8 +54,8 @@ export interface QueryItemsFormGroup {
 }
 
 export interface ShoppingList {
-    toBuy: string[];
-    bought: string[];
+  toBuy: string[];
+  bought: string[];
 }
 
 export interface Home {
@@ -64,7 +64,7 @@ export interface Home {
   users: { [key: string]: true };
   usersDetails: { [key: string]: UserDetails };
   storage: string[];
-  shoppingList?: ShoppingList // TODO make this always available
+  shoppingList?: ShoppingList;
   items?: Item[]; // TODO think we can remove this, this would be a sub collection in Firestore
 }
 

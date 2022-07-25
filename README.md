@@ -29,6 +29,7 @@ For later:
 - [ ] Change the logo in the Chrome tab
 - [x] Add a shopping list (similar to Google Notes), deleting from main app will ask user to move to shopping list
   - [ ] Firestore rules for shoppingList
+  - [ ]  Make shoppingList always available
   - [ ] Allow changing item names in shopping list
 - [x] Remember previous query, save on device instead of firebase
 - [x] Check the source maps size stuff
