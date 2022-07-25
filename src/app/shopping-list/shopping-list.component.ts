@@ -27,8 +27,9 @@ import { Subject } from 'rxjs';
     <ul cdkDropList (cdkDropListDropped)="toBuyDrop($event)">
       <li *ngFor="let item of toBuy" cdkDrag>
         <mat-icon cdkDragHandle>drag_indicator</mat-icon>
-        <mat-checkbox (change)="moveToBought(item)"> {{ item }}</mat-checkbox>
+        <mat-checkbox (change)="moveToBought(item)"> </mat-checkbox>
         <!-- <input matInput [value]="item" /> -->
+        {{ item }}
         <mat-icon (click)="deleteItemFromToBuy(item)" class="clear-button"
           >clear</mat-icon
         >
@@ -41,8 +42,8 @@ import { Subject } from 'rxjs';
       <li *ngFor="let item of bought" cdkDrag>
         <mat-icon cdkDragHandle>drag_indicator</mat-icon>
         <mat-checkbox (change)="moveToToBuy(item)" [checked]="true">
-          {{ item }}
         </mat-checkbox>
+        {{ item }}
         <!-- <input matInput [value]="item" /> -->
         <mat-icon (click)="deleteItemFromBought(item)" class="clear-button"
           >clear</mat-icon
@@ -64,7 +65,7 @@ import { Subject } from 'rxjs';
       .add-item-container,
       li {
         display: grid;
-        grid-template-columns: 50px auto 30px;
+        grid-template-columns: 50px 30px auto 30px;
         transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
       }
       mat-icon[cdkDragHandle] {
