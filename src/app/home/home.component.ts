@@ -22,7 +22,15 @@ import { take, takeUntil } from 'rxjs/operators';
       </mat-tab>
     </mat-tab-group>
   `,
-  styles: [],
+  styles: [
+    `
+      ::ng-deep .mat-tab-body-content {
+        padding: 0 10px;
+        height: calc(100vh - 49px - 64px) !important;
+        /* 49px is tab height, TODO refactor? */
+      }
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnDestroy {

@@ -221,7 +221,7 @@ export class InventoryComponent {
         this._router.navigate([], {
           queryParams: data,
           relativeTo: this._route,
-          queryParamsHandling: 'merge'
+          queryParamsHandling: 'merge',
         });
       });
   }

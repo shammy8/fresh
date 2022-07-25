@@ -13,7 +13,7 @@ h1 {
   margin-left: auto;
 }
 mat-sidenav-container {
-  height: calc(100% - 64px);
+    height: calc(100% - 64px); // 64px is toolbar height
 }
 mat-sidenav {
   width: 250px;
@@ -36,7 +36,7 @@ mat-nav-list {
   }
 }
 mat-sidenav-content {
-  padding: 0px 10px;
+  padding: 0;
 }
 ::ng-deep .mat-drawer-inner-container {
   display: flex;

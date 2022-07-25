@@ -28,7 +28,7 @@ For later:
 - [ ] Allow changing item names in shopping list
 - [ ] Add animations for adding removing items in both tabs
 - [ ] Firestore rules for shoppingList
-- [ ] Move the vertical scroll below the tabs
+- [x] Move the vertical scroll below the tabs
 - [ ] Change the logo in the Chrome tab
 - [ ] Add a shopping list (similar to Google Notes), deleting from main app will ask user to move to shopping list
 - [x] Remember previous query, save on device instead of firebase
