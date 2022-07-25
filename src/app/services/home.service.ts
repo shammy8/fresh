@@ -77,14 +77,14 @@ export class HomeService {
     return deleteDoc(doc(this._firestore, `homes/${home.id!}`));
   }
 
-  getCurrentHomeFromHome$(homeId: string) {
+  getCurrentHomeFromHomes$(homeId: string) {
     return this._homes$.pipe(
       map((homes) => homes.find((home) => home.id === homeId)),
       map((home) => (home ? home : null))
     );
   }
 
-  getCurrentStorageFromHome$(homeId: string) {
+  getCurrentStorageFromHomes$(homeId: string) {
     return this._homes$.pipe(
       map((homes) => homes.find((home) => home.id === homeId)),
       map((home) => (home ? home.storage : []))

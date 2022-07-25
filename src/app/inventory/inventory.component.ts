@@ -208,7 +208,7 @@ export class InventoryComponent {
     const bottomSheetRef = this._bottomSheet.open(QueryItemsComponent, {
       data: {
         currentQuery,
-        storedInOptions$: this._homeService.getCurrentStorageFromHome$(
+        storedInOptions$: this._homeService.getCurrentStorageFromHomes$(
           this.homeId
         ),
       },
@@ -230,7 +230,7 @@ export class InventoryComponent {
     const bottomSheetRef = this._bottomSheet.open(AddItemComponent, {
       data: {
         homeId: this.homeId,
-        storedInOptions$: this._homeService.getCurrentStorageFromHome$(
+        storedInOptions$: this._homeService.getCurrentStorageFromHomes$(
           this.homeId
         ),
       },
@@ -242,7 +242,7 @@ export class InventoryComponent {
       data: {
         homeId: this.homeId,
         item,
-        storedInOptions$: this._homeService.getCurrentStorageFromHome$(
+        storedInOptions$: this._homeService.getCurrentStorageFromHomes$(
           this.homeId
         ),
       },

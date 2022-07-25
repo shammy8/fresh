@@ -77,7 +77,7 @@ export class MainComponent implements OnDestroy {
   }
 
   openBottomSheetToManageUsers(home: Home) {
-    const home$ = this._homeService.getCurrentHomeFromHome$(home.id!);
+    const home$ = this._homeService.getCurrentHomeFromHomes$(home.id!);
     const bottomSheetRef = this._bottomSheet.open(ManageUsersComponent, {
       data: { userDoc$: this.userDoc$, home$ },
     });

@@ -28,7 +28,7 @@ import { take, takeUntil } from 'rxjs/operators';
 export class HomeComponent implements OnDestroy {
   tabIndex: 0 | 1 = 0;
 
-  private _destroy = new Subject<void>();
+  private readonly _destroy = new Subject<void>();
 
   constructor(
     private readonly _location: Location,
