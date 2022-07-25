@@ -33,6 +33,11 @@
         <a
           mat-list-item
           [routerLink]="['home', home.id]"
+          [queryParams]="{
+            storedIn: '',
+            sortBy: 'primaryDate',
+            sortOrder: 'asc'
+          }"
           routerLinkActive
           #rla="routerLinkActive"
           (click)="matSidenav.close()"

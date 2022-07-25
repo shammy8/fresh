@@ -15,7 +15,7 @@ import {
   of,
   switchMap,
 } from 'rxjs';
-import { catchError, map, take } from 'rxjs/operators';
+import { auditTime, catchError, map, take } from 'rxjs/operators';
 
 import {
   collection,
@@ -128,6 +128,7 @@ export class InventoryComponent {
     this._route.paramMap,
     this._route.queryParamMap,
   ]).pipe(
+    auditTime(0), // when both observables in the combineLatest emits a value at the same time this wil cause just one event to emit
     switchMap(([params, queryParamMap]) => {
       this.itemLimit = this._initialItemLimit;
       this._itemLimit$.next(this.itemLimit);
@@ -220,6 +221,7 @@ export class InventoryComponent {
         this._router.navigate([], {
           queryParams: data,
           relativeTo: this._route,
+          queryParamsHandling: 'merge'
         });
       });
   }
