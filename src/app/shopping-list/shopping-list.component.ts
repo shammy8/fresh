@@ -13,6 +13,7 @@ import { Subject } from 'rxjs';
   selector: 'fresh-shopping-list',
   template: `
     <div class="add-item-container">
+      <div></div>
       <mat-icon>add</mat-icon>
       <input
         matInput
@@ -25,12 +26,12 @@ import { Subject } from 'rxjs';
     </div>
 
     <ul cdkDropList (cdkDropListDropped)="toBuyDrop($event)">
-      <li *ngFor="let item of toBuy" cdkDrag>
+      <li *ngFor="let item of toBuy; index as i" cdkDrag>
         <mat-icon cdkDragHandle>drag_indicator</mat-icon>
         <mat-checkbox (change)="moveToBought(item)"> </mat-checkbox>
         <!-- <input matInput [value]="item" /> -->
         {{ item }}
-        <mat-icon (click)="deleteItemFromToBuy(item)" class="clear-button"
+        <mat-icon (click)="deleteItemFromToBuy(i)" class="clear-button"
           >clear</mat-icon
         >
       </li>
@@ -39,13 +40,13 @@ import { Subject } from 'rxjs';
     <mat-divider *ngIf="bought.length > 0"> </mat-divider>
 
     <ul cdkDropList (cdkDropListDropped)="boughtDrop($event)">
-      <li *ngFor="let item of bought" cdkDrag>
+      <li *ngFor="let item of bought; index as i" cdkDrag>
         <mat-icon cdkDragHandle>drag_indicator</mat-icon>
         <mat-checkbox (change)="moveToToBuy(item)" [checked]="true">
         </mat-checkbox>
         {{ item }}
         <!-- <input matInput [value]="item" /> -->
-        <mat-icon (click)="deleteItemFromBought(item)" class="clear-button"
+        <mat-icon (click)="deleteItemFromBought(i)" class="clear-button"
           >clear</mat-icon
         >
       </li>
@@ -160,16 +161,16 @@ export class ShoppingListComponent implements OnDestroy {
     });
   }
 
-  deleteItemFromToBuy(itemToDelete: string) {
-    const newToBuy = this.toBuy.filter((item) => itemToDelete !== item);
+  deleteItemFromToBuy(indexToDelete: number) {
+    const newToBuy = this.toBuy.filter((_, index) => indexToDelete !== index);
     this._homeService.updateShoppingList(this.homeId, {
       toBuy: newToBuy,
       bought: this.bought,
     });
   }
 
-  deleteItemFromBought(itemToDelete: string) {
-    const newBought = this.bought.filter((item) => itemToDelete !== item);
+  deleteItemFromBought(indexToDelete: number) {
+    const newBought = this.bought.filter((_, index) => indexToDelete !== index);
     this._homeService.updateShoppingList(this.homeId, {
       toBuy: this.toBuy,
       bought: newBought,
