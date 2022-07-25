@@ -25,6 +25,8 @@ Version 0.1:
 
 For later:
 
+- [ ] Add animations for adding removing items in both tabs
+- [ ] Firestore rules for shoppingList
 - [ ] Move the vertical scroll below the tabs
 - [ ] Change the logo in the Chrome tab
 - [ ] Add a shopping list (similar to Google Notes), deleting from main app will ask user to move to shopping list

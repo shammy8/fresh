@@ -26,8 +26,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatDividerModule} from '@angular/material/divider';
 
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { LetModule } from '@ngrx/component';
 
@@ -107,7 +110,10 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatTabsModule,
+    MatCheckboxModule,
+    MatDividerModule,
     ClipboardModule,
+    DragDropModule,
     LetModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),

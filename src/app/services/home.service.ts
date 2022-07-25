@@ -27,7 +27,7 @@ import {
   tap,
 } from 'rxjs';
 
-import { Home } from '../item.interface';
+import { Home, ShoppingList } from '../item.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +50,7 @@ export class HomeService {
         const homesForUserQuery = query(
           collection(this._firestore, 'homes'),
           where(`users.${user.uid}`, '==', true),
-        //   orderBy('name') // TODO order without creating an index?
+          //   orderBy('name') // TODO order without creating an index?
         );
         return (
           collectionData(homesForUserQuery, {
@@ -101,6 +101,12 @@ export class HomeService {
     if (!homeId) return;
     return updateDoc(doc(this._firestore, `homes/${homeId}`), {
       users: { ...users },
+    });
+  }
+
+  updateShoppingList(homeId: string, shoppingList: ShoppingList) {
+    return updateDoc(doc(this._firestore, `homes/${homeId}`), {
+      shoppingList,
     });
   }
 

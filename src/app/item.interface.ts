@@ -53,13 +53,19 @@ export interface QueryItemsFormGroup {
   sortOrder: FormControl<'asc' | 'desc'>;
 }
 
+export interface ShoppingList {
+    toBuy: string[];
+    bought: string[];
+}
+
 export interface Home {
   id?: string;
   name: string;
   users: { [key: string]: true };
   usersDetails: { [key: string]: UserDetails };
   storage: string[];
-  items?: Item[]; // this would be a sub collection in Firestore
+  shoppingList?: ShoppingList // TODO make this always available
+  items?: Item[]; // TODO think we can remove this, this would be a sub collection in Firestore
 }
 
 export interface HomeFormGroup {
