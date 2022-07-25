@@ -254,6 +254,12 @@ export class InventoryComponent {
       return;
 
     try {
+      if (
+        confirm(`Do you also want to add ${item.name} to the Shopping List?`)
+      ) {
+        this._homeService.addItemToToBuyShoppingList(this.homeId, item.name);
+      }
+
       await this._itemService.deleteItem(this.homeId, item.id!);
       this._snackBar.open('Successfully Deleted Item', 'Close');
     } catch (error) {

@@ -14,6 +14,7 @@ import {
   orderBy,
   deleteField,
   deleteDoc,
+  arrayUnion,
 } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 
@@ -107,6 +108,13 @@ export class HomeService {
   updateShoppingList(homeId: string, shoppingList: ShoppingList) {
     return updateDoc(doc(this._firestore, `homes/${homeId}`), {
       shoppingList,
+    });
+  }
+
+  addItemToToBuyShoppingList(homeId: string, newItem: string) {
+    // TODO this adds the newItem randomly, make it add the newItem to top of array
+    return updateDoc(doc(this._firestore, `homes/${homeId}`), {
+      'shoppingList.toBuy': arrayUnion(newItem),
     });
   }
 
