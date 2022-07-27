@@ -30,7 +30,6 @@ For later:
   - [ ] Firestore rules for shoppingList
   - [ ] Make shoppingList property in home interface always available
   - [x] Allow changing item names in shopping list
-  - [ ] Check overflow of item names
 - [x] Remember previous query, save on device instead of firebase
 - [x] Check the source maps size stuff
 - [x] Humanize duration instead of display the primary date on expansion panel?
