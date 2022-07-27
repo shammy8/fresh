@@ -39,9 +39,12 @@ import { Subject } from 'rxjs';
 
     <mat-divider *ngIf="bought.length > 0"> </mat-divider>
 
-    <ul cdkDropList (cdkDropListDropped)="boughtDrop($event)">
-      <li *ngFor="let item of bought; index as i" cdkDrag>
-        <mat-icon cdkDragHandle>drag_indicator</mat-icon>
+    <!-- cdkDropList (cdkDropListDropped)="boughtDrop($event)" -->
+    <!-- cdkDrag -->
+    <ul>
+      <li *ngFor="let item of bought; index as i">
+        <!-- <mat-icon cdkDragHandle>drag_indicator</mat-icon> -->
+        <div></div>
         <mat-checkbox (change)="moveToToBuy(item)" [checked]="true">
         </mat-checkbox>
         {{ item }}
@@ -178,6 +181,7 @@ export class ShoppingListComponent implements OnDestroy {
   }
 
   toBuyDrop(event: CdkDragDrop<string[]>) {
+    // TODO make this less janky, make a Stackblitz
     moveItemInArray(this.toBuy, event.previousIndex, event.currentIndex);
     this._homeService.updateShoppingList(this.homeId, {
       toBuy: this.toBuy,
@@ -185,13 +189,13 @@ export class ShoppingListComponent implements OnDestroy {
     });
   }
 
-  boughtDrop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.bought, event.previousIndex, event.currentIndex);
-    this._homeService.updateShoppingList(this.homeId, {
-      toBuy: this.toBuy,
-      bought: this.bought,
-    });
-  }
+  //   boughtDrop(event: CdkDragDrop<string[]>) {
+  //     moveItemInArray(this.bought, event.previousIndex, event.currentIndex);
+  //     this._homeService.updateShoppingList(this.homeId, {
+  //       toBuy: this.toBuy,
+  //       bought: this.bought,
+  //     });
+  //   }
 
   ngOnDestroy(): void {
     this._destroy.next();

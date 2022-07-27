@@ -26,10 +26,9 @@ Version 0.1:
 For later:
 
 - [x] Move the vertical scroll below the tabs
-- [ ] Change the logo in the Chrome tab
 - [x] Add a shopping list (similar to Google Notes), deleting from main app will ask user to move to shopping list
   - [ ] Firestore rules for shoppingList
-  - [ ]  Make shoppingList always available
+  - [ ] Make shoppingList property in home interface always available
   - [ ] Allow changing item names in shopping list
 - [x] Remember previous query, save on device instead of firebase
 - [x] Check the source maps size stuff
@@ -49,6 +48,7 @@ For later:
   - [ ] Style login page
 - [ ] Styling
   - [ ] Add animations for adding removing items in both tabs
+  - [ ] Change the logo in the Chrome tab
   - [ ] Change the styling of the app
   - [ ] Some styling are repeated, can refactor eg expansion panel button container
   - [x] Create custom logos for the app, use it in the manifest.webmanifest
