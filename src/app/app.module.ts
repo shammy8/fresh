@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -55,7 +56,6 @@ import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { HomeComponent } from './home/home.component';
 import { AddItemComponent } from './add-item/add-item.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { ItemComponent } from './item/item.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
 import { QueryItemsComponent } from './query-items/query-items.component';
@@ -88,6 +88,7 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     MatToolbarModule,

@@ -29,8 +29,12 @@ import { Subject } from 'rxjs';
       <li *ngFor="let item of toBuy; index as i" cdkDrag>
         <mat-icon cdkDragHandle>drag_indicator</mat-icon>
         <mat-checkbox (change)="moveToBought(item)"> </mat-checkbox>
-        <!-- <input matInput [value]="item" /> -->
-        {{ item }}
+        <input
+          matInput
+          [ngModel]="toBuy[i]"
+          [ngModelOptions]="{ updateOn: 'blur' }"
+          (ngModelChange)="updateToBuyItem($event, i)"
+        />
         <mat-icon (click)="deleteItemFromToBuy(i)" class="clear-button"
           >clear</mat-icon
         >
@@ -47,8 +51,12 @@ import { Subject } from 'rxjs';
         <div></div>
         <mat-checkbox (change)="moveToToBuy(item)" [checked]="true">
         </mat-checkbox>
-        {{ item }}
-        <!-- <input matInput [value]="item" /> -->
+        <input
+          matInput
+          [ngModel]="bought[i]"
+          [ngModelOptions]="{ updateOn: 'blur' }"
+          (ngModelChange)="updateBoughtItem($event, i)"
+        />
         <mat-icon (click)="deleteItemFromBought(i)" class="clear-button"
           >clear</mat-icon
         >
@@ -161,6 +169,26 @@ export class ShoppingListComponent implements OnDestroy {
     this._homeService.updateShoppingList(this.homeId, {
       toBuy: newToBuy,
       bought: newBought,
+    });
+  }
+
+  updateToBuyItem(newItemName: string, toBuyIndex: number) {
+    const newToBuy = [...this.toBuy];
+    newToBuy[toBuyIndex] = newItemName;
+
+    this._homeService.updateShoppingList(this.homeId, {
+      toBuy: newToBuy,
+      bought: this.bought,
+    });
+  }
+
+  updateBoughtItem(newItemName: string, boughtIndex: number) {
+    const newBought = [...this.bought];
+    newBought[boughtIndex] = newItemName;
+
+    this._homeService.updateShoppingList(this.homeId, {
+      toBuy: this.toBuy,
+      bought: newBought
     });
   }
 

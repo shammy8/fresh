@@ -29,7 +29,8 @@ For later:
 - [x] Add a shopping list (similar to Google Notes), deleting from main app will ask user to move to shopping list
   - [ ] Firestore rules for shoppingList
   - [ ] Make shoppingList property in home interface always available
-  - [ ] Allow changing item names in shopping list
+  - [x] Allow changing item names in shopping list
+  - [ ] Check overflow of item names
 - [x] Remember previous query, save on device instead of firebase
 - [x] Check the source maps size stuff
 - [x] Humanize duration instead of display the primary date on expansion panel?
