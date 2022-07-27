@@ -50,7 +50,7 @@ export class AddHomeComponent implements OnDestroy {
     }),
   });
 
-//   uidList: Set<string> = new Set();
+  //   uidList: Set<string> = new Set();
   storageList: Set<string> = new Set();
 
   disableSubmitButton = false;
@@ -119,6 +119,7 @@ export class AddHomeComponent implements OnDestroy {
         ...this.form.getRawValue(),
         users: usersMap,
         usersDetails: { [this._userDoc.uid]: this._userDoc },
+        shoppingList: { toBuy: [], bought: [] },
       });
       this.closeBottomSheet(docRef.id);
       this._snackBar.open('Successfully Added Home', 'Close');

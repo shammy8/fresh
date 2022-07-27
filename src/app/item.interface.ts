@@ -64,8 +64,7 @@ export interface Home {
   users: { [key: string]: true };
   usersDetails: { [key: string]: UserDetails };
   storage: string[];
-  shoppingList?: ShoppingList;
-  items?: Item[]; // TODO think we can remove this, this would be a sub collection in Firestore
+  shoppingList: ShoppingList;
 }
 
 export interface HomeFormGroup {
