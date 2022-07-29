@@ -25,6 +25,8 @@ Version 0.1:
 
 For later:
 
+- [ ] Try @rx-angular/template
+- [ ] Try standalone components
 - [x] Move the vertical scroll below the tabs
 - [x] Add a shopping list (similar to Google Notes), deleting from main app will ask user to move to shopping list
   - [ ] Firestore rules for shoppingList

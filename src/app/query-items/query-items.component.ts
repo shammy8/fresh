@@ -26,10 +26,6 @@ import { QueryItems, SortByOptions } from './query-item';
       mat-divider {
         margin-bottom: 20px;
       }
-      .button-container {
-        display: flex;
-        flex-direction: row-reverse;
-      }
     `,
   ],
 })

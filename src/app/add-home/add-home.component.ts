@@ -29,11 +29,6 @@ import { HomeService } from '../services/home.service';
         display: flex;
         flex-direction: column;
       }
-      .button-container {
-        display: flex;
-        flex-direction: row-reverse;
-        margin-top: 10px;
-      }
     `,
   ],
 })

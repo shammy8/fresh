@@ -26,3 +26,8 @@ input:-webkit-autofill:active {
 .red {
   color: #ff8c95;
 }
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+}

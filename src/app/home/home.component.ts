@@ -8,7 +8,7 @@ import { takeUntil } from 'rxjs/operators';
   selector: 'fresh-home',
   template: `
     <mat-tab-group
-      animationDuration="0ms"
+      animationDuration="500ms"
       mat-stretch-tabs
       color="accent"
       [selectedIndex]="tabIndex"

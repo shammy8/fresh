@@ -32,11 +32,6 @@ import { HomeService } from '../services/home.service';
       mat-form-field {
         width: 100%;
       }
-      .button-container {
-        display: flex;
-        flex-direction: row-reverse;
-        margin-top: 20px;
-      }
     `,
   ],
 })

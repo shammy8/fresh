@@ -37,10 +37,6 @@ import { HomeService } from '../services/home.service';
         flex-direction: row !important;
         justify-content: space-between !important;
       }
-      .button-container {
-        display: flex;
-        flex-direction: row-reverse;
-      }
     `,
   ],
 })

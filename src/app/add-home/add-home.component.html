@@ -55,7 +55,8 @@
     <mat-hint align="end">Press enter after each one</mat-hint>
   </mat-form-field>
 
-  <div class="button-container">
+  <div class="button-container" style="margin-top: 10px">
+    <button mat-button type="button" (click)="closeBottomSheet()">Close</button>
     <button
       mat-raised-button
       color="primary"
@@ -64,6 +65,5 @@
     >
       Add Home
     </button>
-    <button mat-button type="button" (click)="closeBottomSheet()">Close</button>
   </div>
 </form>

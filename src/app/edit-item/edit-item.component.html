@@ -1,7 +1,12 @@
 <form [formGroup]="form" (ngSubmit)="onUpdate()">
   <mat-form-field>
     <mat-label>Item</mat-label>
-    <input matInput formControlName="name" placeholder="Chicken" name="item-name" />
+    <input
+      matInput
+      formControlName="name"
+      placeholder="Chicken"
+      name="item-name"
+    />
     <mat-error *ngIf="form.hasError('required', 'name')">Required</mat-error>
     <mat-error *ngIf="form.hasError('maxlength', 'name')"
       >Name must be lest than 31 characters</mat-error
@@ -122,6 +127,7 @@
   <br />
 
   <div class="button-container">
+    <button mat-button type="button" (click)="closeBottomSheet()">Close</button>
     <button
       mat-raised-button
       color="primary"
@@ -130,6 +136,5 @@
     >
       Update Item
     </button>
-    <button mat-button type="button" (click)="closeBottomSheet()">Close</button>
   </div>
 </form>
