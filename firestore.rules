@@ -12,6 +12,9 @@ service cloud.firestore {
                 request.resource.data.name.size() > 0 &&
                 request.resource.data.name.size() < 31 &&
                 request.resource.data.storage is list && // this should be a string list where each element is less than 31 characters
+                // request.resource.data.shoppingList.keys().hasOnly(['toBuy','bought']) && 
+                // request.resource.data.shoppingList.toBuy is list && 
+                // request.resource.data.shoppingList.bought is list && 
                 request.resource.data.users[request.auth.uid] == true;
             }
 

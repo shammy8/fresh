@@ -51,8 +51,8 @@ For later:
 - [ ] Styling
   - [ ] Add animations for adding removing items in both tabs
   - [ ] Change the logo in the Chrome tab
-  - [ ] Change the styling of the app
-  - [ ] Some styling are repeated, can refactor eg expansion panel button container
+  - [x] Change the styling of the app
+  - [ ] Some styling are repeated, can refactor eg expansion panel
   - [x] Create custom logos for the app, use it in the manifest.webmanifest
   - [x] Handle overflow of homes
 - [ ] Scrolling / pagination / searching
@@ -60,13 +60,9 @@ For later:
   - [ ] Should I allow users to drag items to different storage, like one column for each storage?
   - [ ] Figure what to do with full text searching and pagination / infinite scrolling, to reduce document reads.
   - [ ] Add virtual scrolling to items? Does it handle expansion boxes since the height can be changed.
-  - [ ] Change all expansion panels to cards. Don't need to all the items dates and comments in the card. Users can see them in the edit screen. Makes virtual scrolling easier. Is this OK?
 - [ ] Cloud messaging
   - [ ] Better configure cloud messaging.
   - [ ] Fix notification for non chrome browser
-- [ ] Hints
-  - [ ] Hints for what desc/asc mean?
-  - [ ] Hints for what primary date is
 
 ## Development server
 
