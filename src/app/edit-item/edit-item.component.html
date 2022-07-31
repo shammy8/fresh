@@ -22,17 +22,21 @@
       [matAutocomplete]="storedInAuto"
     />
     <mat-autocomplete autoActiveFirstOption #storedInAuto="matAutocomplete">
-      <mat-option
-        *ngFor="let option of filteredStoredInOptions$ | async"
-        [value]="option"
+      <ng-container
+        *rxLet="filteredStoredInOptions$ as filteredStoredInOptions"
       >
-        <div>{{ option }}</div>
-        <div>
-          <mat-icon (click)="removeStorage($event, option)"
-            >delete_forever</mat-icon
-          >
-        </div>
-      </mat-option>
+        <mat-option
+          *ngFor="let option of filteredStoredInOptions"
+          [value]="option"
+        >
+          <div>{{ option }}</div>
+          <div>
+            <mat-icon (click)="removeStorage($event, option)"
+              >delete_forever</mat-icon
+            >
+          </div>
+        </mat-option>
+      </ng-container>
     </mat-autocomplete>
     <mat-error *ngIf="form.hasError('maxlength', 'storedIn')"
       >Stored In must be less than 31 characters</mat-error

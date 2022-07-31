@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -28,6 +28,8 @@ import {
 } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { LetModule } from '@rx-angular/template';
+
 import { Item, ItemFormGroup } from '../item.interface';
 import { ItemService } from '../services/item.service';
 import { HomeService } from '../services/home.service';
@@ -44,7 +46,7 @@ import { HomeService } from '../services/home.service';
     MatButtonModule,
     MatDatepickerModule,
     MatAutocompleteModule,
-    AsyncPipe,
+    LetModule,
   ],
   selector: 'fresh-edit-item',
   templateUrl: './edit-item.component.html',

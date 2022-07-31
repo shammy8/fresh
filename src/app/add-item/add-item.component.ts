@@ -1,4 +1,4 @@
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -23,6 +23,8 @@ import {
   takeUntil,
 } from 'rxjs';
 
+import { LetModule } from '@rx-angular/template';
+
 import { ItemFormGroup } from '../item.interface';
 import { ItemService } from '../services/item.service';
 import { HomeService } from '../services/home.service';
@@ -39,7 +41,7 @@ import { HomeService } from '../services/home.service';
     MatButtonModule,
     MatDatepickerModule,
     MatAutocompleteModule,
-    AsyncPipe
+    LetModule
   ],
   selector: 'fresh-add-item',
   templateUrl: './add-item.component.html',

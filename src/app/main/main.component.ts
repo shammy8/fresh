@@ -1,4 +1,4 @@
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -21,6 +21,8 @@ import { Auth } from '@angular/fire/auth';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
+import { LetModule } from '@rx-angular/template';
+
 import { Home } from '../item.interface';
 import { HomeService } from '../services/home.service';
 import { CloudNotificationService } from '../services/cloud-notification.service';
@@ -35,7 +37,6 @@ import { UserService } from '../services/user.service';
     RouterModule,
     NgIf,
     NgForOf,
-    AsyncPipe,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -44,6 +45,7 @@ import { UserService } from '../services/user.service';
     MatListModule,
     MatSnackBarModule,
     MatBottomSheetModule,
+    LetModule
   ],
   selector: 'fresh-main',
   templateUrl: './main.component.html',
