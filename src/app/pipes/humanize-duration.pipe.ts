@@ -3,6 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import * as humanizeDuration from 'humanize-duration';
 
 @Pipe({
+  standalone: true,
   name: 'humanizeDuration',
 })
 export class HumanizeDurationPipe implements PipeTransform {
@@ -18,7 +19,7 @@ export class HumanizeDurationPipe implements PipeTransform {
     return humanizeDuration(duration, {
       largest: 2,
       units: ['y', 'mo', 'w', 'd'],
-      round: true
+      round: true,
     });
   }
 }

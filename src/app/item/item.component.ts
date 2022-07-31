@@ -1,3 +1,4 @@
+import { DatePipe, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,9 +7,26 @@ import {
   Output,
 } from '@angular/core';
 
+import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+
+import { LetModule } from '@ngrx/component';
+
 import { Item } from '../item.interface';
+import { HumanizeDurationPipe } from '../pipes/humanize-duration.pipe';
 
 @Component({
+  standalone: true,
+  imports: [
+    NgIf,
+    LetModule,
+    MatExpansionModule,
+    HumanizeDurationPipe,
+    DatePipe,
+    MatIconModule,
+    MatButtonModule
+  ],
   selector: 'fresh-item',
   templateUrl: './item.component.html',
   styles: [
@@ -54,11 +72,11 @@ export class ItemComponent {
   @Output() edit = new EventEmitter();
 
   /**
-   * @param timeUntilExpiration 
-   * @returns True if timeUntilExpiration is 7 days or less, false otherwise 
+   * @param timeUntilExpiration
+   * @returns True if timeUntilExpiration is 7 days or less, false otherwise
    */
   isSevenDaysOrLess(timeUntilExpiration: number) {
     const sevenDays = 604800000; // 7 * 24 * 60 * 60 * 1000; // TODO make dynamic
-    return timeUntilExpiration - sevenDays <= 0
+    return timeUntilExpiration - sevenDays <= 0;
   }
 }

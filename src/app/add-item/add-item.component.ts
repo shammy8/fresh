@@ -1,5 +1,18 @@
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {
+  MatBottomSheetRef,
+  MAT_BOTTOM_SHEET_DATA,
+} from '@angular/material/bottom-sheet';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import {
   combineLatest,
@@ -10,17 +23,24 @@ import {
   takeUntil,
 } from 'rxjs';
 
-import {
-  MatBottomSheetRef,
-  MAT_BOTTOM_SHEET_DATA,
-} from '@angular/material/bottom-sheet';
-import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { ItemFormGroup } from '../item.interface';
 import { ItemService } from '../services/item.service';
 import { HomeService } from '../services/home.service';
 
 @Component({
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgIf,
+    NgForOf,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatAutocompleteModule,
+    AsyncPipe
+  ],
   selector: 'fresh-add-item',
   templateUrl: './add-item.component.html',
   styles: [

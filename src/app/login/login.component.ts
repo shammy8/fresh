@@ -1,12 +1,16 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 import { GoogleAuthProvider } from 'firebase/auth';
 import { Auth, signInWithPopup } from '@angular/fire/auth';
 
-import { MatSnackBar } from '@angular/material/snack-bar';
-
 @Component({
+  standalone: true,
+  imports: [MatButtonModule, MatToolbarModule, MatSnackBarModule],
   selector: 'fresh-login',
   template: ` <mat-toolbar color="primary">
       <h1>Fresh</h1>

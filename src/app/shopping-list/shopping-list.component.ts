@@ -1,15 +1,39 @@
+import { NgForOf, NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
 
+import {
+  CdkDragDrop,
+  DragDropModule,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
+
+import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { HomeService } from '../services/home.service';
-import { Subject } from 'rxjs';
 
 @Component({
+  standalone: true,
+  imports: [
+    MatIconModule,
+    NgIf,
+    NgForOf,
+    FormsModule,
+    ReactiveFormsModule,
+    DragDropModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatDividerModule,
+    MatIconModule,
+    MatCheckboxModule
+  ],
   selector: 'fresh-shopping-list',
   template: `
     <div class="add-item-container">

@@ -1,3 +1,4 @@
+import { NgForOf, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,6 +8,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 
 import {
   BehaviorSubject,
@@ -16,6 +20,8 @@ import {
   switchMap,
 } from 'rxjs';
 import { auditTime, catchError, map, take } from 'rxjs/operators';
+
+import { LetModule } from '@ngrx/component';
 
 import {
   collection,
@@ -34,8 +40,19 @@ import { ItemService } from '../services/item.service';
 import { QueryItemsComponent } from '../query-items/query-items.component';
 import { HomeService } from '../services/home.service';
 import { QueryItems } from '../query-items/query-item';
+import { ItemComponent } from '../item/item.component';
 
 @Component({
+  standalone: true,
+  imports: [
+    LetModule,
+    ItemComponent,
+    NgIf,
+    NgForOf,
+    MatButtonModule,
+    MatExpansionModule,
+    MatIconModule,
+  ],
   selector: 'fresh-inventory',
   template: `
     <ng-container *ngrxLet="items$ as items">

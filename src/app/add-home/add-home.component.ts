@@ -1,8 +1,10 @@
+import { NgForOf, NgIf } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   ValidationErrors,
   ValidatorFn,
   Validators,
@@ -12,7 +14,11 @@ import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
 } from '@angular/material/bottom-sheet';
-import { MatChipInputEvent } from '@angular/material/chips';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -21,6 +27,17 @@ import { HomeFormGroup, UserDetails } from '../item.interface';
 import { HomeService } from '../services/home.service';
 
 @Component({
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgIf,
+    NgForOf,
+    MatInputModule,
+    MatFormFieldModule,
+    MatChipsModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
   selector: 'fresh-add-home',
   templateUrl: './add-home.component.html',
   styles: [

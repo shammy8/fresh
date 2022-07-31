@@ -1,14 +1,20 @@
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MatSidenav } from '@angular/material/sidenav';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
 
 import { Auth } from '@angular/fire/auth';
 
@@ -24,6 +30,21 @@ import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { UserService } from '../services/user.service';
 
 @Component({
+  standalone: true,
+  imports: [
+    RouterModule,
+    NgIf,
+    NgForOf,
+    AsyncPipe,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatListModule,
+    MatSnackBarModule,
+    MatBottomSheetModule,
+  ],
   selector: 'fresh-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],

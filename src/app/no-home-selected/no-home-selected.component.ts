@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+import { MatExpansionModule } from '@angular/material/expansion';
+
 @Component({
+  standalone: true,
+  imports: [MatExpansionModule],
   selector: 'fresh-no-home-selected',
   template: `
     <mat-expansion-panel hideToggle>

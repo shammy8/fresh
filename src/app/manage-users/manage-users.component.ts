@@ -1,11 +1,20 @@
+import { CommonModule, KeyValuePipe, NgForOf, NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
 } from '@angular/material/bottom-sheet';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { LetModule } from '@ngrx/component';
 
 import { Observable } from 'rxjs';
 
@@ -13,6 +22,20 @@ import { Home, UserDetails } from '../item.interface';
 import { HomeService } from '../services/home.service';
 
 @Component({
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgIf,
+    NgForOf,
+    KeyValuePipe,
+    LetModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatButtonModule,
+    MatListModule,
+    MatProgressSpinnerModule
+  ],
   selector: 'fresh-manage-users',
   templateUrl: './manage-users.component.html',
   styles: [

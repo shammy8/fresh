@@ -1,10 +1,18 @@
 import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
 
+import { MatTabsModule } from '@angular/material/tabs';
+
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { InventoryComponent } from '../inventory/inventory.component';
+import { ShoppingListComponent } from '../shopping-list/shopping-list.component';
+
 @Component({
+  standalone: true,
+  imports: [InventoryComponent, ShoppingListComponent, MatTabsModule],
   selector: 'fresh-home',
   template: `
     <mat-tab-group

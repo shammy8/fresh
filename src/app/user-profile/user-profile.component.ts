@@ -1,11 +1,20 @@
+import { NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
 } from '@angular/material/bottom-sheet';
+
+import { LetModule } from '@ngrx/component';
 
 import { Observable } from 'rxjs';
 
@@ -13,6 +22,18 @@ import { UserService } from '../services/user.service';
 import { UserDetails } from '../item.interface';
 
 @Component({
+  standalone: true,
+  imports: [
+    LetModule,
+    ReactiveFormsModule,
+    NgIf,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatTooltipModule,
+    ClipboardModule,
+  ],
   selector: 'fresh-user-profile',
   templateUrl: './user-profile.component.html',
   styles: [
