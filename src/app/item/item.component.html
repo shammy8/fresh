@@ -13,7 +13,7 @@
     <mat-panel-description class="right-aligned">
       <ng-container *ngIf="item.primaryDate">
         <ng-container
-          *ngrxLet="item.primaryDate.valueOf() - today as timeUntilExpiration"
+          *rxLet="item.primaryDate.valueOf() - today as timeUntilExpiration"
         >
           <span *ngIf="timeUntilExpiration < 0" class="red">-</span>
           <span [class.red]="isSevenDaysOrLess(timeUntilExpiration)">

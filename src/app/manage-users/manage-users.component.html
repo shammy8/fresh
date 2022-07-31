@@ -1,5 +1,5 @@
-<ng-container *ngrxLet="data.home$ as home">
-  <ng-container *ngrxLet="data.userDoc$ as userDoc">
+<ng-container *rxLet="data.home$ as home">
+  <ng-container *rxLet="data.userDoc$ as userDoc">
     <mat-list>
       <mat-list-item
         *ngFor="let user of home.usersDetails | keyvalue; count as count"

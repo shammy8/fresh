@@ -21,7 +21,7 @@ import {
 } from 'rxjs';
 import { auditTime, catchError, map, take } from 'rxjs/operators';
 
-import { LetModule } from '@ngrx/component';
+import { LetModule } from '@rx-angular/template';
 
 import {
   collection,
@@ -55,7 +55,7 @@ import { ItemComponent } from '../item/item.component';
   ],
   selector: 'fresh-inventory',
   template: `
-    <ng-container *ngrxLet="items$ as items">
+    <ng-container *rxLet="items$ as items">
       <ng-container *ngIf="items.length > 0; else noItems">
         <fresh-item
           *ngFor="let item of items; trackBy: itemTrackByFn"

@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 
-import { LetModule } from '@ngrx/component';
+import { LetModule } from '@rx-angular/template';
 
 import { Item } from '../item.interface';
 import { HumanizeDurationPipe } from '../pipes/humanize-duration.pipe';
@@ -25,7 +25,7 @@ import { HumanizeDurationPipe } from '../pipes/humanize-duration.pipe';
     HumanizeDurationPipe,
     DatePipe,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   selector: 'fresh-item',
   templateUrl: './item.component.html',

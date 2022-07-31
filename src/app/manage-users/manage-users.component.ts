@@ -14,7 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { LetModule } from '@ngrx/component';
+import { LetModule } from '@rx-angular/template';
 
 import { Observable } from 'rxjs';
 

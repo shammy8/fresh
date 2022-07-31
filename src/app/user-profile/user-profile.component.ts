@@ -14,9 +14,9 @@ import {
   MAT_BOTTOM_SHEET_DATA,
 } from '@angular/material/bottom-sheet';
 
-import { LetModule } from '@ngrx/component';
-
 import { Observable } from 'rxjs';
+
+import { LetModule } from '@rx-angular/template';
 
 import { UserService } from '../services/user.service';
 import { UserDetails } from '../item.interface';
