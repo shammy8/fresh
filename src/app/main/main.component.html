@@ -29,35 +29,33 @@
       Home
     </button>
     <mat-nav-list>
-      <ng-container *rxLet="homes$ as homes">
-        <mat-list-item *ngFor="let home of homes">
-          <a
-            mat-list-item
-            [routerLink]="['home', home.id]"
-            [queryParams]="{
-              storedIn: '',
-              sortBy: 'primaryDate',
-              sortOrder: 'asc'
-            }"
-            routerLinkActive
-            #rla="routerLinkActive"
-            (click)="matSidenav.close()"
-          >
-            {{ home.name }}
-          </a>
-          <mat-icon *ngIf="rla.isActive" [matMenuTriggerFor]="menu"
-            >settings</mat-icon
-          >
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openBottomSheetToManageUsers(home)">
-              Manage Users
-            </button>
-            <button mat-menu-item color="warn" (click)="deleteHome(home)">
-              Delete Home
-            </button>
-          </mat-menu>
-        </mat-list-item>
-      </ng-container>
+      <mat-list-item *rxFor="let home of homes$">
+        <a
+          mat-list-item
+          [routerLink]="['home', home.id]"
+          [queryParams]="{
+            storedIn: '',
+            sortBy: 'primaryDate',
+            sortOrder: 'asc'
+          }"
+          routerLinkActive
+          #rla="routerLinkActive"
+          (click)="matSidenav.close()"
+        >
+          {{ home.name }}
+        </a>
+        <mat-icon *ngIf="rla.isActive" [matMenuTriggerFor]="menu"
+          >settings</mat-icon
+        >
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openBottomSheetToManageUsers(home)">
+            Manage Users
+          </button>
+          <button mat-menu-item color="warn" (click)="deleteHome(home)">
+            Delete Home
+          </button>
+        </mat-menu>
+      </mat-list-item>
     </mat-nav-list>
     <div class="version-number">v0.2.2</div>
   </mat-sidenav>

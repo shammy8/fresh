@@ -1,4 +1,4 @@
-import { NgForOf, NgIf } from '@angular/common';
+import { NgForOf } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import {
   AbstractControl,
@@ -23,6 +23,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable, Subject, takeUntil } from 'rxjs';
 
+// import { ForModule } from '@rx-angular/template/experimental/for';
+import { IfModule } from '@rx-angular/template/experimental/if';
+
 import { HomeFormGroup, UserDetails } from '../item.interface';
 import { HomeService } from '../services/home.service';
 
@@ -30,13 +33,14 @@ import { HomeService } from '../services/home.service';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgIf,
     NgForOf,
     MatInputModule,
     MatFormFieldModule,
     MatChipsModule,
     MatIconModule,
     MatButtonModule,
+    // ForModule, // TODO doesn't add it to the mat-chip
+    IfModule,
   ],
   selector: 'fresh-add-home',
   templateUrl: './add-home.component.html',

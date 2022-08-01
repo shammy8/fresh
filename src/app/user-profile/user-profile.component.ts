@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -17,6 +16,7 @@ import {
 import { Observable } from 'rxjs';
 
 import { LetModule } from '@rx-angular/template';
+import { IfModule } from '@rx-angular/template/experimental/if';
 
 import { UserService } from '../services/user.service';
 import { UserDetails } from '../item.interface';
@@ -26,13 +26,13 @@ import { UserDetails } from '../item.interface';
   imports: [
     LetModule,
     ReactiveFormsModule,
-    NgIf,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatTooltipModule,
     ClipboardModule,
+    IfModule
   ],
   selector: 'fresh-user-profile',
   templateUrl: './user-profile.component.html',
@@ -58,7 +58,7 @@ import { UserDetails } from '../item.interface';
 export class UserProfileComponent {
   newNameControl = new FormControl('', {
     nonNullable: true,
-    validators: [Validators.maxLength(30)],
+    validators: [Validators.maxLength(30), Validators.required],
   });
 
   isEditMode = false;
@@ -79,7 +79,7 @@ export class UserProfileComponent {
   }
 
   async saveDisplayName(uid: string) {
-    if (!this.newNameControl.value) return;
+    if (this.newNameControl.invalid) return;
 
     try {
       await this._userService.updateDisplayName(uid, this.newNameControl.value);

@@ -12,6 +12,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 
 import { LetModule } from '@rx-angular/template';
+// import { IfModule } from '@rx-angular/template/experimental/if';
 
 import { Item } from '../item.interface';
 import { HumanizeDurationPipe } from '../pipes/humanize-duration.pipe';
@@ -20,6 +21,7 @@ import { HumanizeDurationPipe } from '../pipes/humanize-duration.pipe';
   standalone: true,
   imports: [
     NgIf,
+    // IfModule, // TODO the action buttons appear half a second after the rest of the expansion box 
     LetModule,
     MatExpansionModule,
     HumanizeDurationPipe,

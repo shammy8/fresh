@@ -7,8 +7,8 @@
       placeholder="Chicken"
       name="item-name"
     />
-    <mat-error *ngIf="form.hasError('required', 'name')">Required</mat-error>
-    <mat-error *ngIf="form.hasError('maxlength', 'name')"
+    <mat-error *rxIf="form.hasError('required', 'name')">Required</mat-error>
+    <mat-error *rxIf="form.hasError('maxlength', 'name')"
       >Name must be less than 31 characters</mat-error
     >
   </mat-form-field>
@@ -22,23 +22,19 @@
       [matAutocomplete]="storedInAuto"
     />
     <mat-autocomplete autoActiveFirstOption #storedInAuto="matAutocomplete">
-      <ng-container
-        *rxLet="filteredStoredInOptions$ as filteredStoredInOptions"
+      <mat-option
+        *rxFor="let option of filteredStoredInOptions$"
+        [value]="option"
       >
-        <mat-option
-          *ngFor="let option of filteredStoredInOptions"
-          [value]="option"
-        >
-          <div>{{ option }}</div>
-          <div>
-            <mat-icon (click)="removeStorage($event, option)"
-              >delete_forever</mat-icon
-            >
-          </div>
-        </mat-option>
-      </ng-container>
+        <div>{{ option }}</div>
+        <div>
+          <mat-icon (click)="removeStorage($event, option)"
+            >delete_forever</mat-icon
+          >
+        </div>
+      </mat-option>
     </mat-autocomplete>
-    <mat-error *ngIf="form.hasError('maxlength', 'storedIn')"
+    <mat-error *rxIf="form.hasError('maxlength', 'storedIn')"
       >Stored In must be less than 31 characters</mat-error
     >
     <mat-hint align="end"
@@ -123,7 +119,7 @@
       placeholder="Move to freezer"
       name="comments"
     ></textarea>
-    <mat-error *ngIf="form.hasError('maxlength', 'comments')"
+    <mat-error *rxIf="form.hasError('maxlength', 'comments')"
       >Comments must be less than 301 characters</mat-error
     >
   </mat-form-field>

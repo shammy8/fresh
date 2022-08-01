@@ -1,5 +1,4 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -28,7 +27,8 @@ import {
 } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { LetModule } from '@rx-angular/template';
+import { ForModule } from '@rx-angular/template/experimental/for';
+import { IfModule } from '@rx-angular/template/experimental/if';
 
 import { Item, ItemFormGroup } from '../item.interface';
 import { ItemService } from '../services/item.service';
@@ -38,15 +38,14 @@ import { HomeService } from '../services/home.service';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgIf,
-    NgForOf,
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
     MatButtonModule,
     MatDatepickerModule,
     MatAutocompleteModule,
-    LetModule,
+    IfModule,
+    ForModule,
   ],
   selector: 'fresh-edit-item',
   templateUrl: './edit-item.component.html',

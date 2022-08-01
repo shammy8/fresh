@@ -1,6 +1,10 @@
-import { NgForOf, NgIf } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,7 +27,8 @@ import {
   takeUntil,
 } from 'rxjs';
 
-import { LetModule } from '@rx-angular/template';
+import { ForModule } from '@rx-angular/template/experimental/for';
+import { IfModule } from '@rx-angular/template/experimental/if';
 
 import { ItemFormGroup } from '../item.interface';
 import { ItemService } from '../services/item.service';
@@ -33,15 +38,14 @@ import { HomeService } from '../services/home.service';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgIf,
-    NgForOf,
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
     MatButtonModule,
     MatDatepickerModule,
     MatAutocompleteModule,
-    LetModule
+    ForModule,
+    IfModule,
   ],
   selector: 'fresh-add-item',
   templateUrl: './add-item.component.html',

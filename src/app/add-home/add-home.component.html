@@ -2,8 +2,8 @@
   <mat-form-field>
     <mat-label>Name</mat-label>
     <input matInput formControlName="name" name="home-name" />
-    <mat-error *ngIf="form.hasError('required', 'name')">Required</mat-error>
-    <mat-error *ngIf="form.hasError('maxlength', 'name')"
+    <mat-error *rxIf="form.hasError('required', 'name')">Required</mat-error>
+    <mat-error *rxIf="form.hasError('maxlength', 'name')"
       >Name must be less than 31 characters</mat-error
     >
   </mat-form-field>
@@ -12,13 +12,13 @@
     <mat-label>Users ID</mat-label>
     <mat-chip-list #usersList multiple formControlName="users">
       <mat-chip
-        *ngFor="let uid of uidList"
+        *rxFor="let uid of uidList"
         [selectable]="false"
         [value]="uid"
         (removed)="removeUid(uid)"
       >
-        {{ uid }} <span class="mat-caption" *ngIf="uid === data.userId"> - You </span>
-        <button matChipRemove *ngIf="uid !== data.userId">
+        {{ uid }} <span class="mat-caption" *rxIf="uid === data.userId"> - You </span>
+        <button matChipRemove *rxIf="uid !== data.userId">
           <mat-icon>cancel</mat-icon>
         </button>
       </mat-chip>
@@ -49,7 +49,7 @@
       [matChipInputFor]="storagesList"
       (matChipInputTokenEnd)="addStorage($event)"
     />
-    <mat-error *ngIf="form.hasError('arrayElementMaxLength', 'storage')"
+    <mat-error *rxIf="form.hasError('arrayElementMaxLength', 'storage')"
       >Each storage must be less than 31 characters</mat-error
     >
     <mat-hint align="end">Press enter after each one</mat-hint>

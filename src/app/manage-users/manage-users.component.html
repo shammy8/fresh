@@ -2,11 +2,11 @@
   <ng-container *rxLet="data.userDoc$ as userDoc">
     <mat-list>
       <mat-list-item
-        *ngFor="let user of home.usersDetails | keyvalue; count as count"
+        *rxFor="let user of home.usersDetails | keyvalue; count as count"
       >
         <div matLine class="userId-text">{{ user.key }}</div>
         <div matLine>
-          <span *ngIf="user.value.displayName; else noDisplayName">
+          <span *rxIf="user.value.displayName; else noDisplayName">
             {{ user.value.displayName }}
           </span>
           <ng-template #noDisplayName
@@ -14,10 +14,10 @@
               >No Display Name</span
             ></ng-template
           >
-          <span *ngIf="user.key === userDoc.uid"> - You </span>
+          <span *rxIf="user.key === userDoc.uid"> - You </span>
         </div>
         <mat-icon
-          *ngIf="count > 1"
+          *rxIf="count > 1"
           (click)="deleteUserId(home.id!, user.key, userDoc.uid, user.value.email)"
           >delete</mat-icon
         >
@@ -33,7 +33,7 @@
         name="newUserEmailControl"
       />
       <mat-icon
-        *ngIf="!isLoadingAddUser; else loadingAddUserTemplate"
+        *rxIf="!isLoadingAddUser; else loadingAddUserTemplate"
         matSuffix
         type="button"
         (click)="addUserEmailToForm(home.id!)"
@@ -43,10 +43,10 @@
       <mat-hint align="end">
         Press the + button after entering the User Email</mat-hint
       >
-      <mat-error *ngIf="newUserEmailControl.hasError('email')"
+      <mat-error *rxIf="newUserEmailControl.hasError('email')"
         >Email must be a valid email</mat-error
       >
-      <mat-error *ngIf="newUserEmailControl.hasError('backendError')">
+      <mat-error *rxIf="newUserEmailControl.hasError('backendError')">
         {{ newUserEmailControl.errors?.['backendError'] }}</mat-error
       >
 

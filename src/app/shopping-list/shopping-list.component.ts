@@ -1,4 +1,3 @@
-import { NgForOf, NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -17,14 +16,15 @@ import {
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
+import { ForModule } from '@rx-angular/template/experimental/for';
+import { IfModule } from '@rx-angular/template/experimental/if';
+
 import { HomeService } from '../services/home.service';
 
 @Component({
   standalone: true,
   imports: [
     MatIconModule,
-    NgIf,
-    NgForOf,
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
@@ -32,7 +32,9 @@ import { HomeService } from '../services/home.service';
     MatCheckboxModule,
     MatDividerModule,
     MatIconModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ForModule,
+    IfModule,
   ],
   selector: 'fresh-shopping-list',
   template: `
@@ -50,7 +52,7 @@ import { HomeService } from '../services/home.service';
     </div>
 
     <ul cdkDropList (cdkDropListDropped)="toBuyDrop($event)">
-      <li *ngFor="let item of toBuy; index as i" cdkDrag>
+      <li *rxFor="let item of toBuy; index as i" cdkDrag>
         <mat-icon cdkDragHandle>drag_indicator</mat-icon>
         <mat-checkbox (change)="moveToBought(item)"> </mat-checkbox>
         <input
@@ -65,10 +67,10 @@ import { HomeService } from '../services/home.service';
       </li>
     </ul>
 
-    <mat-divider *ngIf="bought.length > 0"> </mat-divider>
+    <mat-divider *rxIf="bought.length > 0"> </mat-divider>
 
     <ul cdkDropList (cdkDropListDropped)="boughtDrop($event)">
-      <li *ngFor="let item of bought; index as i" cdkDrag>
+      <li *rxFor="let item of bought; index as i" cdkDrag>
         <mat-icon cdkDragHandle>drag_indicator</mat-icon>
         <mat-checkbox (change)="moveToToBuy(item)" [checked]="true">
         </mat-checkbox>

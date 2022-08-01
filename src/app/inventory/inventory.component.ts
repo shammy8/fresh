@@ -1,4 +1,3 @@
-import { NgForOf, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -22,6 +21,8 @@ import {
 import { auditTime, catchError, map, take } from 'rxjs/operators';
 
 import { LetModule } from '@rx-angular/template';
+import { ForModule } from '@rx-angular/template/experimental/for';
+import { IfModule } from '@rx-angular/template/experimental/if';
 
 import {
   collection,
@@ -47,18 +48,18 @@ import { ItemComponent } from '../item/item.component';
   imports: [
     LetModule,
     ItemComponent,
-    NgIf,
-    NgForOf,
     MatButtonModule,
     MatExpansionModule,
     MatIconModule,
+    ForModule,
+    IfModule
   ],
   selector: 'fresh-inventory',
   template: `
     <ng-container *rxLet="items$ as items">
-      <ng-container *ngIf="items.length > 0; else noItems">
+      <ng-container *rxIf="items.length > 0; else noItems">
         <fresh-item
-          *ngFor="let item of items; trackBy: itemTrackByFn"
+          *rxFor="let item of items; trackBy: itemTrackByFn"
           [item]="item"
           [today]="todayDate"
           (edit)="openEditItemBottomSheet(item)"
@@ -74,34 +75,34 @@ import { ItemComponent } from '../item/item.component';
       >
         Load more
       </button>
-
-      <div class="add-empty-height"></div>
-
-      <ng-template #noItems>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title> No items found </mat-panel-title>
-          </mat-expansion-panel-header>
-          Please add an item or change your search criteria in the bottom right
-        </mat-expansion-panel>
-      </ng-template>
-
-      <button
-        mat-mini-fab
-        class="query-button"
-        (click)="openQueryItemsBottomSheet()"
-      >
-        <mat-icon>search</mat-icon>
-      </button>
-      <button
-        mat-fab
-        color="primary"
-        class="add-item-button"
-        (click)="openAddItemBottomSheet()"
-      >
-        <mat-icon>add</mat-icon>
-      </button>
     </ng-container>
+
+    <div class="add-empty-height"></div>
+
+    <ng-template #noItems>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> No items found </mat-panel-title>
+        </mat-expansion-panel-header>
+        Please add an item or change your search criteria in the bottom right
+      </mat-expansion-panel>
+    </ng-template>
+
+    <button
+      mat-mini-fab
+      class="query-button"
+      (click)="openQueryItemsBottomSheet()"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+    <button
+      mat-fab
+      color="primary"
+      class="add-item-button"
+      (click)="openAddItemBottomSheet()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
   `,
   styles: [
     `

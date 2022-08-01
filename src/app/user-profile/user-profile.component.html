@@ -1,5 +1,5 @@
 <div *rxLet="data.userDoc$ as userDoc" class="grid">
-  <ng-container *ngIf="!isEditMode; else editNameTemplate">
+  <ng-container *rxIf="!isEditMode; else editNameTemplate">
     <h2>
       {{ userDoc.displayName }}
     </h2>
@@ -21,7 +21,10 @@
         placeholder="New display name"
         name="displayName"
       />
-      <mat-error *ngIf="newNameControl.hasError('maxlength')"
+      <mat-error *rxIf="newNameControl.hasError('required')"
+        >Name is required</mat-error
+      >
+      <mat-error *rxIf="newNameControl.hasError('maxlength')"
         >Name must be less than 31 characters</mat-error
       >
     </mat-form-field>

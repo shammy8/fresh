@@ -1,4 +1,4 @@
-import { NgForOf, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,7 +8,10 @@ import {
 import { Router, RouterModule } from '@angular/router';
 
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import {
+  MatBottomSheet,
+  MatBottomSheetModule,
+} from '@angular/material/bottom-sheet';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,7 +24,8 @@ import { Auth } from '@angular/fire/auth';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-import { LetModule } from '@rx-angular/template';
+import { ForModule } from '@rx-angular/template/experimental/for';
+// import { IfModule } from '@rx-angular/template/experimental/if';
 
 import { Home } from '../item.interface';
 import { HomeService } from '../services/home.service';
@@ -36,7 +40,6 @@ import { UserService } from '../services/user.service';
   imports: [
     RouterModule,
     NgIf,
-    NgForOf,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -45,7 +48,8 @@ import { UserService } from '../services/user.service';
     MatListModule,
     MatSnackBarModule,
     MatBottomSheetModule,
-    LetModule
+    ForModule,
+    // IfModule, // TODO the cog button doesn't get removed when changing homes
   ],
   selector: 'fresh-main',
   templateUrl: './main.component.html',
