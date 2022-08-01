@@ -27,6 +27,7 @@ For later:
 
 - [x] Try @rx-angular/template
   - [x] Try rxFor when it's available
+  - [ ] Change to rxIf, rxFor once they fix the errors I'm getting
 - [x] Try standalone components
 - [x] Move the vertical scroll below the tabs
 - [x] Add a shopping list (similar to Google Notes), deleting from main app will ask user to move to shopping list

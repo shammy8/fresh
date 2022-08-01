@@ -1,4 +1,8 @@
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  enableProdMode,
+  importProvidersFrom,
+} from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
@@ -50,42 +54,50 @@ const routes: Routes = [
   },
 ];
 
-bootstrapApplication(AppComponent, {
-  providers: [
-    provideAnimations(),
-    importProvidersFrom([
-      RouterModule.forRoot(routes, { preloadingStrategy:  PreloadAllModules }),
-      MatNativeDateModule,
-      provideFirebaseApp(() => initializeApp(environment.firebase)),
-      provideAuth(() => getAuth()),
-      provideFirestore(() => {
-        const firestore = getFirestore();
-        enableIndexedDbPersistence(firestore)
-          .then(() => {
-            console.log('Successfully enabled persistence');
-          })
-          .catch((error) => {
-            alert(
-              'Offline mode has errored, make sure the app is only opened in one tab. ' +
-                error
-            );
-          });
-        return firestore;
-      }),
-      provideMessaging(() => getMessaging()),
-      FunctionsModule,
-      provideFunctions(() => getFunctions()), // TODO figure out how to set the region
-      ServiceWorkerModule.register('ngsw-worker.js', {
-        enabled: environment.production,
-        // Register the ServiceWorker as soon as the application is stable
-        // or after 30 seconds (whichever comes first).
-        registrationStrategy: 'registerWhenStable:30000',
-      }),
-    ]),
-    {
-      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-      useValue: { duration: 3000, verticalPosition: 'top' },
-    },
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
-  ],
-}).catch((err) => console.error(err));
+setTimeout(() => // TODO does this help?
+  bootstrapApplication(AppComponent, {
+    providers: [
+      provideAnimations(),
+      importProvidersFrom([
+        RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+        MatNativeDateModule,
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideAuth(() => getAuth()),
+        provideFirestore(() => {
+          const firestore = getFirestore();
+          enableIndexedDbPersistence(firestore)
+            .then(() => {
+              console.log('Successfully enabled persistence');
+            })
+            .catch((error) => {
+              alert(
+                'Offline mode has errored, make sure the app is only opened in one tab. ' +
+                  error
+              );
+            });
+          return firestore;
+        }),
+        provideMessaging(() => getMessaging()),
+        FunctionsModule,
+        provideFunctions(() => getFunctions()), // TODO figure out how to set the region
+        ServiceWorkerModule.register('ngsw-worker.js', {
+          enabled: environment.production,
+          // Register the ServiceWorker as soon as the application is stable
+          // or after 30 seconds (whichever comes first).
+          registrationStrategy: 'registerWhenStable:30000',
+        }),
+      ]),
+      {
+        // TODO does this help?
+        provide: APP_INITIALIZER,
+        useFactory: () => () => new Promise((resolve) => setTimeout(resolve)),
+        multi: true,
+      },
+      {
+        provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+        useValue: { duration: 3000, verticalPosition: 'top' },
+      },
+      { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    ],
+  }).catch((err) => console.error(err))
+);
