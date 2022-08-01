@@ -14,19 +14,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   ],
   selector: 'fresh-root',
   template: `
-    <mat-spinner *ngIf="!isRouteLoaded"></mat-spinner>
+    <mat-spinner *ngIf="!isRouteLoaded" [diameter]="50"></mat-spinner>
     <router-outlet (activate)="isRouteLoaded = !!$event"></router-outlet>
   `,
-  styles: [
-    `
-      mat-spinner {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-    `,
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {

@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import {
   BehaviorSubject,
@@ -51,12 +52,13 @@ import { ItemComponent } from '../item/item.component';
     MatButtonModule,
     MatExpansionModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     ForModule,
-    IfModule
+    IfModule,
   ],
   selector: 'fresh-inventory',
   template: `
-    <ng-container *rxLet="items$ as items">
+    <ng-container *rxLet="items$ as items; rxSuspense: loadingTemplate">
       <ng-container *rxIf="items.length > 0; else noItems">
         <fresh-item
           *rxFor="let item of items; trackBy: itemTrackByFn"
@@ -86,6 +88,10 @@ import { ItemComponent } from '../item/item.component';
         </mat-expansion-panel-header>
         Please add an item or change your search criteria in the bottom right
       </mat-expansion-panel>
+    </ng-template>
+
+    <ng-template #loadingTemplate>
+      <mat-spinner [diameter]="50"> </mat-spinner>
     </ng-template>
 
     <button
