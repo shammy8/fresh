@@ -6,15 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 
-import {
-  combineLatest,
-  map,
-  Observable,
-  startWith,
-  Subject,
-  takeUntil,
-} from 'rxjs';
-
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,12 +18,22 @@ import {
 } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import {
+  combineLatest,
+  map,
+  Observable,
+  startWith,
+  Subject,
+  takeUntil,
+} from 'rxjs';
+
 import { ForModule } from '@rx-angular/template/experimental/for';
 import { IfModule } from '@rx-angular/template/experimental/if';
 
 import { Item, ItemFormGroup } from '../item.interface';
 import { ItemService } from '../services/item.service';
 import { HomeService } from '../services/home.service';
+import { AutoCompleteOnOffDirective } from '../directives/autocomplete-on-off.directive';
 
 @Component({
   standalone: true,
@@ -46,6 +47,7 @@ import { HomeService } from '../services/home.service';
     MatAutocompleteModule,
     IfModule,
     ForModule,
+    AutoCompleteOnOffDirective,
   ],
   selector: 'fresh-edit-item',
   templateUrl: './edit-item.component.html',

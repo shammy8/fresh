@@ -6,10 +6,11 @@
       formControlName="name"
       placeholder="Chicken"
       name="item-name"
+      freshAutocompleteOnOff
     />
     <mat-error *rxIf="form.hasError('required', 'name')">Required</mat-error>
     <mat-error *rxIf="form.hasError('maxlength', 'name')"
-      >Name must be lest than 31 characters</mat-error
+      >Name must be less than 31 characters</mat-error
     >
   </mat-form-field>
 

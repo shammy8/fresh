@@ -6,6 +6,7 @@
       formControlName="name"
       placeholder="Chicken"
       name="item-name"
+      freshAutocompleteOnOff
     />
     <mat-error *rxIf="form.hasError('required', 'name')">Required</mat-error>
     <mat-error *rxIf="form.hasError('maxlength', 'name')"
