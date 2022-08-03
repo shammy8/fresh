@@ -10,6 +10,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { LetModule } from '@rx-angular/template';
 // import { IfModule } from '@rx-angular/template/experimental/if';
@@ -28,6 +29,7 @@ import { HumanizeDurationPipe } from '../pipes/humanize-duration.pipe';
     DatePipe,
     MatIconModule,
     MatButtonModule,
+    MatTooltipModule
   ],
   selector: 'fresh-item',
   templateUrl: './item.component.html',
@@ -70,6 +72,8 @@ export class ItemComponent {
   };
 
   @Output() delete = new EventEmitter();
+
+  @Output() deleteAndAddToShoppingList = new EventEmitter();
 
   @Output() edit = new EventEmitter();
 

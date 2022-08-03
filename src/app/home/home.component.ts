@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -12,7 +13,12 @@ import { ShoppingListComponent } from '../shopping-list/shopping-list.component'
 
 @Component({
   standalone: true,
-  imports: [InventoryComponent, ShoppingListComponent, MatTabsModule],
+  imports: [
+    InventoryComponent,
+    ShoppingListComponent,
+    MatTabsModule,
+    MatIconModule,
+  ],
   selector: 'fresh-home',
   template: `
     <mat-tab-group
@@ -22,10 +28,18 @@ import { ShoppingListComponent } from '../shopping-list/shopping-list.component'
       [selectedIndex]="tabIndex"
       (selectedIndexChange)="selectedIndexChange($event)"
     >
-      <mat-tab label="Inventory">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>inventory</mat-icon>
+          &nbsp; Inventory
+        </ng-template>
         <fresh-inventory></fresh-inventory>
       </mat-tab>
-      <mat-tab label="Shopping List">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>checklist</mat-icon>
+          &nbsp; Shopping List
+        </ng-template>
         <fresh-shopping-list></fresh-shopping-list>
       </mat-tab>
     </mat-tab-group>

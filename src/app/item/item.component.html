@@ -58,10 +58,23 @@
   </ng-template>
 
   <mat-action-row>
-    <button mat-mini-fab color="warn" (click)="delete.emit()">
+    <button
+      mat-mini-fab
+      color="warn"
+      (click)="delete.emit()"
+      matTooltip="Delete item"
+    >
       <mat-icon>delete_forever</mat-icon>
     </button>
-    <button mat-mini-fab color="primary" (click)="edit.emit()">
+    <button
+      mat-mini-fab
+      color="accent"
+      (click)="deleteAndAddToShoppingList.emit()"
+      matTooltip="Add item to Shopping List"
+    >
+      <mat-icon>checklist</mat-icon>
+    </button>
+    <button mat-mini-fab color="primary" (click)="edit.emit()" matTooltip="Edit item">
       <mat-icon>edit</mat-icon>
     </button>
   </mat-action-row>

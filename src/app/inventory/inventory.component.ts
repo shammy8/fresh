@@ -66,6 +66,7 @@ import { ItemComponent } from '../item/item.component';
           [today]="todayDate"
           (edit)="openEditItemBottomSheet(item)"
           (delete)="deleteItem(item)"
+          (deleteAndAddToShoppingList)="deleteAndAddToShoppingList(item)"
         ></fresh-item>
       </ng-container>
 
@@ -278,17 +279,24 @@ export class InventoryComponent {
       return;
 
     try {
-      if (
-        confirm(`Do you also want to add ${item.name} to the Shopping List?`)
-      ) {
-        this._homeService.addItemToToBuyShoppingList(this.homeId, item.name);
-      }
-
       await this._itemService.deleteItem(this.homeId, item.id!);
       this._snackBar.open('Successfully Deleted Item', 'Close');
     } catch (error) {
       console.error(error);
       this._snackBar.open('Error Deleting Item', 'Close');
+    }
+  }
+
+  async deleteAndAddToShoppingList(item: Item) {
+    try {
+      await this._homeService.addItemToToBuyShoppingList(
+        this.homeId,
+        item.name
+      );
+      this._snackBar.open('Successfully Added Item to Shopping List', 'Close');
+    } catch (error) {
+      console.error(error);
+      this._snackBar.open('Error Adding Item to Shopping List', 'Close');
     }
   }
 }
