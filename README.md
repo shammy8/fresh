@@ -52,6 +52,7 @@ For later:
   - [ ] Style login page
 - [ ] Styling
   - [ ] Add animations for adding removing items in both tabs
+    - [ ] Problem with animating mat-expansion panel
   - [ ] Change the logo in the Chrome tab
   - [x] Change the styling of the app
   - [ ] Some styling are repeated, can refactor eg expansion panel
