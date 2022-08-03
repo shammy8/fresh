@@ -40,6 +40,12 @@
           }"
           routerLinkActive
           #rla="routerLinkActive"
+          [routerLinkActiveOptions]="{
+            queryParams: 'ignored',
+            matrixParams: 'exact',
+            paths: 'exact',
+            fragment: 'exact'
+          }"
           (click)="matSidenav.close()"
         >
           {{ home.name }}
