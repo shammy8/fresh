@@ -108,6 +108,11 @@ export class MainComponent implements OnDestroy {
     const bottomSheetRef = this._bottomSheet.open(ManageUsersComponent, {
       data: { userDoc$: this.userDoc$, home$ },
     });
+    bottomSheetRef.afterDismissed().subscribe((navBack) => {
+      if (navBack === false) return;
+      this._router.navigate(['']);
+      this.matSideNav?.close();
+    });
   }
 
   openBottomSheetToUserPage() {

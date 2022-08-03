@@ -31,7 +31,7 @@ For later:
 - [x] Try standalone components
 - [x] Move the vertical scroll below the tabs
 - [x] Add a shopping list (similar to Google Notes), deleting from main app will ask user to move to shopping list
-  - [ ] Firestore rules for shoppingList
+  - [x] Firestore rules for shoppingList
   - [x] Make shoppingList property in home interface always available
   - [x] Allow changing item names in shopping list
 - [x] Remember previous query, save on device instead of firebase

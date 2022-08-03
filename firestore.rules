@@ -15,6 +15,7 @@ service cloud.firestore {
                 request.resource.data.shoppingList.keys().hasOnly(['toBuy','bought']) && 
                 request.resource.data.shoppingList.toBuy is list && 
                 request.resource.data.shoppingList.bought is list;
+                // TODO must have at least one users
             }
 
             function isHomeUser() {

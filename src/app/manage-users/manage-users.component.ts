@@ -107,13 +107,18 @@ export class ManageUsersComponent {
     userDocUid: string,
     userEmail: string
   ) {
-    if (
-      userId === userDocUid &&
-      !confirm(
-        `Removing yourself will mean you no longer have access to the home until a user adds you back in. Are you sure you want to continue?`
-      )
-    ) {
-      return;
+    let closeBottomSheetAndNavigate = false;
+
+    if (userId === userDocUid) {
+      if (
+        confirm(
+          `Removing yourself will mean you no longer have access to the home until a user adds you back in. Are you sure you want to continue?`
+        )
+      ) {
+        closeBottomSheetAndNavigate = true;
+      } else {
+        return;
+      }
     } else if (
       !confirm(`Are you sure you want to remove ${userEmail} from this home?`)
     ) {
@@ -121,6 +126,9 @@ export class ManageUsersComponent {
     }
 
     try {
+      if (closeBottomSheetAndNavigate === true) {
+        this.closeBottomSheet(true);
+      }
       await this._homeService.deleteUser(homeId, userId);
       this._snackBar.open('Successfully Deleted User', 'Close');
     } catch (error) {
@@ -129,7 +137,7 @@ export class ManageUsersComponent {
     }
   }
 
-  closeBottomSheet(docRef?: string) {
-    this._bottomSheetRef.dismiss(docRef);
+  closeBottomSheet(navBackToMain: boolean) {
+    this._bottomSheetRef.dismiss(navBackToMain);
   }
 }
