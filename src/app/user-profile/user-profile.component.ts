@@ -9,9 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
-  MatBottomSheetRef,
-  MAT_BOTTOM_SHEET_DATA,
+    MatBottomSheetRef,
+    MAT_BOTTOM_SHEET_DATA,
 } from '@angular/material/bottom-sheet';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { Observable } from 'rxjs';
 
@@ -31,8 +32,9 @@ import { UserDetails } from '../item.interface';
     MatInputModule,
     MatIconModule,
     MatTooltipModule,
+    MatSlideToggleModule,
     ClipboardModule,
-    IfModule
+    IfModule,
   ],
   selector: 'fresh-user-profile',
   templateUrl: './user-profile.component.html',
@@ -49,7 +51,8 @@ import { UserDetails } from '../item.interface';
         margin-bottom: 0;
       }
       button,
-      .name-control-button-container {
+      .name-control-button-container,
+      mat-slide-toggle {
         justify-self: end;
       }
     `,
@@ -63,6 +66,10 @@ export class UserProfileComponent {
 
   isEditMode = false;
 
+  notificationControl = new FormControl<boolean>(
+    Notification.permission === 'granted'
+  );
+
   constructor(
     private _snackBar: MatSnackBar,
     private _bottomSheetRef: MatBottomSheetRef<UserProfileComponent>,
@@ -71,7 +78,16 @@ export class UserProfileComponent {
       userDoc$: Observable<UserDetails>;
     },
     private _userService: UserService
-  ) {}
+  ) {
+    this.notificationControl.valueChanges.subscribe((allow) => {
+      // TODO
+      if (allow === true) {
+        console.log('allow');
+      } else if (allow === false) {
+        console.log('deny');
+      }
+    });
+  }
 
   onEdit(displayName: string) {
     this.isEditMode = true;

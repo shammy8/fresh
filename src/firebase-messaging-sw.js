@@ -27,7 +27,7 @@ isSupported().then((isSupported) => {
       ({ notification: { title, body, image } }) => {
         self.registration.showNotification(title, {
           body,
-          icon: image || "/assets/icons/icon-72x72.png",
+          icon: image || "/assets/icons/manifest-icon-192.maskable.png",
         });
       }
     );
