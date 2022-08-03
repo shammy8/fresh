@@ -22,7 +22,7 @@ import { ShoppingListComponent } from '../shopping-list/shopping-list.component'
   selector: 'fresh-home',
   template: `
     <mat-tab-group
-      animationDuration="500ms"
+      animationDuration="300ms"
       mat-stretch-tabs
       color="accent"
       [selectedIndex]="tabIndex"
