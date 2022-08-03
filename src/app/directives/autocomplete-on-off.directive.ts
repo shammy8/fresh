@@ -1,36 +1,56 @@
-import { AfterViewInit, Directive, ElementRef, OnDestroy } from '@angular/core';
-import { NgControl } from '@angular/forms';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Input,
+} from '@angular/core';
 
-import { startWith, Subject, takeUntil } from 'rxjs';
+import { coerceNumberProperty, NumberInput } from '@angular/cdk/coercion';
 
+/**
+ * Directive to be applied to <input type="text"> elements to turn the autocomplete attribute 'on' when the value length is
+ * greater than a certain number and 'off' otherwise.
+ * 
+ * When directive is used without binding to anything, it will default to greater than 0. Meaning autocomplete will be turn
+ * on when there is at least one character in the <input type="text">
+ *
+ * Normal html criteria for autocomplete applies. Ie needs a name and/or id attribute, be descendant of a <form> element and
+ * the form must have a submit button. https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+ */
 @Directive({
   standalone: true,
-  selector: 'input[freshAutocompleteOnOff]',
+  selector: 'input[type=text][freshAutocompleteOnWhenLengthGreaterThan]',
 })
-export class AutoCompleteOnOffDirective implements AfterViewInit, OnDestroy {
-  private readonly _destroy = new Subject<void>();
+export class AutocompleteOnOffDirective implements AfterViewInit {
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  @Input('freshAutocompleteOnWhenLengthGreaterThan')
+  get limit() {
+    return this._limit;
+  }
+  set limit(value: NumberInput) {
+    this._limit = coerceNumberProperty(value, 0);
+  }
+  private _limit = 0;
 
-  constructor(
-    private readonly _formControl: NgControl,
-    private readonly _elementRef: ElementRef
-  ) {}
+  @HostBinding('attr.autocomplete') autocomplete: 'on' | 'off' = 'off';
 
-  ngAfterViewInit() {
-    console.log(this._formControl.value);
-
-    this._formControl.valueChanges
-      ?.pipe(startWith(this._formControl.value), takeUntil(this._destroy))
-      .subscribe((value) => {
-        if (value.length > 0) {
-          this._elementRef.nativeElement.autocomplete = 'on';
-        } else {
-          this._elementRef.nativeElement.autocomplete = 'off';
-        }
-      });
+  @HostListener('input', ['$event'])
+  inputChange(event: InputEvent) {
+    const value = (event.target as HTMLInputElement).value;
+    this._setAutocomplete(value);
   }
 
-  ngOnDestroy(): void {
-    this._destroy.next();
-    this._destroy.complete();
+  constructor(private readonly _elementRef: ElementRef) {}
+
+  ngAfterViewInit() {
+    const initialValue = (this._elementRef.nativeElement as HTMLInputElement)
+      .value;
+    this._setAutocomplete(initialValue);
+  }
+
+  private _setAutocomplete(value: string) {
+    this.autocomplete = value.length > this._limit ? 'on' : 'off';
   }
 }

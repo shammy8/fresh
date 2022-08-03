@@ -33,7 +33,7 @@ import { IfModule } from '@rx-angular/template/experimental/if';
 import { ItemFormGroup } from '../item.interface';
 import { ItemService } from '../services/item.service';
 import { HomeService } from '../services/home.service';
-import { AutoCompleteOnOffDirective } from '../directives/autocomplete-on-off.directive';
+import { AutocompleteOnOffDirective } from '../directives/autocomplete-on-off.directive';
 
 @Component({
   standalone: true,
@@ -47,7 +47,7 @@ import { AutoCompleteOnOffDirective } from '../directives/autocomplete-on-off.di
     MatAutocompleteModule,
     ForModule,
     IfModule,
-    AutoCompleteOnOffDirective
+    AutocompleteOnOffDirective
   ],
   selector: 'fresh-add-item',
   templateUrl: './add-item.component.html',
