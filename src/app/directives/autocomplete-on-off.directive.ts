@@ -18,6 +18,7 @@ import { coerceNumberProperty, NumberInput } from '@angular/cdk/coercion';
  *
  * Normal html criteria for autocomplete applies. Ie needs a name and/or id attribute, be descendant of a <form> element and
  * the form must have a submit button. https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+ * Not sure if above is correct actually.
  */
 @Directive({
   standalone: true,
