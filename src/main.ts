@@ -5,7 +5,13 @@ import {
 } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {
+  PreloadAllModules,
+  provideRouter,
+  RouterModule,
+  Routes,
+  withPreloading,
+} from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
@@ -54,13 +60,15 @@ const routes: Routes = [
   },
 ];
 
-setTimeout(() => // TODO does this help?
+setTimeout(() =>
+  // TODO does this help?
   bootstrapApplication(AppComponent, {
     providers: [
       provideAnimations(),
+      //   provideRouter(routes, withPreloading(PreloadAllModules)), // TODO check if routing works
       importProvidersFrom([
         RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
-        MatNativeDateModule,
+        MatNativeDateModule, // TODO right now you need to type in the date as mm/dd/yyyy.
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideAuth(() => getAuth()),
         provideFirestore(() => {
