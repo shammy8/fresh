@@ -52,12 +52,12 @@
       formControlName="dateBought"
       name="dateBought"
       autocomplete="off"
-    />
+      />
     <mat-datepicker-toggle
       matSuffix
       [for]="dateBoughtPicker"
     ></mat-datepicker-toggle>
-    <mat-datepicker #dateBoughtPicker touchUi></mat-datepicker>
+    <mat-datepicker #dateBoughtPicker touchUi disabled="false"></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field>
@@ -73,7 +73,7 @@
       matSuffix
       [for]="bestBeforePicker"
     ></mat-datepicker-toggle>
-    <mat-datepicker #bestBeforePicker touchUi></mat-datepicker>
+    <mat-datepicker #bestBeforePicker touchUi disabled="false"></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field>
@@ -89,7 +89,7 @@
       matSuffix
       [for]="useByPicker"
     ></mat-datepicker-toggle>
-    <mat-datepicker #useByPicker touchUi></mat-datepicker>
+    <mat-datepicker #useByPicker touchUi disabled="false"></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field>
@@ -103,7 +103,7 @@
     />
     <mat-datepicker-toggle matSuffix [for]="userDefinedDatePicker">
     </mat-datepicker-toggle>
-    <mat-datepicker #userDefinedDatePicker touchUi></mat-datepicker>
+    <mat-datepicker #userDefinedDatePicker touchUi disabled="false"></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field>

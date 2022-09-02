@@ -105,16 +105,28 @@ export class AddEditItemComponent implements OnInit, OnDestroy {
         validators: [Validators.maxLength(30)],
         nonNullable: true,
       }),
-      dateBought: new FormControl(this.initialValues.dateBought, {
-        updateOn: 'blur',
-      }),
-      bestBefore: new FormControl(this.initialValues.bestBefore, {
-        updateOn: 'blur',
-      }),
-      useBy: new FormControl(this.initialValues.useBy, { updateOn: 'blur' }),
-      userDefinedDate: new FormControl(this.initialValues.userDefinedDate, {
-        updateOn: 'blur',
-      }),
+      dateBought: new FormControl(
+        { value: this.initialValues.dateBought, disabled: true },
+        {
+          updateOn: 'blur',
+        }
+      ),
+      bestBefore: new FormControl(
+        { value: this.initialValues.bestBefore, disabled: true },
+        {
+          updateOn: 'blur',
+        }
+      ),
+      useBy: new FormControl(
+        { value: this.initialValues.useBy, disabled: true },
+        { updateOn: 'blur' }
+      ),
+      userDefinedDate: new FormControl(
+        { value: this.initialValues.userDefinedDate, disabled: true },
+        {
+          updateOn: 'blur',
+        }
+      ),
       primaryDate: new FormControl({
         value: this.initialValues.primaryDate,
         disabled: true,
@@ -135,7 +147,7 @@ export class AddEditItemComponent implements OnInit, OnDestroy {
     ]).pipe(
       map(([value, storedInOptions]) => {
         return this._filter(value || '', storedInOptions);
-      }),
+      })
     );
 
     combineLatest([
