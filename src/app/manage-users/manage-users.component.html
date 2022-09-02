@@ -6,7 +6,7 @@
       >
         <div matLine class="userId-text">{{ user.key }}</div>
         <div matLine>
-          <span *rxIf="user.value.displayName; else noDisplayName">
+          <span *ngIf="user.value.displayName; else noDisplayName">
             {{ user.value.displayName }}
           </span>
           <ng-template #noDisplayName
@@ -14,10 +14,10 @@
               >No Display Name</span
             ></ng-template
           >
-          <span *rxIf="user.key === userDoc.uid"> - You </span>
+          <span *ngIf="user.key === userDoc.uid"> - You </span>
         </div>
         <mat-icon
-          *rxIf="count > 1"
+          *ngIf="count > 1"
           (click)="deleteUserId(home.id!, user.key, userDoc.uid, user.value.email)"
           >delete</mat-icon
         >
@@ -33,7 +33,7 @@
         name="newUserEmailControl"
       />
       <mat-icon
-        *rxIf="!isLoadingAddUser; else loadingAddUserTemplate"
+        *ngIf="!isLoadingAddUser; else loadingAddUserTemplate"
         matSuffix
         type="button"
         (click)="addUserEmailToForm(home.id!)"
@@ -43,10 +43,10 @@
       <mat-hint align="end">
         Press the + button after entering the User Email</mat-hint
       >
-      <mat-error *rxIf="newUserEmailControl.hasError('email')"
+      <mat-error *ngIf="newUserEmailControl.hasError('email')"
         >Email must be a valid email</mat-error
       >
-      <mat-error *rxIf="newUserEmailControl.hasError('backendError')">
+      <mat-error *ngIf="newUserEmailControl.hasError('backendError')">
         {{ newUserEmailControl.errors?.['backendError'] }}</mat-error
       >
 

@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -16,8 +17,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { Observable } from 'rxjs';
 
-import { LetModule } from '@rx-angular/template';
-import { IfModule } from '@rx-angular/template/experimental/if';
+import { LetModule } from '@rx-angular/template/let';
 
 import { UserService } from '../services/user.service';
 import { UserDetails } from '../item.interface';
@@ -26,6 +26,7 @@ import { UserDetails } from '../item.interface';
   standalone: true,
   imports: [
     LetModule,
+    NgIf,
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -34,7 +35,7 @@ import { UserDetails } from '../item.interface';
     MatTooltipModule,
     MatSlideToggleModule,
     ClipboardModule,
-    IfModule,
+    // // IfModule,
   ],
   selector: 'fresh-user-profile',
   templateUrl: './user-profile.component.html',

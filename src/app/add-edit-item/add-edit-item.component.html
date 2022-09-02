@@ -9,8 +9,8 @@
       type="text"
       freshAutocompleteOnWhenLengthGreaterThan
     />
-    <mat-error *rxIf="form.hasError('required', 'name')">Required</mat-error>
-    <mat-error *rxIf="form.hasError('maxlength', 'name')"
+    <mat-error *ngIf="form.hasError('required', 'name')">Required</mat-error>
+    <mat-error *ngIf="form.hasError('maxlength', 'name')"
       >Name must be less than 31 characters</mat-error
     >
   </mat-form-field>
@@ -36,7 +36,7 @@
         </div>
       </mat-option>
     </mat-autocomplete>
-    <mat-error *rxIf="form.hasError('maxlength', 'storedIn')"
+    <mat-error *ngIf="form.hasError('maxlength', 'storedIn')"
       >Stored In must be less than 31 characters</mat-error
     >
     <mat-hint align="end"
@@ -126,7 +126,7 @@
       placeholder="Move to freezer"
       name="comments"
     ></textarea>
-    <mat-error *rxIf="form.hasError('maxlength', 'comments')"
+    <mat-error *ngIf="form.hasError('maxlength', 'comments')"
       >Comments must be less than 301 characters</mat-error
     >
   </mat-form-field>

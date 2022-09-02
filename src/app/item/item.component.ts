@@ -12,8 +12,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { LetModule } from '@rx-angular/template';
-// import { IfModule } from '@rx-angular/template/experimental/if';
+import { LetModule } from '@rx-angular/template/let';
 
 import { Item } from '../item.interface';
 import { HumanizeDurationPipe } from '../pipes/humanize-duration.pipe';
@@ -46,7 +45,7 @@ import { HumanizeDurationPipe } from '../pipes/humanize-duration.pipe';
         color: rgba(255, 255, 255, 0.7);
       }
       mat-panel-description.right-aligned {
-        flex-grow: 0;
+        justify-content: end;
       }
     `,
   ],

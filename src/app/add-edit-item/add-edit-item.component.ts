@@ -24,8 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
 
-import { ForModule } from '@rx-angular/template/experimental/for';
-import { IfModule } from '@rx-angular/template/experimental/if';
+import { ForModule } from '@rx-angular/template/for';
 
 import { Item, ItemFormGroup } from '../item.interface';
 import { AutocompleteOnOffDirective } from '../directives/autocomplete-on-off.directive';
@@ -43,7 +42,7 @@ import { AutocompleteOnOffDirective } from '../directives/autocomplete-on-off.di
     MatDatepickerModule,
     MatAutocompleteModule,
     ForModule,
-    IfModule,
+    // IfModule,
     AutocompleteOnOffDirective,
   ],
   templateUrl: './add-edit-item.component.html',

@@ -12,7 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { Observable } from 'rxjs';
 
-import { ForModule } from '@rx-angular/template/experimental/for';
+import { ForModule } from '@rx-angular/template/for';
 
 import { QueryItemsFormGroup } from '../item.interface';
 import { QueryItems, SortByOptions } from './query-item';

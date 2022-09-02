@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -16,14 +17,14 @@ import {
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
-import { ForModule } from '@rx-angular/template/experimental/for';
-import { IfModule } from '@rx-angular/template/experimental/if';
+import { ForModule } from '@rx-angular/template/for';
 
 import { HomeService } from '../services/home.service';
 
 @Component({
   standalone: true,
   imports: [
+    NgIf,
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
@@ -34,7 +35,7 @@ import { HomeService } from '../services/home.service';
     MatIconModule,
     MatCheckboxModule,
     ForModule,
-    IfModule,
+    // IfModule,
   ],
   selector: 'fresh-shopping-list',
   template: `
@@ -67,7 +68,7 @@ import { HomeService } from '../services/home.service';
       </li>
     </ul>
 
-    <mat-divider *rxIf="bought.length > 0"> </mat-divider>
+    <mat-divider *ngIf="bought.length > 0"> </mat-divider>
 
     <ul cdkDropList (cdkDropListDropped)="boughtDrop($event)">
       <li *rxFor="let item of bought; index as i" cdkDrag>

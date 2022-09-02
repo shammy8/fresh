@@ -24,7 +24,7 @@ import { Auth } from '@angular/fire/auth';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-import { ForModule } from '@rx-angular/template/experimental/for';
+import { ForModule } from '@rx-angular/template/for';
 // import { IfModule } from '@rx-angular/template/experimental/if';
 
 import { Home } from '../item.interface';
