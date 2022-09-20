@@ -1,6 +1,12 @@
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -49,28 +55,28 @@ import {
     <div class="add-item-container">
       <div></div>
       <mat-icon (click)="addItemToToBuy()">add</mat-icon>
-      <input
-        type="text"
-        matInput
-        placeholder="Add Item"
-        [formControl]="addItem"
-        [matAutocomplete]="addItemAuto"
-        (keyup.enter)="addItemToToBuy()"
-      />
-      <mat-autocomplete
-        autoActiveFirstOption
-        #addItemAuto="matAutocomplete"
-        (optionSelected)="autocompletedSelected($event)"
-      >
-        <mat-option
-          *ngFor="let option of filteredBought$ | async"
-          [value]="option"
+      <form [formGroup]="addForm" (ngSubmit)="addItemToToBuy()">
+        <input
+          type="text"
+          matInput
+          placeholder="Add Item"
+          formControlName="newItem"
+          [matAutocomplete]="addItemAuto"
+        />
+        <mat-autocomplete
+          autoActiveFirstOption
+          #addItemAuto="matAutocomplete"
+          (optionSelected)="autocompletedSelected($event)"
         >
-          <mat-checkbox disabled checked> </mat-checkbox>
-          &nbsp; {{ option }}
-        </mat-option>
-      </mat-autocomplete>
-    <div></div>
+          <mat-option
+            *ngFor="let option of filteredBought$ | async"
+            [value]="option"
+          >
+            <mat-checkbox disabled checked> </mat-checkbox>
+            &nbsp; {{ option }}
+          </mat-option>
+        </mat-autocomplete>
+      </form>
     </div>
 
     <ul cdkDropList (cdkDropListDropped)="toBuyDrop($event)">
@@ -134,6 +140,7 @@ import {
         border: none;
         background: #303030;
         color: white;
+        width: 100%;
       }
       input:focus {
         outline: none;
@@ -162,13 +169,17 @@ export class ShoppingListComponent implements OnDestroy {
   toBuy: string[] = [];
   bought: string[] = [];
 
-  addItem = new FormControl('', { nonNullable: true });
+  addForm = new FormGroup<{ newItem: FormControl<string> }>({
+    newItem: new FormControl('', {
+      nonNullable: true,
+    }),
+  });
 
   private readonly _destroy = new Subject<void>();
 
-  filteredBought$ = this.addItem.valueChanges.pipe(
+  filteredBought$ = this.addForm.valueChanges.pipe(
     takeUntil(this._destroy),
-    map((value) => this._filter(value, this.bought))
+    map((value) => this._filter(value.newItem || '', this.bought))
   );
 
   constructor(
@@ -193,14 +204,14 @@ export class ShoppingListComponent implements OnDestroy {
 
   autocompletedSelected(item: MatAutocompleteSelectedEvent) {
     this.moveToToBuy(item.option.value);
-    this.addItem.reset();
+    this.addForm.reset();
   }
 
   addItemToToBuy() {
-    if (!this.addItem.value) return;
+    if (!this.addForm.value.newItem) return;
 
-    const newToBuy = [this.addItem.value, ...this.toBuy];
-    this.addItem.reset();
+    const newToBuy = [this.addForm.value.newItem, ...this.toBuy];
+    this.addForm.reset();
     this._homeService.updateShoppingList(this.homeId, {
       toBuy: newToBuy,
       bought: this.bought,
