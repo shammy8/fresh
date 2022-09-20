@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -17,15 +17,20 @@ import {
 import { Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 
-import { ForModule } from '@rx-angular/template/for';
+// import { ForModule } from '@rx-angular/template/for';
 
 import { HomeService } from '../services/home.service';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {
+  MatAutocompleteModule,
+  MatAutocompleteSelectedEvent,
+} from '@angular/material/autocomplete';
 
 @Component({
   standalone: true,
   imports: [
     NgIf,
+    NgForOf,
+    AsyncPipe,
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
@@ -36,14 +41,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatDividerModule,
     MatIconModule,
     MatCheckboxModule,
-    ForModule,
+    // ForModule,
     // IfModule,
   ],
   selector: 'fresh-shopping-list',
   template: `
     <div class="add-item-container">
       <div></div>
-      <mat-icon>add</mat-icon>
+      <mat-icon (click)="addItemToToBuy()">add</mat-icon>
       <input
         type="text"
         matInput
@@ -51,18 +56,25 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         [formControl]="addItem"
         [matAutocomplete]="addItemAuto"
         (keyup.enter)="addItemToToBuy()"
-        (blur)="addItemToToBuy()"
       />
-      <mat-autocomplete autoActiveFirstOption #addItemAuto="matAutocomplete">
-        <mat-option *rxFor="let option of filteredBought$" [value]="option">
-          {{ option }}
+      <mat-autocomplete
+        autoActiveFirstOption
+        #addItemAuto="matAutocomplete"
+        (optionSelected)="autocompletedSelected($event)"
+      >
+        <mat-option
+          *ngFor="let option of filteredBought$ | async"
+          [value]="option"
+        >
+          <mat-checkbox disabled checked> </mat-checkbox>
+          &nbsp; {{ option }}
         </mat-option>
       </mat-autocomplete>
-      <div></div>
+    <div></div>
     </div>
 
     <ul cdkDropList (cdkDropListDropped)="toBuyDrop($event)">
-      <li *rxFor="let item of toBuy; index as i" cdkDrag>
+      <li *ngFor="let item of toBuy; index as i" cdkDrag>
         <mat-icon cdkDragHandle>drag_indicator</mat-icon>
         <mat-checkbox (change)="moveToBought(item)"> </mat-checkbox>
         <input
@@ -80,7 +92,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     <mat-divider *ngIf="bought.length > 0"> </mat-divider>
 
     <ul cdkDropList (cdkDropListDropped)="boughtDrop($event)">
-      <li *rxFor="let item of bought; index as i" cdkDrag>
+      <li *ngFor="let item of bought; index as i" cdkDrag>
         <mat-icon cdkDragHandle>drag_indicator</mat-icon>
         <mat-checkbox (change)="moveToToBuy(item)" [checked]="true">
         </mat-checkbox>
@@ -179,14 +191,13 @@ export class ShoppingListComponent implements OnDestroy {
       });
   }
 
+  autocompletedSelected(item: MatAutocompleteSelectedEvent) {
+    this.moveToToBuy(item.option.value);
+    this.addItem.reset();
+  }
+
   addItemToToBuy() {
     if (!this.addItem.value) return;
-
-    if (this.bought.includes(this.addItem.value)) {
-      this.moveToToBuy(this.addItem.value);
-      this.addItem.reset();
-      return;
-    }
 
     const newToBuy = [this.addItem.value, ...this.toBuy];
     this.addItem.reset();
