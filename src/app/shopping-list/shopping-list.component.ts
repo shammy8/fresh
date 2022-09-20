@@ -15,20 +15,22 @@ import {
 } from '@angular/cdk/drag-drop';
 
 import { Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { ForModule } from '@rx-angular/template/for';
 
 import { HomeService } from '../services/home.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
   standalone: true,
   imports: [
     NgIf,
-    MatIconModule,
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
+    MatAutocompleteModule,
+    MatIconModule,
     MatInputModule,
     MatCheckboxModule,
     MatDividerModule,
@@ -43,12 +45,19 @@ import { HomeService } from '../services/home.service';
       <div></div>
       <mat-icon>add</mat-icon>
       <input
+        type="text"
         matInput
         placeholder="Add Item"
         [formControl]="addItem"
+        [matAutocomplete]="addItemAuto"
         (keyup.enter)="addItemToToBuy()"
         (blur)="addItemToToBuy()"
       />
+      <mat-autocomplete autoActiveFirstOption #addItemAuto="matAutocomplete">
+        <mat-option *rxFor="let option of filteredBought$" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
       <div></div>
     </div>
 
@@ -145,6 +154,11 @@ export class ShoppingListComponent implements OnDestroy {
 
   private readonly _destroy = new Subject<void>();
 
+  filteredBought$ = this.addItem.valueChanges.pipe(
+    takeUntil(this._destroy),
+    map((value) => this._filter(value, this.bought))
+  );
+
   constructor(
     private readonly _cdr: ChangeDetectorRef,
     private readonly _route: ActivatedRoute,
@@ -167,6 +181,12 @@ export class ShoppingListComponent implements OnDestroy {
 
   addItemToToBuy() {
     if (!this.addItem.value) return;
+
+    if (this.bought.includes(this.addItem.value)) {
+      this.moveToToBuy(this.addItem.value);
+      this.addItem.reset();
+      return;
+    }
 
     const newToBuy = [this.addItem.value, ...this.toBuy];
     this.addItem.reset();
@@ -250,5 +270,15 @@ export class ShoppingListComponent implements OnDestroy {
   ngOnDestroy(): void {
     this._destroy.next();
     this._destroy.complete();
+  }
+
+  private _filter(value: string, storedInOptions: string[]): string[] {
+    if (value.length < 2) {
+      return [];
+    }
+    const filterValue = value.toLowerCase();
+    return storedInOptions.filter((option) =>
+      option.toLowerCase().includes(filterValue)
+    );
   }
 }
