@@ -120,12 +120,13 @@
 
   <mat-form-field>
     <mat-label>Comments</mat-label>
-    <textarea
+    <input
       matInput
       formControlName="comments"
       placeholder="Move to freezer"
       name="comments"
-    ></textarea>
+      type="text"
+    >
     <mat-error *ngIf="form.hasError('maxlength', 'comments')"
       >Comments must be less than 301 characters</mat-error
     >
