@@ -51,6 +51,7 @@ For later:
 - [ ] Add other login providers
   - [ ] Style login page
 - [ ] Styling
+  - [ ] Fix long item names
   - [ ] Add animations for adding removing items in both tabs
     - [ ] Problem with animating mat-expansion panel
   - [ ] Change the logo in the Chrome tab

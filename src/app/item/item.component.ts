@@ -21,14 +21,14 @@ import { HumanizeDurationPipe } from '../pipes/humanize-duration.pipe';
   standalone: true,
   imports: [
     NgIf,
-    // IfModule, // TODO the action buttons appear half a second after the rest of the expansion box 
+    // IfModule, // TODO the action buttons appear half a second after the rest of the expansion box
     LetModule,
     MatExpansionModule,
     HumanizeDurationPipe,
     DatePipe,
     MatIconModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   selector: 'fresh-item',
   templateUrl: './item.component.html',
@@ -36,6 +36,11 @@ import { HumanizeDurationPipe } from '../pipes/humanize-duration.pipe';
     `
       mat-expansion-panel {
         margin: 5px 0;
+      }
+      mat-panel-title {
+        flex-grow: 2;
+        flex-direction: column;
+        align-items: start;
       }
       .stored-in-text {
         color: rgba(255, 255, 255, 0.7);
