@@ -24,6 +24,8 @@ import { MatInputModule } from '@angular/material/input';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
 
+import { DateTime } from 'luxon';
+
 // import { ForModule } from '@rx-angular/template/for';
 
 import { Item, ItemFormGroup } from '../item.interface';
@@ -69,12 +71,12 @@ export class AddEditItemComponent implements OnInit, OnDestroy {
   @Input() initialValues: Item = {
     name: '',
     storedIn: '',
-    dateBought: new Date(),
+    dateBought: DateTime.now().startOf('day'),
     primaryDate: null,
     userDefinedDate: null,
     useBy: null,
     bestBefore: null,
-    notifyOn: null,
+    // notifyOn: null,
     createdAt: null,
     comments: '',
   };
@@ -108,23 +110,23 @@ export class AddEditItemComponent implements OnInit, OnDestroy {
         nonNullable: true,
       }),
       dateBought: new FormControl(
-        { value: this.initialValues.dateBought, disabled: true },
+        { value: this.initialValues.dateBought, disabled: false },
         {
           updateOn: 'blur',
         }
       ),
       bestBefore: new FormControl(
-        { value: this.initialValues.bestBefore, disabled: true },
+        { value: this.initialValues.bestBefore, disabled: false },
         {
           updateOn: 'blur',
         }
       ),
       useBy: new FormControl(
-        { value: this.initialValues.useBy, disabled: true },
+        { value: this.initialValues.useBy, disabled: false },
         { updateOn: 'blur' }
       ),
       userDefinedDate: new FormControl(
-        { value: this.initialValues.userDefinedDate, disabled: true },
+        { value: this.initialValues.userDefinedDate, disabled: false },
         {
           updateOn: 'blur',
         }

@@ -10,12 +10,16 @@
     </mat-panel-title>
     <mat-panel-description class="right-aligned">
       <ng-container *ngIf="item.primaryDate as primaryDate">
+        <!-- TODO change back to rxLet and remove the object val hack below -->
+        <!-- <ng-container
+          *rxLet="primaryDate.valueOf() - today as timeUntilExpiration"
+        > -->
         <ng-container
-          *ngIf="primaryDate.valueOf() - today as timeUntilExpiration"
+          *ngIf="{val: primaryDate.valueOf() - today} as timeUntilExpiration"
         >
-          <span *ngIf="timeUntilExpiration < 0" class="red">-</span>
-          <span [class.red]="isSevenDaysOrLess(timeUntilExpiration)">
-            {{ timeUntilExpiration | humanizeDuration }}
+          <span *ngIf="timeUntilExpiration.val < 0" class="red">-</span>
+          <span [class.red]="isSevenDaysOrLess(timeUntilExpiration.val)">
+            {{ timeUntilExpiration.val | humanizeDuration }}
           </span>
         </ng-container>
       </ng-container>
@@ -25,28 +29,28 @@
   <ng-template matExpansionPanelContent>
     <div *ngIf="item.primaryDate">
       <span class="date-title-text"> Primary Expiration Date </span>
-      <span>{{ item.primaryDate | date: "mediumDate" }}</span>
+      <span>{{ item.primaryDate.toLocaleString(dateTime.DATE_MED) }}</span>
     </div>
 
     <div *ngIf="item.userDefinedDate">
       <span class="date-title-text"> User defined date </span>
-      <span>{{ item.userDefinedDate | date: "mediumDate" }}</span>
+      <span>{{ item.userDefinedDate.toLocaleString(dateTime.DATE_MED) }}</span>
     </div>
 
     <div *ngIf="item.useBy">
       <span class="date-title-text">Use by </span>
-      <span>{{ item.useBy | date: "mediumDate" }}</span>
+      <span>{{ item.useBy.toLocaleString(dateTime.DATE_MED) }}</span>
     </div>
 
     <div *ngIf="item.bestBefore">
       <span class="date-title-text"> Best before </span>
-      <span>{{ item.bestBefore | date: "mediumDate" }}</span>
+      <span>{{ item.bestBefore.toLocaleString(dateTime.DATE_MED) }}</span>
     </div>
 
     <div *ngIf="item.dateBought">
       <br />
       <span class="date-title-text">Bought on </span>
-      <span>{{ item.dateBought | date: "mediumDate" }}</span>
+      <span>{{ item.dateBought.toLocaleString(dateTime.DATE_MED) }}</span>
     </div>
 
     <div *ngIf="item.comments">

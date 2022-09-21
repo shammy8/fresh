@@ -12,6 +12,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
+import { DateTime } from 'luxon';
+
 // import { LetModule } from '@rx-angular/template/let';
 
 import { Item } from '../item.interface';
@@ -57,6 +59,8 @@ import { HumanizeDurationPipe } from '../pipes/humanize-duration.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemComponent {
+  dateTime = DateTime;
+
   /**
    * Today's date as a number set to a time of 00:00
    */
@@ -70,7 +74,7 @@ export class ItemComponent {
     userDefinedDate: null,
     useBy: null,
     bestBefore: null,
-    notifyOn: null,
+    // notifyOn: null,
     createdAt: null,
     comments: '',
   };

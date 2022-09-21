@@ -35,9 +35,11 @@ import {
   where,
 } from '@angular/fire/firestore';
 
+import { DateTime } from 'luxon';
+
 import { AddItemComponent } from '../add-item/add-item.component';
 import { EditItemComponent } from '../edit-item/edit-item.component';
-import { Item, ItemDto } from '../item.interface';
+import { Item, ItemFromDto } from '../item.interface';
 import { ItemService } from '../services/item.service';
 import { QueryItemsComponent } from '../query-items/query-items.component';
 import { HomeService } from '../services/home.service';
@@ -63,7 +65,7 @@ import { ItemComponent } from '../item/item.component';
   template: `
     <!-- TODO rxSuspense is throwing an error -->
     <!-- <ng-container *rxLet="items$ as items; rxSuspense: loadingTemplate"> -->
-    <ng-container *ngIf="(items$ | async) as items">
+    <ng-container *ngIf="items$ | async as items">
       <ng-container *ngIf="items.length > 0; else noItems">
         <fresh-item
           *ngFor="let item of items; trackBy: itemTrackByFn"
@@ -148,7 +150,7 @@ export class InventoryComponent {
   /**
    * Today's date as a number set to a time of 00:00
    */
-  todayDate = new Date().setHours(0, 0, 0, 0);
+  todayDate = DateTime.now().startOf('day').valueOf();
 
   private readonly _initialItemLimit = 30;
   itemLimit: number = this._initialItemLimit;
@@ -192,7 +194,7 @@ export class InventoryComponent {
           return (
             collectionData(itemsQuery, {
               idField: 'id',
-            }) as unknown as Observable<ItemDto>
+            }) as unknown as Observable<ItemFromDto>
           ).pipe(
             catchError(() => {
               alert(
@@ -201,7 +203,7 @@ export class InventoryComponent {
               this._router.navigate(['']);
               return of([]);
             })
-          ) as Observable<ItemDto[]>;
+          ) as Observable<ItemFromDto[]>;
         })
       );
     }),

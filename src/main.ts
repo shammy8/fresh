@@ -7,15 +7,24 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   PreloadAllModules,
-  provideRouter,
+  //   provideRouter,
   RouterModule,
   Routes,
-  withPreloading,
+  //   withPreloading,
 } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
-import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
+import {
+  LuxonDateAdapter,
+  MAT_LUXON_DATE_ADAPTER_OPTIONS,
+  MAT_LUXON_DATE_FORMATS,
+} from '@angular/material-luxon-adapter';
 
 import {
   AuthGuard,
@@ -68,7 +77,7 @@ setTimeout(() =>
       //   provideRouter(routes, withPreloading(PreloadAllModules)), // TODO check if routing works
       importProvidersFrom([
         RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
-        MatNativeDateModule, // TODO right now you need to type in the date as mm/dd/yyyy.
+        // MatNativeDateModule, // TODO right now you need to type in the date as mm/dd/yyyy.
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideAuth(() => getAuth()),
         provideFirestore(() => {
@@ -106,6 +115,12 @@ setTimeout(() =>
         useValue: { duration: 3000, verticalPosition: 'top' },
       },
       { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+      {
+        provide: DateAdapter,
+        useClass: LuxonDateAdapter,
+        deps: [MAT_DATE_LOCALE, MAT_LUXON_DATE_ADAPTER_OPTIONS],
+      },
+      { provide: MAT_DATE_FORMATS, useValue: MAT_LUXON_DATE_FORMATS },
     ],
   }).catch((err) => console.error(err))
 );
