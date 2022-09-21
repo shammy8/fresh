@@ -52,12 +52,15 @@
       formControlName="dateBought"
       name="dateBought"
       autocomplete="off"
-      />
+    />
     <mat-datepicker-toggle
       matSuffix
       [for]="dateBoughtPicker"
     ></mat-datepicker-toggle>
     <mat-datepicker #dateBoughtPicker touchUi disabled="false"></mat-datepicker>
+    <mat-error *ngIf="form.hasError('matDatepickerParse', 'dateBought')"
+      >Invalid date</mat-error
+    >
   </mat-form-field>
 
   <mat-form-field>
@@ -74,6 +77,9 @@
       [for]="bestBeforePicker"
     ></mat-datepicker-toggle>
     <mat-datepicker #bestBeforePicker touchUi disabled="false"></mat-datepicker>
+    <mat-error *ngIf="form.hasError('matDatepickerParse', 'bestBefore')"
+      >Invalid date</mat-error
+    >
   </mat-form-field>
 
   <mat-form-field>
@@ -90,6 +96,9 @@
       [for]="useByPicker"
     ></mat-datepicker-toggle>
     <mat-datepicker #useByPicker touchUi disabled="false"></mat-datepicker>
+    <mat-error *ngIf="form.hasError('matDatepickerParse', 'useBy')"
+      >Invalid date</mat-error
+    >
   </mat-form-field>
 
   <mat-form-field>
@@ -103,7 +112,14 @@
     />
     <mat-datepicker-toggle matSuffix [for]="userDefinedDatePicker">
     </mat-datepicker-toggle>
-    <mat-datepicker #userDefinedDatePicker touchUi disabled="false"></mat-datepicker>
+    <mat-datepicker
+      #userDefinedDatePicker
+      touchUi
+      disabled="false"
+    ></mat-datepicker>
+    <mat-error *ngIf="form.hasError('matDatepickerParse', 'userDefinedDate')"
+      >Invalid date</mat-error
+    >
   </mat-form-field>
 
   <mat-form-field>
@@ -126,7 +142,7 @@
       placeholder="Move to freezer"
       name="comments"
       type="text"
-    >
+    />
     <mat-error *ngIf="form.hasError('maxlength', 'comments')"
       >Comments must be less than 301 characters</mat-error
     >
