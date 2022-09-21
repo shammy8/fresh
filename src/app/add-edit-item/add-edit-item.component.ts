@@ -59,6 +59,9 @@ import { AutocompleteOnOffDirective } from '../directives/autocomplete-on-off.di
       .storedIn-form-field {
         margin-bottom: 10px;
       }
+      .mat-datepicker-toggle {
+        font-size: 18px;
+      }
       ::ng-deep .mat-option-text {
         display: flex !important;
         flex-direction: row !important;
