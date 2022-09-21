@@ -186,6 +186,11 @@ export class AddEditItemComponent implements OnInit, OnDestroy {
       });
   }
 
+  clearDate(e: MouseEvent, dateFormControlName: string) {
+    e.stopPropagation();
+    this.form?.get(dateFormControlName)?.patchValue(null);
+  }
+
   onSubmit() {
     if (!this.form?.valid) return;
 
