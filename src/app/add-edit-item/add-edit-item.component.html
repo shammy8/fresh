@@ -57,6 +57,12 @@
       matSuffix
       [for]="dateBoughtPicker"
     ></mat-datepicker-toggle>
+    <mat-datepicker-toggle
+      matSuffix
+      (click)="form.get('dateBought')?.patchValue(null)"
+    >
+      <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+    </mat-datepicker-toggle>
     <mat-datepicker #dateBoughtPicker touchUi disabled="false"></mat-datepicker>
     <mat-error *ngIf="form.hasError('matDatepickerParse', 'dateBought')"
       >Invalid date</mat-error
@@ -76,6 +82,12 @@
       matSuffix
       [for]="bestBeforePicker"
     ></mat-datepicker-toggle>
+    <mat-datepicker-toggle
+      matSuffix
+      (click)="form.get('bestBefore')?.patchValue(null)"
+    >
+      <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+    </mat-datepicker-toggle>
     <mat-datepicker #bestBeforePicker touchUi disabled="false"></mat-datepicker>
     <mat-error *ngIf="form.hasError('matDatepickerParse', 'bestBefore')"
       >Invalid date</mat-error
@@ -95,6 +107,12 @@
       matSuffix
       [for]="useByPicker"
     ></mat-datepicker-toggle>
+    <mat-datepicker-toggle
+      matSuffix
+      (click)="form.get('useBy')?.patchValue(null)"
+    >
+      <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+    </mat-datepicker-toggle>
     <mat-datepicker #useByPicker touchUi disabled="false"></mat-datepicker>
     <mat-error *ngIf="form.hasError('matDatepickerParse', 'useBy')"
       >Invalid date</mat-error
@@ -111,6 +129,12 @@
       autocomplete="off"
     />
     <mat-datepicker-toggle matSuffix [for]="userDefinedDatePicker">
+    </mat-datepicker-toggle>
+    <mat-datepicker-toggle
+      matSuffix
+      (click)="form.get('userDefinedDate')?.patchValue(null)"
+    >
+      <mat-icon matDatepickerToggleIcon>clear</mat-icon>
     </mat-datepicker-toggle>
     <mat-datepicker
       #userDefinedDatePicker
