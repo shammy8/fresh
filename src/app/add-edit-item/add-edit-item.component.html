@@ -25,7 +25,7 @@
     />
     <mat-autocomplete autoActiveFirstOption #storedInAuto="matAutocomplete">
       <mat-option
-        *rxFor="let option of filteredStoredInOptions$"
+        *ngFor="let option of filteredStoredInOptions$ | async"
         [value]="option"
       >
         <div>{{ option }}</div>

@@ -1,8 +1,8 @@
-<ng-container *rxLet="data.home$ as home">
-  <ng-container *rxLet="data.userDoc$ as userDoc">
+<ng-container *ngIf="(data.home$ | async) as home">
+  <ng-container *ngIf="(data.userDoc$ | async) as userDoc">
     <mat-list>
       <mat-list-item
-        *rxFor="let user of home.usersDetails | keyvalue; count as count"
+        *ngFor="let user of home.usersDetails | keyvalue; count as count"
       >
         <div matLine class="userId-text">{{ user.key }}</div>
         <div matLine>

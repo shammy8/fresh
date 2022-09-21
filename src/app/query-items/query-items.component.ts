@@ -1,3 +1,4 @@
+import { AsyncPipe, NgForOf } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -12,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { Observable } from 'rxjs';
 
-import { ForModule } from '@rx-angular/template/for';
+// import { ForModule } from '@rx-angular/template/for';
 
 import { QueryItemsFormGroup } from '../item.interface';
 import { QueryItems, SortByOptions } from './query-item';
@@ -20,12 +21,14 @@ import { QueryItems, SortByOptions } from './query-item';
 @Component({
   standalone: true,
   imports: [
+    NgForOf,
+    AsyncPipe,
     ReactiveFormsModule,
     MatSelectModule,
     MatFormFieldModule,
     MatButtonModule,
     MatRadioModule,
-    ForModule,
+    // ForModule,
   ],
   selector: 'fresh-query-items',
   templateUrl: './query-items.component.html',

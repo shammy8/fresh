@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -24,7 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
 
-import { ForModule } from '@rx-angular/template/for';
+// import { ForModule } from '@rx-angular/template/for';
 
 import { Item, ItemFormGroup } from '../item.interface';
 import { AutocompleteOnOffDirective } from '../directives/autocomplete-on-off.directive';
@@ -34,6 +34,8 @@ import { AutocompleteOnOffDirective } from '../directives/autocomplete-on-off.di
   standalone: true,
   imports: [
     NgIf,
+    NgForOf,
+    AsyncPipe,
     ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
@@ -41,7 +43,7 @@ import { AutocompleteOnOffDirective } from '../directives/autocomplete-on-off.di
     MatButtonModule,
     MatDatepickerModule,
     MatAutocompleteModule,
-    ForModule,
+    // ForModule,
     // IfModule,
     AutocompleteOnOffDirective,
   ],

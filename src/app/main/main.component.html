@@ -29,7 +29,7 @@
       Home
     </button>
     <mat-nav-list>
-      <mat-list-item *rxFor="let home of homes$">
+      <mat-list-item *ngFor="let home of homes$ | async">
         <a
           mat-list-item
           [routerLink]="['home', home.id]"

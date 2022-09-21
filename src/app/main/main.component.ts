@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -24,7 +24,7 @@ import { Auth } from '@angular/fire/auth';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-import { ForModule } from '@rx-angular/template/for';
+// import { ForModule } from '@rx-angular/template/for';
 // import { IfModule } from '@rx-angular/template/experimental/if';
 
 import { Home } from '../item.interface';
@@ -40,6 +40,8 @@ import { UserService } from '../services/user.service';
   imports: [
     RouterModule,
     NgIf,
+    NgForOf,
+    AsyncPipe,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -48,7 +50,7 @@ import { UserService } from '../services/user.service';
     MatListModule,
     MatSnackBarModule,
     MatBottomSheetModule,
-    ForModule,
+    // ForModule,
     // IfModule, // TODO the cog button doesn't get removed when changing homes
   ],
   selector: 'fresh-main',

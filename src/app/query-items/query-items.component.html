@@ -4,7 +4,7 @@
     <mat-select formControlName="storedIn">
       <mat-option [value]="''">All Storages</mat-option>
       <mat-option
-        *rxFor="let option of data.storedInOptions$"
+        *ngFor="let option of data.storedInOptions$ | async"
         [value]="option"
         >{{ option }}</mat-option
       >
@@ -14,7 +14,7 @@
   <mat-form-field>
     <mat-label>Sort By</mat-label>
     <mat-select formControlName="sortBy">
-      <mat-option *rxFor="let sort of sortOptions" [value]="sort.value">
+      <mat-option *ngFor="let sort of sortOptions" [value]="sort.value">
         {{ sort.label }}
       </mat-option>
     </mat-select>

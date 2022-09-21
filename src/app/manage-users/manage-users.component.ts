@@ -1,4 +1,4 @@
-import { KeyValuePipe, NgIf } from '@angular/common';
+import { AsyncPipe, KeyValuePipe, NgForOf, NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -14,8 +14,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { LetModule } from '@rx-angular/template/let';
-import { ForModule } from '@rx-angular/template/for';
+// import { LetModule } from '@rx-angular/template/let';
+// import { ForModule } from '@rx-angular/template/for';
 
 import { Observable } from 'rxjs';
 
@@ -26,6 +26,8 @@ import { HomeService } from '../services/home.service';
   standalone: true,
   imports: [
     NgIf,
+    NgForOf,
+    AsyncPipe,
     ReactiveFormsModule,
     KeyValuePipe,
     MatInputModule,
@@ -34,8 +36,8 @@ import { HomeService } from '../services/home.service';
     MatButtonModule,
     MatListModule,
     MatProgressSpinnerModule,
-    LetModule,
-    ForModule,
+    // LetModule,
+    // ForModule,
     // IfModule,
   ],
   selector: 'fresh-manage-users',

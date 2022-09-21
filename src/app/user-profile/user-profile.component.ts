@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -17,7 +17,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { Observable } from 'rxjs';
 
-import { LetModule } from '@rx-angular/template/let';
+// import { LetModule } from '@rx-angular/template/let';
 
 import { UserService } from '../services/user.service';
 import { UserDetails } from '../item.interface';
@@ -25,8 +25,10 @@ import { UserDetails } from '../item.interface';
 @Component({
   standalone: true,
   imports: [
-    LetModule,
+    // LetModule,
     NgIf,
+    NgForOf,
+    AsyncPipe,
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,

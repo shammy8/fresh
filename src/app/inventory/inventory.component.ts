@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -22,8 +22,8 @@ import {
 } from 'rxjs';
 import { auditTime, catchError, map, take } from 'rxjs/operators';
 
-import { LetModule } from '@rx-angular/template/let';
-import { ForModule } from '@rx-angular/template/for';
+// import { LetModule } from '@rx-angular/template/let';
+// import { ForModule } from '@rx-angular/template/for';
 
 import {
   collection,
@@ -47,24 +47,26 @@ import { ItemComponent } from '../item/item.component';
 @Component({
   standalone: true,
   imports: [
-    LetModule,
+    // LetModule,
     NgIf,
+    NgForOf,
+    AsyncPipe,
     ItemComponent,
     MatButtonModule,
     MatExpansionModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    ForModule,
+    // ForModule,
     // IfModule,
   ],
   selector: 'fresh-inventory',
   template: `
     <!-- TODO rxSuspense is throwing an error -->
     <!-- <ng-container *rxLet="items$ as items; rxSuspense: loadingTemplate"> -->
-    <ng-container *rxLet="items$ as items">
+    <ng-container *ngIf="(items$ | async) as items">
       <ng-container *ngIf="items.length > 0; else noItems">
         <fresh-item
-          *rxFor="let item of items; trackBy: itemTrackByFn"
+          *ngFor="let item of items; trackBy: itemTrackByFn"
           [item]="item"
           [today]="todayDate"
           (edit)="openEditItemBottomSheet(item)"

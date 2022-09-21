@@ -1,4 +1,4 @@
-<div *rxLet="data.userDoc$ as userDoc" class="grid">
+<div *ngIf="(data.userDoc$ | async) as userDoc" class="grid">
   <ng-container *ngIf="!isEditMode; else editNameTemplate">
     <h2>
       {{ userDoc.displayName }}
