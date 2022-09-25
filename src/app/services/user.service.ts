@@ -22,6 +22,7 @@ export class UserService {
     displayName: '',
     email: '',
     uid: '',
+    defaultHome: '',
   });
   userDoc$ = this._userDocBS$.asObservable();
 
@@ -32,6 +33,7 @@ export class UserService {
       switchMap((user) => {
         if (!user) return EMPTY;
 
+        console.log(user.uid);
         const docRef = doc(this._firestore, `users/${user.uid}`);
         return (docData(docRef) as Observable<UserDetails | undefined>).pipe(
           catchError((error) => {
@@ -43,11 +45,16 @@ export class UserService {
       tap((userDetails) => {
         if (!userDetails) {
           console.error('User document does not exist');
-          this._userDocBS$.next({ displayName: '', email: '', uid: '' });
+          this._userDocBS$.next({
+            displayName: '',
+            email: '',
+            uid: '',
+            defaultHome: '',
+          });
         } else {
           this._userDocBS$.next(userDetails);
         }
-      }),
+      })
     );
   }
 
@@ -55,6 +62,16 @@ export class UserService {
     const userRef = doc(this._firestore, `users/${userId}`);
     return updateDoc(userRef, {
       displayName,
+    });
+  }
+
+  setAsDefaultHome(homeId: string) {
+    const userRef = doc(
+      this._firestore,
+      `users/${this._userDocBS$.getValue().uid}`
+    );
+    return updateDoc(userRef, {
+      defaultHome: homeId,
     });
   }
 }

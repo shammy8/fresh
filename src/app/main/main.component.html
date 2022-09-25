@@ -54,6 +54,9 @@
           >settings</mat-icon
         >
         <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="setAsDefaultHome(home)">
+            Set as default home
+          </button>
           <button mat-menu-item (click)="openBottomSheetToManageUsers(home)">
             Manage Users
           </button>

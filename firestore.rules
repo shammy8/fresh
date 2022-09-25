@@ -62,7 +62,8 @@ service cloud.firestore {
                 resource.data.email == request.resource.data.email &&
                 request.resource.data.displayName is string &&
                 request.resource.data.displayName.size() > 0 && 
-                request.resource.data.displayName.size() < 31;
+                request.resource.data.displayName.size() < 31 && 
+                request.resource.data.defaultHome is string;
         }
     }
 }

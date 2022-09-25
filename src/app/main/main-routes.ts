@@ -25,6 +25,11 @@ export const MAIN_ROUTES: Routes = [
         canActivate: [AuthGuard],
         data: { authGuardPipe: () => redirectUnauthorizedTo(['login']) },
       },
+      {
+        path: 'home',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
     ],
   },
 ];

@@ -95,4 +95,5 @@ export interface UserDetails {
   displayName: string;
   email: string;
   uid: string;
+  defaultHome: string;
 }

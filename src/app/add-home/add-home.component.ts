@@ -71,7 +71,7 @@ export class AddHomeComponent implements OnDestroy {
 
   disableSubmitButton = false;
 
-  private _userDoc: UserDetails = { displayName: '', email: '', uid: '' };
+  private _userDoc: UserDetails = { displayName: '', email: '', uid: '', defaultHome: '' };
 
   private _destroy = new Subject<void>();
 
