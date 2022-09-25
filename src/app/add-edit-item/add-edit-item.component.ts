@@ -22,7 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
 import { combineLatest, Observable, of, Subject } from 'rxjs';
-import { map, startWith, takeUntil } from 'rxjs/operators';
+import { map, startWith, take, takeUntil } from 'rxjs/operators';
 
 import { DateTime } from 'luxon';
 
@@ -198,7 +198,7 @@ export class AddEditItemComponent implements OnInit, OnDestroy {
     const storedInValue = this.form.get('storedIn')!.value;
 
     let storages: string[] = [];
-    this.storedInOptions$.subscribe((storedIn) => (storages = storedIn));
+    this.storedInOptions$.pipe(take(1)).subscribe((storedIn) => (storages = storedIn));
 
     this.closeBottomSheet.emit();
 

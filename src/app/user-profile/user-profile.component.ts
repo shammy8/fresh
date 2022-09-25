@@ -1,5 +1,5 @@
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -10,12 +10,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
-    MatBottomSheetRef,
-    MAT_BOTTOM_SHEET_DATA,
+  MatBottomSheetRef,
+  MAT_BOTTOM_SHEET_DATA,
 } from '@angular/material/bottom-sheet';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 // import { LetModule } from '@rx-angular/template/let';
 
@@ -61,7 +61,7 @@ import { UserDetails } from '../item.interface';
     `,
   ],
 })
-export class UserProfileComponent {
+export class UserProfileComponent implements OnDestroy {
   newNameControl = new FormControl('', {
     nonNullable: true,
     validators: [Validators.maxLength(30), Validators.required],
@@ -73,6 +73,8 @@ export class UserProfileComponent {
     Notification.permission === 'granted'
   );
 
+  private readonly _destroy = new Subject<void>();
+
   constructor(
     private _snackBar: MatSnackBar,
     private _bottomSheetRef: MatBottomSheetRef<UserProfileComponent>,
@@ -82,14 +84,16 @@ export class UserProfileComponent {
     },
     private _userService: UserService
   ) {
-    this.notificationControl.valueChanges.subscribe((allow) => {
-      // TODO
-      if (allow === true) {
-        console.log('allow');
-      } else if (allow === false) {
-        console.log('deny');
-      }
-    });
+    this.notificationControl.valueChanges
+      .pipe(takeUntil(this._destroy))
+      .subscribe((allow) => {
+        // TODO
+        if (allow === true) {
+          console.log('allow');
+        } else if (allow === false) {
+          console.log('deny');
+        }
+      });
   }
 
   onEdit(displayName: string) {
@@ -112,5 +116,10 @@ export class UserProfileComponent {
 
   closeBottomSheet() {
     this._bottomSheetRef.dismiss();
+  }
+
+  ngOnDestroy(): void {
+    this._destroy.next();
+    this._destroy.complete();
   }
 }

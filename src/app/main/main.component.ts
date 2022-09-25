@@ -21,7 +21,7 @@ import { MatListModule } from '@angular/material/list';
 
 import { Auth } from '@angular/fire/auth';
 
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 // import { ForModule } from '@rx-angular/template/for';
@@ -98,7 +98,7 @@ export class MainComponent implements OnDestroy {
     const bottomSheetRef = this._bottomSheet.open(AddHomeComponent, {
       data: { userDoc$: this.userDoc$ },
     });
-    bottomSheetRef.afterDismissed().subscribe((docId) => {
+    bottomSheetRef.afterDismissed().pipe(take(1)).subscribe((docId) => {
       if (!docId) return;
       this._router.navigate(['home', docId]);
       this.matSideNav?.close();
@@ -110,7 +110,7 @@ export class MainComponent implements OnDestroy {
     const bottomSheetRef = this._bottomSheet.open(ManageUsersComponent, {
       data: { userDoc$: this.userDoc$, home$ },
     });
-    bottomSheetRef.afterDismissed().subscribe((navBack) => {
+    bottomSheetRef.afterDismissed().pipe(take(1)).subscribe((navBack) => {
       if (navBack === false) return;
       this._router.navigate(['']);
       this.matSideNav?.close();
